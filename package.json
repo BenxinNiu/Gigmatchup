@@ -1,0 +1,29 @@
+{
+  "name": "workterm1-project",
+  "version": "1.0.0",
+  "description": "online platform for local music band and other type of perfomance ",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "deploy": "gcloud app deploy",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Benxin Niu",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.16.1",
+    "config": "^1.25.1",
+    "connect-memcached": "^0.2.0",
+    "express": "^4.14.1",
+    "express-session": "^1.15.1",
+    "jade": "^1.11.0",
+    "moment": "^2.17.1",
+    "mongodb": "^2.2.24",
+    "multer": "^1.2.0",
+    "nconf": "^0.8.4",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.0.0",
+    "passport-google-oauth20": "^1.0.0",
+    "path": "^0.12.7"
+  }
+}

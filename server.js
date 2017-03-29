@@ -48,6 +48,10 @@ if (profile.photos && profile.photos.length) {
 function formatTime(date){
   return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + "/" + date.getHours()+ ":" + date.getMinutes();
 }
+function ensure(req,res,next){
+  if(req.isAuthenticated()){return next();}
+  res.redirect('/');
+}
 
 passport.use(new GoogleStrategy({
   clientID: config.get('OAUTH2_CLIENT_ID'),
@@ -88,11 +92,22 @@ app.get('/auth/google',function (req,res,next){
     next();
 },passport.authenticate('google', { scope: ['email', 'profile'] }));
 
-app.get('/auth/google/callback',passport.authenticate('google'，{ failureRedirect: '/' }),function(req, res){
-     res.redirect('ad');
+app.get('/auth/google/callback',passport.authenticate('google',{ failureRedirect: '/' }),function(req, res){
+     res.redirect('/ad?Id='+req.user.displayName);
   }
 );
 
+app.get('/ad',(req,res)=>{
+  var query=req.query.Id;
+  console.log(query);
+  res.sendFile(path.join(__dirname+'/public/index.html'),{user:req.user});
+})
+
+app.get('/test',ensure,(req,res)=>{
+  var query=req.query.Id;
+  console.log(query);
+res.send('hi');
+})
 
 var server=app.listen(process.env.PORT || '8080', function(){
   console.log('App is listening on the port %s', server.address().port);

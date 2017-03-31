@@ -16,9 +16,7 @@ const path = require('path');
 //const oauth=require('./authentication')
 const app = express();
 
-//var mongoURL='mongodb://127.0.0.1:27017/test';
-const mongoURL='mongodb://benxinniu:nbx00144@ds137110.mlab.com:37110/testingdb';
-
+var mongoURL=config.get('MONGO_URL');
 
 const sessionConfig={
   resave: false,
@@ -48,6 +46,7 @@ if (profile.photos && profile.photos.length) {
 function formatTime(date){
   return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + "/" + date.getHours()+ ":" + date.getMinutes();
 }
+
 function ensure(req,res,next){
   if(req.isAuthenticated()){return next();}
   res.redirect('/');
@@ -72,7 +71,7 @@ passport.deserializeUser((obj, cb) => {
 
 
 //app.use(express.static('htmls/Ad'))
-app.use(session(sessionConfig));
+app.use(express.static(path.join(__dirname,'public')));
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json()); // for parsing application/json
 app.use(passport.initialize());
@@ -89,25 +88,25 @@ app.use(function(req, res, next) {
 
 
 app.get('/auth/google',function (req,res,next){
+  if(req.query.return){
+    req.session.oauth2return = req.query.return;
+  }
     next();
 },passport.authenticate('google', { scope: ['email', 'profile'] }));
 
 app.get('/auth/google/callback',passport.authenticate('google',{ failureRedirect: '/' }),function(req, res){
-     res.redirect('/ad?Id='+req.user.displayName);
+  const redirect = req.session.oauth2return
+  delete req.session.oauth2return;
+     res.redirect('redirect?id='+req.user.displayName);
   }
 );
 
-app.get('/ad',(req,res)=>{
+app.get('/',(req,res)=>{
   var query=req.query.Id;
   console.log(query);
-  res.sendFile(path.join(__dirname+'/public/index.html'),{user:req.user});
-})
+ res.sendFile( path.join( __dirname, 'public', 'index.html' ));
+});
 
-app.get('/test',ensure,(req,res)=>{
-  var query=req.query.Id;
-  console.log(query);
-res.send('hi');
-})
 
 var server=app.listen(process.env.PORT || '8080', function(){
   console.log('App is listening on the port %s', server.address().port);

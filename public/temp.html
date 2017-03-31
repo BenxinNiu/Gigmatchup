@@ -1,39 +1,50 @@
-<div class="col-md-3 col-sm-6">
-    <div class="service-item">
-        <span class="fa-stack fa-4x">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-play fa-stack-1x text-primary"></i>
-    </span>
-        <h4>
-            <strong>DJ</strong>
-        </h4>
-        <p>Explore our selection of DJs.Great party starts from Here!.</p>
-        <a href="#" class="btn btn-light">Learn More</a>
+<div class="col-md-6">
+    <div class="post-form">
+      <h2>Link your profile to your Ad</h2>
+      <label class"full_label">Email address</label>
+      <input class="full" id="userName">
+      <label class"full_label">Or User name</label>
+        <input class="full" id="userID">
+        <a href="#about" class="btn btn-primary btn-lg">Link and Post</a>
     </div>
 </div>
-<div class="col-md-3 col-sm-6">
-    <div class="service-item">
-        <span class="fa-stack fa-4x">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-magic fa-stack-1x text-primary"></i>
-    </span>
-        <h4>
-            <strong>Talents</strong>
-        </h4>
-        <p>Singer, Comedian, dancer, anything for your event</p>
-        <a href="#" class="btn btn-light">Learn More</a>
-    </div>
+  <div class="col-md-6">
+      <div class="post-form" id='right_top'>
+        <h2>Edit details </h2>
+        <label class"full_label">Ad title</label>
+        <input class="full" id="Ad_title">
+        <label class"full_label">Pricing</label>
+        <input class="full" id="pricing" placeholder="Optional">
+          <label class"full_label">Select Category</label>
+          <select class="form-control" name="category" id="Ad_category">
+            <option value="Music">Music band</option>
+            <option value="solo">solo</option>
+            <option value="DJ">DJ</option>
+            <option value="other">other</option>
+            <option value="Instrument performance">Instrument performance</option>
+          </select>
+      </div>
+  </div>
+  <div class="col-md-6">
+      <div class="post-form" id="left_bot">
+          <h2>Add description</h2>
+          <textarea class='description'> </textarea>
+
+      </div>
+  </div>
+  <div class="col-md-6">
+      <div class="post-form">
+        <h2> Contact Information</h2>
+        <label class"full_label">Email address</label>
+        <input class="full" id="email">
+        <label class"full_label">Cell number</label>
+          <input class="full" id="phone">
+          <h4> add pictures</h4>
+          <i class="add_pic fa fa-plus fa-stack-2x "></i>
+      </div>
+  </div>
 </div>
-<div class="col-md-3 col-sm-6">
-    <div class="service-item">
-        <span class="fa-stack fa-4x">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-shopping-bag fa-stack-1x text-primary"></i>
-    </span>
-        <h4>
-            <strong>Supplies</strong>
-        </h4>
-        <p>Explore the best Musical instruments store in your area.</p>
-        <a href="#" class="btn btn-light">Learn More</a>
-    </div>
+<!-- /.row (nested) -->
+<a class="btn btn-primary" id="post">Post</a>
 </div>
+<!-- /.col-lg-10 -->

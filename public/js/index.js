@@ -7,6 +7,7 @@ function acquireInfor(){
     phone:$('#phone').val()
   };
 }
+
 function postAd(){
 var url='http://localhost:8080/postAd';
 var form=acquireInfor();
@@ -31,12 +32,35 @@ $.ajax({
 }
 
 function social_login(){
-
+$('.list_unstyled').animate({left: "53%"},600);
 }
 
-
+function learn_more(service){
+let id="#_"+service;
+let Id="#"+service;
+$(id).slideDown();
+switch (service){
+  case "music":
+$('Id').append()
+}
+}
+function initial_animation(){
+  $('.service_detail').slideUp(0.1);
+}
 
 $(document).ready(function(){
+
+initial_animation();
+
+$('.learn_more').on('click',function(){
+  let id=$(this).attr('id');
+  learn_more(id);
+})
+
+$('.login_icon').on('click',function(){
+  social_login();
+})
+
   $('#post').click(function(){
     postAd();
   })

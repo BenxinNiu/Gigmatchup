@@ -138,10 +138,10 @@ textarea{
   font-size: 4.5em;
   font-weight: 700;
 }
+
 .social {
     display: table;
     width: 100%;
-    max-height: 400px;
     color: #fff;
     background: url(../img/portfolio-4.jpg) no-repeat center center scroll;
     -webkit-background-size: cover;
@@ -182,8 +182,17 @@ color:white;
 }
 .list_unstyled{
   position:relative;
-  margin-top:10px;
+  margin-top:5px;
    list-style-type: none;
+}
+.social_buttons li{
+    margin:0px !important;
+}
+.social_buttons{
+  position:relative;
+  margin-top:-230px;
+  margin-left:-200px;
+  left:-53%;
 }
 .border-black{
   /*color: #2095F2;*/

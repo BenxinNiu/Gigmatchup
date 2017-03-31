@@ -8,19 +8,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Benxin Niu">
-<script src="post.js"></script>
-    <title>Web App projet (beta version benxin)</title>
 
+    <title>Web App projet (beta version benxin)</title>
+    <!-- jQuery -->
+    <script src="library/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="library/bootstrap.min.js"></script>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
+            <script src="js/index.js"></script>
     <!-- Custom CSS -->
-    <link href="css/stylish-portfolio.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -31,9 +35,11 @@
 </head>
 
 <body>
-
     <!-- Navigation -->
-    <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
+    <div class="blackbar">
+  <a class="logo"></a>
+<a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
+    </div>
     <nav id="sidebar-wrapper">
         <ul class="sidebar-nav">
             <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
@@ -59,12 +65,13 @@
     </nav>
 
     <!-- Header -->
-    <header id="top" class="header">
-        <div class="text-vertical-center">
+
+    <header id="top" class="intro">
+        <div class="home-page">
             <h1>APP NAME</h1>
             <input class='searchBar'>
             <br>
-            <a href="#about" class="btn btn-dark btn-lg">Search Ad</a>
+            <a href="#about" class="btn btn-blue btn-lg">Search Ad</a>
             <div class="region">
             <label for="category" class="select_province control-label col-sm-3">Select your region</label>
   <div class="province input-group col-xs-8">
@@ -90,90 +97,79 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>Your one stop for search of Talent!</h2>
+                    <h2 class="title">Your one stop for search of Talent!</h2>
                     <p class="lead">Looking for Music band DJ or Magician? <a target="_blank" href="#">Explore</a>.</p>
                 </div>
             </div>
-            <!-- /.row -->
-        </div>
-        <!-- /.container -->
-    </section>
-
-    <!-- Services -->
-    <!-- The circle icons use Font Awesome's stacked icon classes. For more information, visit http://fontawesome.io/examples/ -->
-    <section id="services" class="services bg-primary">
-        <div class="container">
             <div class="row text-center">
-                <div class="col-lg-10 col-lg-offset-1">
-                    <h2>Our Services</h2>
-                    <hr class="small">
+                <div class="col-lg-20">
+                    <h2>Click to explore our services</h2>
+                    <hr class="medium">
                     <div class="row">
-                        <div class="col-md-3 col-sm-6">
-                            <div class="service-item">
-                                <span class="fa-stack fa-4x">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-headphones fa-stack-1x text-primary"></i>
-                            </span>
-                                <h4>
-                                    <strong>Music Band</strong>
-                                </h4>
-                                <p>Hire the best music band for your event.</p>
-                                <a href="#" class="btn btn-light">Learn More</a>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="service-item">
-                                <span class="fa-stack fa-4x">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-play fa-stack-1x text-primary"></i>
-                            </span>
-                                <h4>
-                                    <strong>DJ</strong>
-                                </h4>
-                                <p>Explore our selection of DJs.Great party starts from Here!.</p>
-                                <a href="#" class="btn btn-light">Learn More</a>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="service-item">
-                                <span class="fa-stack fa-4x">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-magic fa-stack-1x text-primary"></i>
-                            </span>
-                                <h4>
-                                    <strong>Talents</strong>
-                                </h4>
-                                <p>Singer, Comedian, dancer, anything for your event</p>
-                                <a href="#" class="btn btn-light">Learn More</a>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="service-item">
-                                <span class="fa-stack fa-4x">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-shopping-bag fa-stack-1x text-primary"></i>
-                            </span>
-                                <h4>
-                                    <strong>Supplies</strong>
-                                </h4>
-                                <p>Explore the best Musical instruments store in your area.</p>
-                                <a href="#" class="btn btn-light">Learn More</a>
-                            </div>
-                        </div>
+                      <div class="col-md-3 col-sm-6">
+                          <div class="service">
+                              <span class="fa-stack fa-4x">
+                              <i class="fa fa-square-o fa-stack-2x border-black"></i>
+                              <i class="fa fa-music fa-stack-1x"></i>
+                          </span>
+                              <h4>
+                                  <strong>Music</strong>
+                              </h4>
+                              <p>Explore our selection of DJs.Great party starts from Here!.</p>
+                              <a href="#" class="btn btn-primary btn-lobster">Learn More</a>
+                          </div>
+                      </div>
+                      <div class="col-md-3 col-sm-6">
+                          <div class="service">
+                              <span class="fa-stack fa-4x">
+                              <i class="fa fa-square-o fa-stack-2x border-black"></i>
+                              <i class="fa fa-play fa-stack-1x"></i>
+                          </span>
+                              <h4>
+                                  <strong>DJ</strong>
+                              </h4>
+                              <p>Explore our selection of DJs.Great party starts from Here!.</p>
+                              <a href="#" class="btn btn-primary btn-lobster">Learn More</a>
+                          </div>
+                      </div>
+                      <div class="col-md-3 col-sm-6">
+                          <div class="service">
+                              <span class="fa-stack fa-4x">
+                              <i class="fa fa-square-o fa-stack-2x border-black"></i>
+                              <i class="fa fa-magic fa-stack-1x"></i>
+                          </span>
+                              <h4>
+                                  <strong>Talents</strong>
+                              </h4>
+                              <p>Singer, Comedian, dancer, anything for your event</p>
+                              <a href="#" class="btn btn-primary btn-lobster">Learn More</a>
+                          </div>
+                      </div>
+                      <div class="col-md-3 col-sm-6">
+                          <div class="service">
+                              <span class="fa-stack fa-4x">
+                              <i class="fa fa-square-o fa-stack-2x border-black"></i>
+                              <i class="fa fa-certificate fa-stack-1x"></i>
+                          </span>
+                              <h4>
+                                  <strong>Be discovered</strong>
+                              </h4>
+                              <p>Explore the best Musical instruments store in your area.</p>
+                              <a href="#" class="btn btn-primary btn-lobster">Learn More</a>
+                          </div>
+                      </div>
                     </div>
-                    <!-- /.row (nested) -->
+
                 </div>
-                <!-- /.col-lg-10 -->
+
             </div>
-            <!-- /.row -->
         </div>
-        <!-- /.container -->
+
     </section>
 
-    <!-- Callout -->
-    <aside class="callout">
-        <div class="text-vertical-center">
-            <h1>Join us now</h1>
+    <aside class="social">
+        <div class="social-area">
+            <h1 style="font-family:lobster;">Register now for free with </h1>
             <ul class='list_unstyled'>
       <li><i class="login_icon fa fa-google fa-stack-2x "></i></li>
       <li><i class="login_icon fa fa-facebook fa-stack-2x "></i></li>
@@ -182,26 +178,25 @@
         </div>
     </aside>
 
-    <!-- Portfolio -->
-    <section id="portfolio" class="portfolio">
+    <section id="post-form-area" class="post-form-area">
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 col-lg-offset-1 text-center">
                     <h2>Post Ad for yourself or business</h2>
                     <hr class="small">
                     <div class="row">
+                      <div class="col-md-6">
+                          <div class="post-form">
+                            <h2>Link your profile to your Ad</h2>
+                            <label class"full_label">Email address</label>
+                            <input class="full" id="userName">
+                            <label class"full_label">Or User name</label>
+                              <input class="full" id="userID">
+                              <a href="#about" class="btn btn-primary btn-lg">Link and Post</a>
+                          </div>
+                      </div>
                         <div class="col-md-6">
-                            <div class="portfolio-item">
-                              <h2>Link your profile to your Ad</h2>
-                              <label class"full_label">Email address</label>
-                              <input class="full" id="userName">
-                              <label class"full_label">Or User name</label>
-                                <input class="full" id="userID">
-                                <a href="#about" class="btn btn-primary btn-lg">Link and Post</a>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="portfolio-item" id='right_top'>
+                            <div class="post-form" id='right_top'>
                               <h2>Edit details </h2>
                               <label class"full_label">Ad title</label>
                               <input class="full" id="Ad_title">
@@ -218,14 +213,14 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="portfolio-item" id="left_bot">
+                            <div class="post-form" id="left_bot">
                                 <h2>Add description</h2>
                                 <textarea class='description'> </textarea>
 
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="portfolio-item">
+                            <div class="post-form">
                               <h2> Contact Information</h2>
                               <label class"full_label">Email address</label>
                               <input class="full" id="email">
@@ -258,133 +253,6 @@
             </div>
         </div>
     </aside>
-
-    <!-- Map -->
-    <!--
-    <section id="contact" class="map">
-        <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;aq=0&amp;oq=twitter&amp;sll=28.659344,-81.187888&amp;sspn=0.128789,0.264187&amp;ie=UTF8&amp;hq=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;t=m&amp;z=15&amp;iwloc=A&amp;output=embed"></iframe>
-        <br />
-        <small>
-            <a href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;aq=0&amp;oq=twitter&amp;sll=28.659344,-81.187888&amp;sspn=0.128789,0.264187&amp;ie=UTF8&amp;hq=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;t=m&amp;z=15&amp;iwloc=A"></a>
-        </small>
-    </section>
--->
-    <!-- Footer -->
-    <!--
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-10 col-lg-offset-1 text-center">
-                    <h4><strong>Start Bootstrap</strong>
-                    </h4>
-                    <p>3481 Melrose Place
-                        <br>Beverly Hills, CA 90210</p>
-                    <ul class="list-unstyled">
-                        <li><i class="fa fa-phone fa-fw"></i> (123) 456-7890</li>
-                        <li><i class="fa fa-envelope-o fa-fw"></i> <a href="mailto:name@example.com">name@example.com</a>
-                        </li>
-                    </ul>
-                    <br>
-                    <ul class="list-inline">
-                        <li>
-                            <a href="#"><i class="fa fa-facebook fa-fw fa-3x"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-twitter fa-fw fa-3x"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-dribbble fa-fw fa-3x"></i></a>
-                        </li>
-                    </ul>
-                    <hr class="small">
-                    <p class="text-muted">Copyright &copy; Your Website 2014</p>
-                </div>
-            </div>
-        </div>
-        <a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
-    </footer>
--->
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script>
-    $('#post').click(function(){
-      postAd();
-    })
-    // Closes the sidebar menu
-    $("#menu-close").click(function(e) {
-        e.preventDefault();
-        $("#sidebar-wrapper").toggleClass("active");
-    });
-    // Opens the sidebar menu
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#sidebar-wrapper").toggleClass("active");
-    });
-    // Scrolls to the selected menu item on the page
-    $(function() {
-        $('a[href*=#]:not([href=#],[data-toggle],[data-target],[data-slide])').click(function() {
-            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
-                var target = $(this.hash);
-                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-                if (target.length) {
-                    $('html,body').animate({
-                        scrollTop: target.offset().top
-                    }, 1000);
-                    return false;
-                }
-            }
-        });
-    });
-    //#to-top button appears after scrolling
-    var fixed = false;
-    $(document).scroll(function() {
-        if ($(this).scrollTop() > 250) {
-            if (!fixed) {
-                fixed = true;
-                // $('#to-top').css({position:'fixed', display:'block'});
-                $('#to-top').show("slow", function() {
-                    $('#to-top').css({
-                        position: 'fixed',
-                        display: 'block'
-                    });
-                });
-            }
-        } else {
-            if (fixed) {
-                fixed = false;
-                $('#to-top').hide("slow", function() {
-                    $('#to-top').css({
-                        display: 'none'
-                    });
-                });
-            }
-        }
-    });
-
-    var onMapMouseleaveHandler = function(event) {
-        var that = $(this);
-        that.on('click', onMapClickHandler);
-        that.off('mouseleave', onMapMouseleaveHandler);
-        that.find('iframe').css("pointer-events", "none");
-    }
-    var onMapClickHandler = function(event) {
-            var that = $(this);
-            // Disable the click handler until the user leaves the map area
-            that.off('click', onMapClickHandler);
-            // Enable scrolling zoom
-            that.find('iframe').css("pointer-events", "auto");
-            // Handle the mouse leave event
-            that.on('mouseleave', onMapMouseleaveHandler);
-        }
-        // Enable map zooming with mouse scroll when the user clicks the map
-    $('.map').on('click', onMapClickHandler);
-    </script>
-
 </body>
 
 </html>

@@ -87,7 +87,8 @@ app.use(function(req, res, next) {
 });
 
 
-app.get('/auth/google',function (req,res,next){
+app.get('/login/google',function (req,res,next){
+//  console.log(req.query.return);
   if(req.query.return){
     req.session.oauth2return = req.query.return;
   }
@@ -95,9 +96,10 @@ app.get('/auth/google',function (req,res,next){
 },passport.authenticate('google', { scope: ['email', 'profile'] }));
 
 app.get('/auth/google/callback',passport.authenticate('google',{ failureRedirect: '/' }),function(req, res){
-  const redirect = req.session.oauth2return
+  const redirect = req.session.oauth2return+"?user="+req.user.id;
+//  console.log(redirect);
   delete req.session.oauth2return;
-     res.redirect('redirect?id='+req.user.displayName);
+     res.redirect(redirect);
   }
 );
 

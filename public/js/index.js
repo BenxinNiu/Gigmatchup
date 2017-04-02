@@ -35,22 +35,53 @@ function social_login(){
 $('.list_unstyled').animate({left: "53%"},600);
 }
 
+function promote_login(){
+  $('#a').animate({right:"-13%"},300,function(){
+    $('.social_buttons_two').animate({top:"-75%"},400)
+  })
+}
+
 function learn_more(service){
 let id="#_"+service;
 let Id="#"+service;
 $(id).slideDown();
 switch (service){
   case "music":
-$('Id').append()
+$(Id).empty();
+$(Id).append("<a href='/ad?search=music_band' class='btn btn-primary btn-lobster'>go to Ad page</a>");
+break;
+case "DJ":
+$(Id).empty();
+$(Id).append("<a href='/ad?search=DJ' class='btn btn-primary btn-lobster'>Go to Ad page</a>");
+break;
+case "talents":
+$(Id).empty();
+$(Id).append("<a href='/ad?search=talents' class='btn btn-primary btn-lobster'>Go to Ad page</a>");
+break;
+case "be_discovered":
+$(Id).empty();
+$(Id).append("<a href='/ad?search=be_discovered' class='btn btn-primary btn-lobster'>Go to Profile</a>");
+break;
 }
 }
+//see if user is logged in
+function is_login(){
+  var url=window.location.href;
+  var num=url.indexOf("=")+1;
+  if(num===0)
+  return false;
+  else return true;
+//  return url.slice(num);
+}
+
+
+// load some animation when the page is first loaded
 function initial_animation(){
   $('.service_detail').slideUp(0.1);
 }
 
 $(document).ready(function(){
 
-initial_animation();
 
 $('.learn_more').on('click',function(){
   let id=$(this).attr('id');
@@ -77,28 +108,6 @@ $('.login_icon').on('click',function(){
   });
   //#to-top button appears after scrolling
   var fixed = false;
-  $(document).scroll(function() {
-      if ($(this).scrollTop() > 250) {
-          if (!fixed) {
-              fixed = true;
-              // $('#to-top').css({position:'fixed', display:'block'});
-              $('#to-top').show("slow", function() {
-                  $('#to-top').css({
-                      position: 'fixed',
-                      display: 'block'
-                  });
-              });
-          }
-      } else {
-          if (fixed) {
-              fixed = false;
-              $('#to-top').hide("slow", function() {
-                  $('#to-top').css({
-                      display: 'none'
-                  });
-              });
-          }
-      }
-  });
+
 
 });

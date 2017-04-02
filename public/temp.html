@@ -48,3 +48,29 @@
 <a class="btn btn-primary" id="post">Post</a>
 </div>
 <!-- /.col-lg-10 -->
+
+
+
+$(document).scroll(function() {
+    if ($(this).scrollTop() > 250) {
+        if (!fixed) {
+            fixed = true;
+            // $('#to-top').css({position:'fixed', display:'block'});
+            $('#to-top').show("slow", function() {
+                $('#to-top').css({
+                    position: 'fixed',
+                    display: 'block'
+                });
+            });
+        }
+    } else {
+        if (fixed) {
+            fixed = false;
+            $('#to-top').hide("slow", function() {
+                $('#to-top').css({
+                    display: 'none'
+                });
+            });
+        }
+    }
+});

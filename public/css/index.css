@@ -138,6 +138,9 @@ textarea{
   font-size: 4.5em;
   font-weight: 700;
 }
+.service {
+    margin-bottom: 20px;
+}
 
 .social {
     display: table;
@@ -325,14 +328,43 @@ hr.medium {
     margin: 5px 5px 0 0;
 }
 
+.post_ad{
+  border:1px solid black;
+  border-radius:5px;
+  height:400px;
+  margin-bottom:13px;
+  overflow:hidden;
+}
+.a{
+  position:relative;
+  z-index:10;
+  height:400px;
+  top:56px;
+}
+#a{
+  position:relative;
 
-
-.service {
-    margin-bottom: 20px;
+}
+.social_buttons_two{
+  position:relative;
+ top:30px;
+}
+#a h2{
+  margin-bottom:30px;
+}
+.b{
+  position:relative;
+  z-index:8;
+  height:400px;
+  margin-top:-400px;
+}
+.b{
+  position:relative;
+  z-index:8;
+  height:400px;
+  margin-top:-400px;
 }
 
-
-/* Portfolio */
 
 .post-form-area {
     padding: 50px 0;

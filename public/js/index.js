@@ -2,10 +2,20 @@ function acquireInfor(){
   return {
     title:$('#Ad_title').val(),
     category:$('#Ad_category').val(),
-    description:$('.description').val(),
+    pricing:$('#pricing').val(),
+    description:$('#description').val(),
     email:$('#email').val(),
     phone:$('#phone').val()
   };
+}
+
+function acquireSocial_urls(){
+return{
+  facebook:$('#facebook-url').val(),
+  twitter:$('#twitter_url').val(),
+  youtube:$('#youtube_url').val(),
+  video:$('#video').val()
+};
 }
 
 function postAd(){

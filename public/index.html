@@ -74,7 +74,7 @@
             <a href="#about" class="btn btn-blue btn-lg">Search Ad</a>
             <div class="region">
             <label for="category" class="select_province control-label col-sm-3">Select your region</label>
-  <div class="province input-group col-xs-8">
+  <div class="province_top input-group col-xs-8">
     <select class="form-control" name="category" id="category">
       <option value="Newfoundland">Newfoundland</option>
       <option value="Ontario">Ontario</option>
@@ -219,16 +219,15 @@
                                 <span class="fa fa-twitter"></span> Sign in with Twitter
                               </a></li>
                     </ul>
-
                         </div>
                         <div class="b col-md-12">
                           <h2>Edit details </h2>
-                       <form class='edit_ad_form'>
+                       <form class='edit_ad_form col-md-6'>
                          <label for="Ad_title"> Ad title</label>
                           <input class="full" id="Ad_title" placeholder="Edit title">
                   <label for="pricing"> Pricing</label>
                           <input class="full" id="pricing" placeholder="Pricing optional">
-                         <label for="Ad_category"> Select category</label>
+                         <label for="Ad_category">Select category</label>
                             <select class="form-control" name="category" id="Ad_category">
                               <option value="Music">Music band</option>
                               <option value="solo">solo</option>
@@ -236,32 +235,56 @@
                               <option value="other">other</option>
                               <option value="Instrument performance">Instrument performance</option>
                             </select>
+                            <label for="description">Add description</label>
+                            <textarea class='full' id="description"> </textarea>
                           </form>
+                          <div class="add_social col-md-6">
+                            <ul class="social_list">
+                              <li><h3 style="margin:-20px 0 0 -35px;">click to add your social channels</h3></li>
+                              <li id="fb"><i class='fa fa-facebook fa-stack-2x channel'></i></li>
+                                <li id="yt"><i class='fa fa-youtube fa-stack-2x channel'></i></li>
+                                  <li id="tw"><i class='fa fa-twitter fa-stack-2x channel'></i></li>
+                            </ul>
+                            <span id="upload_pics" class="btn btn-primary">Upload Pictures</span>
+                              <span id="add_video" class="btn btn-primary">Add Video</span>
+                          </div>
                         </div>
                         <div class="c col-md-12">
-
+   <form class="contact_form col-md-12">
+  <h2> Contact Information</h2>
+  <label>Email address</label>
+  <input class="full" id="email" type='email' placeholder="Email address">
+  <br></br>
+  <label>Cell phone</label>
+    <input class="full" id="phone" type='phone' placeholder="Phone Number">
+    <br></br>
+    <label>location</label>
+      <input class="full" id="city" placeholder="City">
+      <select name="category" id="province">
+        <option value="Newfoundland">Newfoundland</option>
+        <option value="Ontario">Ontario</option>
+        <option value="British Columbia">British Columbia</option>
+        <option value="Québec">Québec</option>
+        <option value="Alberta">Alberta</option>
+        <option value="Saskatchewan">Saskatchewan</option>
+        <option value="Nova Scotia">Nova Scotia</option>
+        <option value="Manitoba">Manitoba</option>
+        <option value="New Brunswick">New Brunswick</option>
+          <option value="Prince Edward Island">Prince Edward Island</option>
+      </select>
+   </form>
                         </div>
                       </div>
 
-<a class="btn btn-primary btn-lobster">Get started</a>
+<span class="navigate"><a id="get_started" class="btn btn-primary btn-lobster">Get started</a></span>
             </div>
             <!-- /.row -->
         </div>
         <!-- /.container -->
     </section>
+<footer class="footer">
+</footer>
 
-    <!-- Call to Action -->
-    <aside class="call-to-action bg-primary">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h3>The buttons below are impossible to resist.</h3>
-                    <a href="#" class="btn btn-lg btn-light">Click Me!</a>
-                    <a href="#" class="btn btn-lg btn-dark">Look at Me!</a>
-                </div>
-            </div>
-        </div>
-    </aside>
 </body>
 
 </html>

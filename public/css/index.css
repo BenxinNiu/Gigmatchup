@@ -63,16 +63,7 @@ textarea{
   left:10%;
   position: fixed;
 }
-#right_top{
-  background-color:black;
-  opacity:0.8;
-  color:white;
-}
-#left_bot{
-  background-color:black;
-  opacity:0.8;
-  color:white;
-}
+
 #post{
   font-size:1.5em;
   padding:15px 25px 15px 25px;
@@ -90,24 +81,11 @@ textarea{
 .form-control{
   opacity:0.7;
 }
-.full{
-  width:50%;
-  height:30px;
-margin:10px;
-  opacity:0.8;
-  border:0.8px solid black;
-  border-radius:5px;
-
-}
-.full_label{
-  display:block;
-  float:left;
-}
 .region{
   text-align:center;
   margin-top:20px;
 }
-.province{
+.province_top{
   margin:auto;
   width:30%;
 }
@@ -338,20 +316,20 @@ hr.medium {
 }
 .a{
   position:relative;
+  width:100%;
   z-index:10;
   height:400px;
-  top:56px;
   background-color: white;
 }
 #a{
   position:relative;
-
 }
 .social_buttons_two{
   position:relative;
  top:30px;
 }
 #a h2{
+  margin-top:50px;
   margin-bottom:30px;
 }
 .edit_profile_now{
@@ -365,28 +343,96 @@ hr.medium {
   z-index:8;
   height:400px;
   margin-top:-400px;
+  background-color: white;
+}
+.social_list{
+  position:relative;
+  color:black;
+width:100%;
+list-style-type: none;
+}
+.social_list li{
+  width:100% !important;
+  font-size:1em;
+  padding: 20px;
+  -webkit-transition: all .3s ease-in-out;
+  -o-transitio: all .3 ease-in-out;
+  transition: all .3s ease-in-out;
 }
 
-.post-form-area {
-    padding: 50px 0;
+.social_list li:hover{
+  cursor:pointer;
+}
+#fb{
+  margin-top:-20px;
 }
 
-.post-form {
-  border:1px solid black;
+.full{
+  width:80%;
+  height:30px;
+  margin:10px;
+  border:0.8px solid black;
   border-radius:5px;
-  margin-bottom: 30px;
-  height:310px;
+  display:table-cell;
+}
+.full_label{
+  display:table-cell;
+  float:left;
+}
+.urls{
+  position: relative;
+  width:80%;
+  height:30px;
+  border:0.8px solid black;
+  border-radius:5px;
+  padding:-20px !important;
+}
+#upload_pics, #add_video{
+  margin-top:30px;
+}
+#description{
+  resize:none;
+  width:90% !important;
+  height:80px;
+}
+.navigate{
+  display:block;
+  position:relative;
+  margin-bottom:20px;
+}
+.c{
+  display:table;
+  position:relative;
+  width: 100%;
+  z-index:6;
+  height:400px;
+  top:-400px;
+
+}
+.contact_form{
+  color:black;
+}
+.contact_form input{
+  max-width:350px;
+}
+.contact_form label{
+  display:block;
+  width:100px;
+  position:relative;
+  margin-left:17%;
+}
+#city{
+  width:30% !important;
+}
+#province{
+  width:30%;
+  height:30px;
+  opacity:0.7;
 }
 
-/* Footer */
-
-footer {
-    padding: 100px 0;
-}
-
-#to-top {
-  display: none;
-  position: fixed;
-  bottom: 5px;
-  right: 5px;
+.footer{
+  width:100%;
+  height:60px;
+  background-color: black;
+  opacity:0.8;
 }

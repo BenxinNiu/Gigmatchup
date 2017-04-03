@@ -1,7 +1,7 @@
 {
   "GCLOUD_PROJECT": "cobalt-concord-162220",
   "DATA_BACKEND": "mongodb",
-  "MONGO_URL": "mongodb://benxin:nbx00144@ds137110.mlab.com:37110/testingdb",
+  "MONGO_URL": "mongodb://benxinniu:nbx00144@ds137110.mlab.com:37110/testingdb",
   "MONGO_COLLECTION": "userBase",
   "OAUTH2_CLIENT_ID": "132321590303-i9uft185ps8l9r1k3nfihmbj2ag67dah.apps.googleusercontent.com",
 "OAUTH2_CLIENT_SECRET": "Kz3wceY42UplkIuYcwuS9K7u",

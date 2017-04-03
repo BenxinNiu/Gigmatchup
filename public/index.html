@@ -204,9 +204,9 @@
                           <p>Use your existing profile to post ad</p>
                             <p>upload pictures, videos or add your social media channels</p>
                             <p>Improve your profile to increase your chance to be discovered</p>
-                            <a class="btn btn-primary">Edit my profile now</a>
+                            <a class="btn btn-primary edit_profile_now">Edit my profile now</a>
                             <p> or start from scratch</p>
-                            <a class='btn btn-danger'>Skip</a>
+                            <a class='btn btn-danger skip'>Skip</a>
                           </div>
                           <ul class='list_unstyled social_buttons_two'>
                             <li><a class="btn btn-social btn-google" href="/login/google?return=/">
@@ -222,7 +222,21 @@
 
                         </div>
                         <div class="b col-md-12">
-
+                          <h2>Edit details </h2>
+                       <form class='edit_ad_form'>
+                         <label for="Ad_title"> Ad title</label>
+                          <input class="full" id="Ad_title" placeholder="Edit title">
+                  <label for="pricing"> Pricing</label>
+                          <input class="full" id="pricing" placeholder="Pricing optional">
+                         <label for="Ad_category"> Select category</label>
+                            <select class="form-control" name="category" id="Ad_category">
+                              <option value="Music">Music band</option>
+                              <option value="solo">solo</option>
+                              <option value="DJ">DJ</option>
+                              <option value="other">other</option>
+                              <option value="Instrument performance">Instrument performance</option>
+                            </select>
+                          </form>
                         </div>
                         <div class="c col-md-12">
 

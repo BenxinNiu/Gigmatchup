@@ -36,9 +36,24 @@ $('.list_unstyled').animate({left: "53%"},600);
 }
 
 function promote_login(){
-  $('#a').animate({right:"-13%"},300,function(){
+
+  $('#a').animate({right:"-20%"},300,function(){
     $('.social_buttons_two').animate({top:"-75%"},400)
   })
+}
+
+function getWidth() {
+  if (self.innerWidth) {
+    return self.innerWidth;
+  }
+
+  if (document.documentElement && document.documentElement.clientWidth) {
+    return document.documentElement.clientWidth;
+  }
+
+  if (document.body) {
+    return document.body.clientWidth;
+  }
 }
 
 function learn_more(service){
@@ -81,6 +96,18 @@ function initial_animation(){
 }
 
 $(document).ready(function(){
+
+initial_animation();
+
+$('.edit_profile_now').on('click',function(){
+  if(is_login())
+  window.location.href='/edit';
+  else
+  promote_login();
+})
+$('.skip').on('click',function(){
+  $('.a').animate({left:"1000px"},600)
+})
 
 
 $('.learn_more').on('click',function(){

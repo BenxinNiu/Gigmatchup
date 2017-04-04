@@ -5,7 +5,11 @@ function acquireInfor(){
     pricing:$('#pricing').val(),
     description:$('#description').val(),
     email:$('#email').val(),
-    phone:$('#phone').val()
+    phone:$('#phone').val(),
+    facebook:$('#facebook-url').val(),
+    twitter:$('#twitter_url').val(),
+    youtube:$('#youtube_url').val(),
+    video:$('#video').val()
   };
 }
 
@@ -19,7 +23,7 @@ return{
 }
 
 function postAd(){
-var url='http://localhost:8080/postAd';
+var url='/post';
 var form=acquireInfor();
 $.ajax({
   type:'POST',
@@ -73,19 +77,19 @@ $(id).slideDown();
 switch (service){
   case "music":
 $(Id).empty();
-$(Id).append("<a href='/ad?search=music_band' class='btn btn-primary btn-lobster'>go to Ad page</a>");
+$(Id).append("<a href='/adpage?search=music_band' class='btn btn-primary btn-lobster'>go to Ad page</a>");
 break;
 case "DJ":
 $(Id).empty();
-$(Id).append("<a href='/ad?search=DJ' class='btn btn-primary btn-lobster'>Go to Ad page</a>");
+$(Id).append("<a href='/adpage?search=DJ' class='btn btn-primary btn-lobster'>Go to Ad page</a>");
 break;
 case "talents":
 $(Id).empty();
-$(Id).append("<a href='/ad?search=talents' class='btn btn-primary btn-lobster'>Go to Ad page</a>");
+$(Id).append("<a href='/adpage?search=talents' class='btn btn-primary btn-lobster'>Go to Ad page</a>");
 break;
 case "be_discovered":
 $(Id).empty();
-$(Id).append("<a href='/ad?search=be_discovered' class='btn btn-primary btn-lobster'>Go to Profile</a>");
+$(Id).append("<a href='/profile?search=be_discovered' class='btn btn-primary btn-lobster'>Go to Profile</a>");
 break;
 }
 }
@@ -126,8 +130,14 @@ function start_post_ad(id){
     case "next_to_contact":
     $('.b').animate({left:"1000px"},600)
     $('.navigate').empty();
-    $('.navigate').append("<a id='go_back' class='btn btn-primary btn-lobster'>Go back</a>")
-      $('.navigate').append("<a id='post_now' class='btn btn-primary btn-lobster'>(2/2)Post Now</a>")
+    $('.navigate').append("<a id='go_back_first' class='btn btn-primary btn-lobster'>Go back</a>")
+      $('.navigate').append("<a id='next_to_social' class='btn btn-primary btn-lobster'>(2/3)Next</a>")
+    break;
+    case "next_to_social":
+    $('.c').animate({left:"1000px"},600)
+    $('.navigate').empty();
+    $('.navigate').append("<a id='go_back_contact' class='btn btn-primary btn-lobster'>Go back</a>")
+      $('.navigate').append("<a id='post_now' class='btn btn-primary btn-lobster'>(3/3)Post Now</a>")
     break;
   }
 }
@@ -152,13 +162,19 @@ initial_animation();
 optimize();
 
 $('.navigate').on('click','#post_now',function(){
-  post_ad();
+  postAd();
 })
 
-$('.navigate').on('click','#go_back',function(){
+$('.navigate').on('click','#go_back_first',function(){
   $('.b').animate({left:"0px"},600)
   $('.navigate').empty();
-  $('.navigate').append("<a id='next_to_contact' class='btn btn-primary btn-lobster'>(1/2)Next</a>")
+  $('.navigate').append("<a id='next_to_contact' class='btn btn-primary btn-lobster'>(1/3)Next</a>")
+})
+$('.navigate').on('click','#go_back_contact',function(){
+  $('.c').animate({left:"0px"},600)
+  $('.navigate').empty();
+      $('.navigate').append("<a id='go_back_first' class='btn btn-primary btn-lobster'>Go back</a>")
+  $('.navigate').append("<a id='next_to_social' class='btn btn-primary btn-lobster'>(2/3)Next</a>")
 })
 
 $('.navigate').on('click','.btn',function(){
@@ -179,7 +195,7 @@ $('.edit_profile_now').on('click',function(){
 })
 $('.skip').on('click',function(){
   $('.a').animate({left:"1000px"},600)
-    $('.navigate').append("<a id='next_to_contact' class='btn btn-primary btn-lobster'>(1/2)Next</a>")
+    $('.navigate').append("<a id='next_to_contact' class='btn btn-primary btn-lobster'>(1/3)Next</a>")
 })
 
 

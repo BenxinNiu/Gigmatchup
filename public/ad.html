@@ -36,13 +36,13 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#">About</a>
+                        <a>login</a>
                     </li>
                     <li>
-                        <a href="#">Services</a>
+                        <a href="#"></a>
                     </li>
                     <li>
-                        <a href="#">Contact</a>
+                        <a href="#"></a>
                     </li>
                 </ul>
             </div>
@@ -53,29 +53,54 @@
 
     <!-- Page Content -->
     <div class="container">
-
         <!-- Page Heading -->
         <div class="row">
-            <div class="col-lg-12 ">
+            <div class="col-lg-12">
                 <h1 class="page-header">Search result
                     <small>1 ad found for you</small>
                 </h1>
+                <div class="row">
+                <form class="search_form col-md-12">
+
+                <input class='searchBar' placeholder="search Ad by Id or name">
+
+                <select class="form-control" name="category" id="Ad_category">
+                  <option value="Music">Music band</option>
+                  <option value="solo">solo</option>
+                  <option value="DJ">DJ</option>
+                  <option value="other">other</option>
+                  <option value="Instrument performance">Instrument performance</option>
+                </select>
+
+                <select class="form-control" name="category" id="category">
+                  <option value="Newfoundland">Newfoundland</option>
+                  <option value="Ontario">Ontario</option>
+                  <option value="British Columbia">British Columbia</option>
+                  <option value="Québec">Québec</option>
+                  <option value="Alberta">Alberta</option>
+                  <option value="Saskatchewan">Saskatchewan</option>
+                  <option value="Nova Scotia">Nova Scotia</option>
+                  <option value="Manitoba">Manitoba</option>
+                  <option value="New Brunswick">New Brunswick</option>
+                    <option value="Prince Edward Island">Prince Edward Island</option>
+                </select>
+              <a class="submit btn btn-primary" type="submit">Search</a>
+              </form>
+            </div>
             </div>
         </div>
         <!-- /.row -->
 
         <!-- Project One -->
         <div class="row">
-            <div class="col-md-7">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x300" alt="">
-                </a>
-            </div>
-            <div class="col-md-5">
+          <div class="more_infor_pannel col-md-7 ">
+
+          </div>
+            <div class="snippet col-md-5">
               <h3>Ad One</h3>
                 <h4>Subheading</h4>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium veniam exercitationem expedita laborum at voluptate. Labore, voluptates totam at aut nemo deserunt rem magni pariatur quos perspiciatis atque eveniet unde.</p>
-                <a class="btn btn-primary" href="#">View more <span class="glyphicon glyphicon-chevron-right"></span></a>
+                <a id="1" class="learn_more btn btn-primary">View more <span class="glyphicon glyphicon-chevron-right"></span></a>
             </div>
         </div>
         <!-- /.row -->

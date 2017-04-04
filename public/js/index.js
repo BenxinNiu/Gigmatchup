@@ -161,6 +161,8 @@ initial_animation();
 
 optimize();
 
+$()
+
 $('.navigate').on('click','#post_now',function(){
   postAd();
 })

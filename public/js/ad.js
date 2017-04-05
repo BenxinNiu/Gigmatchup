@@ -30,7 +30,7 @@ $(document).ready(function(){
 //var ad_infor=acquire_ad();
 $('.snippet').on('click','.learn_more',function(){
 $('.more_infor_pannel').animate({marginLeft:'0px'},600,function(){
-loading();
+//loading();
 })
 })
 })

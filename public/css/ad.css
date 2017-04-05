@@ -21,7 +21,6 @@ footer {
   float:right;
 }
 .more_infor_pannel{
-text-align:center;
 height:auto;
 min-height:220px;
 position:relative;
@@ -30,6 +29,17 @@ margin-left:-1000px;
 .snippet{
   position:relative;
 }
+#imgs_list{
+  list-style-type:none;
+}
+#imgs_list li{
+display:inline-block;
+  width:20px;
+  height:20px;
+  background-color:red;
+}
+
+/* loading bar animation */
 
 .load-wrapp {
   position:relative;

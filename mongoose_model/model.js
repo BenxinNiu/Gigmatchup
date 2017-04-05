@@ -28,7 +28,8 @@ function construct_ad(infor,id){
   "facebook":infor.facebook,
   "twitter":infor.twitter,
   "youtube":infor.youtube,
-  "video":infor.video
+  "video":infor.video,
+  "location":infor.location
 };
 }
 

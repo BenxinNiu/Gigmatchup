@@ -19,6 +19,7 @@ const TwitterStrategy=require('passport-twitter').Strategy;
 const app = express();
 const mongoURL=config.get('MONGO_URL');
 var model;
+
 fs.readdirSync(__dirname+'/mongoose_model').forEach(function(file){
   if(~file.indexOf('.js'))
   model=require(__dirname+'/mongoose_model/'+file)
@@ -231,6 +232,69 @@ app.get('/adpage',(req,res)=>{
 res.sendFile(path.join(__dirname, 'public', 'ad.html'));
 });
 
+app.get('/get_html',(req,res)=>{
+  var query=req.query.type;
+  switch(query){
+    case 'ad_html':
+    res.send(fs.readFileSync(__dirname+'/public/temp.html','utf8'))
+    break;
+  }
+});
+
+app.get('/adinfor/:type',(req,res)=>{
+  var type=req.params.type;
+  var number=req.query.number;
+  mongo.connect(mongoURL,(err,db)=>{
+    if (err){ res.send(500); db.close();}
+    else {
+      var ad=db.collection('AdBase');
+      if (type=='all'){
+      ad.find().toArray(function(err,docs){
+        if(err){
+        res.send(500);
+        db.close();
+      }
+      else{
+        res.send(docs);
+      db.close();
+      }
+      });}
+      else{
+        ad.find({"category":type}).toArray(function(err,docs){
+          if(err)
+          res.send(500);
+        else
+          res.send(docs);
+          db.close();
+        });
+      }
+    }
+  })
+});
+
+app.get('/user',(req,res)=>{
+var Id=req.query.u;
+mongo.connect(mongoURL,(err,db)=>{
+  if (err){
+    res.send(500);
+    db.close();
+  }
+  else{
+    var user=db.collection('userBase');
+    user.find({Oauth_ID:Id}).toArray(function(err,docs){
+      if(err){
+        res.send(500);
+        db.close();
+      }
+      else{
+        var name=docs[0].name;
+        db.close();
+        res.send(name);
+      }
+    })
+  }
+})
+});
 
 app.post('/post',(req,res)=>{
   var data=req.body;
@@ -251,6 +315,7 @@ else{
  db.close();
  res.send('success');
  }});}});}});});
+
 
 
 

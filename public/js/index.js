@@ -1,3 +1,22 @@
+function get_user_infor(){
+  var url=window.location.href;
+  var num=url.indexOf("=")+1;
+  var id=url.slice(num);
+  $.ajax({
+    tyep:'GET',
+      contenttype:'json',
+    url:'/user?u='+id,
+    success:function(data){
+      console.log(data);
+    $('.logo').text("welcome "+data)
+    },
+    error:function(res){
+   console.log(res);
+    }
+  })
+}
+
+
 function acquireInfor(){
   return {
     title:$('#Ad_title').val(),
@@ -9,7 +28,8 @@ function acquireInfor(){
     facebook:$('#facebook-url').val(),
     twitter:$('#twitter_url').val(),
     youtube:$('#youtube_url').val(),
-    video:$('#video').val()
+    video:$('#video').val(),
+    location:$('#city').val()+ " "+ $('#province').val()
   };
 }
 
@@ -50,10 +70,17 @@ $('.list_unstyled').animate({left: "53%"},600);
 }
 
 function promote_login(){
-
-  $('#a').animate({right:"-20%"},300,function(){
-    $('.social_buttons_two').animate({top:"-75%"},400)
+  var width=window.innerWidth;
+  if (width<=700){
+    $('#a').animate({right:"-99%"},300,function(){
+      $('.social_buttons_two').animate({top:"-45%"},400)
   })
+}
+  else{
+  $('#a').animate({right:"-20%"},300,function(){
+    $('.social_buttons_two').animate({top:"-45%"},400)
+  })
+}
 }
 
 function getWidth() {
@@ -150,8 +177,10 @@ function initial_animation(){
 
 function optimize(){
   var width=window.innerWidth;
-  if (width<=700)
-  $('.c').css('top','-600px')
+  if (width<=700){
+  $('.c').css('top','-30px')
+  $('.d').css('top','1080px')
+}
 }
 
 
@@ -161,7 +190,10 @@ initial_animation();
 
 optimize();
 
-$()
+if(is_login())
+get_user_infor();
+
+
 
 $('.navigate').on('click','#post_now',function(){
   postAd();
@@ -213,6 +245,20 @@ $('.login_icon').on('click',function(){
   $('#post').click(function(){
     postAd();
   })
+
+  $('#signin_navbar').click(function(){
+    $('.sidebar-nav').append("<li><a class='nav_login btn btn-social btn-google' href='/login/google?return=/'><span class='fa fa-google'></span> Sign in with Google</a></li>")
+        $('.sidebar-nav').append("<li><a class='nav_login btn btn-social btn-facebook' href='/login/google?return=/'><span class='fa fa-facebook'></span> Sign in with Google</a></li>")
+            $('.sidebar-nav').append("<li><a class='nav_login btn btn-social btn-twitter' href='/login/google?return=/'><span class='fa fa-twitter'></span> Sign in with Google</a></li>")
+  })
+
+$('#register_navbar').click(function(){
+  $('.sidebar-nav').append("<li><a class='nav_login btn btn-social btn-google' href='/login/google?return=/'><span class='fa fa-google'></span> register with Google</a></li>")
+      $('.sidebar-nav').append("<li><a class='nav_login btn btn-social btn-facebook' href='/login/google?return=/'><span class='fa fa-facebook'></span>  register with Google</a></li>")
+          $('.sidebar-nav').append("<li><a class='nav_login btn btn-social btn-twitter' href='/login/google?return=/'><span class='fa fa-twitter'></span> register with Google</a></li>")
+})
+
+
   // Closes the sidebar menu
   $("#menu-close").click(function(e) {
       e.preventDefault();

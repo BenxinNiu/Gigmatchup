@@ -29,7 +29,8 @@ function acquireInfor(){
     twitter:$('#twitter_url').val(),
     youtube:$('#youtube_url').val(),
     video:$('#video').val(),
-    location:$('#city').val()+ " "+ $('#province').val()
+    location:$('#city').val(),
+    province: $('#province').val()
   };
 }
 
@@ -45,6 +46,7 @@ return{
 function postAd(){
 var url='/post';
 var form=acquireInfor();
+console.log(form);
 $.ajax({
   type:'POST',
   contenttype:'json',
@@ -57,9 +59,14 @@ $.ajax({
   headers:{},
   success: function(res){
     console.log('success');
+    $('load-wrapp').remove();
+    $('.response').append("<h3>Thank you for posting you ad</h3>")
+      $('.more_message').append("<h4> An email has been sent to your email address provided, Please check your indox and click the provided link to activate your account</h4>")
   //  $('.notification').append("<a class='goto_Ad' href="+ link +">Goto Ad page</a>")
   },
   error:function(res){
+        $('load-wrapp').remove();
+        $('.response').append("<h3>Sorry, we lost connection to the server </h3>")
   console.log(res);
   }
 });// ajax call end
@@ -104,22 +111,23 @@ $(id).slideDown();
 switch (service){
   case "music":
 $(Id).empty();
-$(Id).append("<a href='/adpage?search=music_band' class='btn btn-primary btn-lobster'>go to Ad page</a>");
+$(Id).append("<a href='/adpage?search=Music&province=all' class='btn btn-primary btn-lobster'>go to Ad page</a>");
 break;
 case "DJ":
 $(Id).empty();
-$(Id).append("<a href='/adpage?search=DJ' class='btn btn-primary btn-lobster'>Go to Ad page</a>");
+$(Id).append("<a href='/adpage?search=DJ&province=all' class='btn btn-primary btn-lobster'>Go to Ad page</a>");
 break;
 case "talents":
 $(Id).empty();
-$(Id).append("<a href='/adpage?search=talents' class='btn btn-primary btn-lobster'>Go to Ad page</a>");
+$(Id).append("<a href='/adpage?search=talents&province=all' class='btn btn-primary btn-lobster'>Go to Ad page</a>");
 break;
 case "be_discovered":
 $(Id).empty();
-$(Id).append("<a href='/profile?search=be_discovered' class='btn btn-primary btn-lobster'>Go to Profile</a>");
+$(Id).append("<a href='/profile?search=be_discovered&province=all' class='btn btn-primary btn-lobster'>Go to Profile</a>");
 break;
 }
 }
+///adpage?search=Music&province=all
 //see if user is logged in
 function is_login(){
   var url=window.location.href;
@@ -173,6 +181,11 @@ function start_post_ad(id){
 function initial_animation(){
   $('.service_detail').slideUp(0.1);
   $('.post_ad').slideUp(0.1);
+  if(is_login()){
+    $('#signin').remove();
+      $('#register').remove();
+      $('.sidebar-nav').append("<li><a href='/logout'>Logout</a></li>")
+  }
 }
 
 function optimize(){
@@ -190,12 +203,14 @@ initial_animation();
 
 optimize();
 
-if(is_login())
+if(is_login()){
 get_user_infor();
-
+}
 
 
 $('.navigate').on('click','#post_now',function(){
+  $('.notification').removeClass('hidden');
+  $('.notification').append("<div class='load-wrapp'><div class='load'><div class='line'></div><div class='line'></div><div class='line'></div></div>")
   postAd();
 })
 
@@ -242,9 +257,6 @@ $('.login_icon').on('click',function(){
   social_login();
 })
 
-  $('#post').click(function(){
-    postAd();
-  })
 
   $('#signin_navbar').click(function(){
     $('.sidebar-nav').append("<li><a class='nav_login btn btn-social btn-google' href='/login/google?return=/'><span class='fa fa-google'></span> Sign in with Google</a></li>")

@@ -49,14 +49,14 @@
             <li>
                 <a href="#top" onclick=$("#menu-close").click();>Home</a>
             </li>
-            <li>
+            <li id="signin">
                 <a id="signin_navbar">SignIn</a>
             </li>
-            <li>
+            <li id="register">
                 <a id="register_navbar">Register</a>
             </li>
             <li>
-                <a href="#portfolio" onclick=$("#menu-close").click();>Post Ad</a>
+                <a href="#post-form-area" onclick=$("#menu-close").click();>Post Ad</a>
             </li>
             <li>
                 <a href="#contact" onclick=$("#menu-close").click();>Contact</a>
@@ -71,8 +71,8 @@
             <h1>APP NAME</h1>
             <input class='searchBar'>
             <br>
-            <a href='/adpage' id="search_ad" class="btn btn-blue btn-lg">Search Ad</a>
-            <a href="/adpage" class="btn btn-blue btn-lg">Explore our talent base</a>
+            <a id="search_ad" class="btn btn-blue btn-lg">Search Ad</a>
+            <a href="/adpage?search=all&province=all" class="btn btn-blue btn-lg">Explore our talent base</a>
             <div class="region">
             <label for="category" class="select_province control-label col-sm-3">Select your region</label>
   <div class="province_top input-group col-xs-8">
@@ -197,16 +197,25 @@
                 <div class="col-lg-10 col-lg-offset-1 text-center">
                     <h2>Post Ad for yourself or business</h2>
                     <hr class="small">
-                    <div class="row">
-                      <div class="post_ad col-md-12">
+                    <div class="notification col-md-12 hidden">
+                      <span class='response'>
+                      </span>
+                      <hr class="small">
+                      <span class="more_message">
 
+                      </span>
+                      <h4>
+                    </div>
+                    <div class="row">
+
+                      <div class="post_ad col-md-12">
                         <div class="a col-md-12">
                       <div id="a">
                           <h2>Link your profile to your Ad</h2>
                           <p>Use your existing profile to post ad</p>
                             <p>upload pictures, videos or add your social media channels</p>
                             <p>Improve your profile to increase your chance to be discovered</p>
-                            <a class="btn btn-primary edit_profile_now">Edit my profile now</a>
+                            <a href='/profile' class="btn btn-primary edit_profile_now">Edit my profile now</a>
                             <p> or start from scratch</p>
                             <a class='btn btn-danger skip'>Skip</a>
                           </div>

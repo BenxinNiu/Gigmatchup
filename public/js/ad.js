@@ -2,7 +2,13 @@
 function infor_from_url(){
   var url=window.location.href;
   var position=url.indexOf("=")+1;
-  return url.slice(num);
+  var url=url.slice(position);
+  var sec_position=url.indexOf('&');
+  var type=url.slice(0,sec_position);
+  var city=url.slice(url.indexOf('=')+1);
+  return {city:city,
+          type:type};
+
 }
 
 
@@ -45,11 +51,12 @@ function display_html(result){
   })
 }
 
-function acquire_ad(number,type){
+function acquire_ad(number,type,province){
+  //console.log(type);
 $.ajax({
   type:'GET',
   contenttype:'json',
-  url:'/adinfor/'+type+'?number='+number,
+  url:'/adinfor/'+type+ '?number='+number +'&province='+province,
   success:function(data){
   var length=data.length;
   $('.num').text(length+" ad found for you")
@@ -65,11 +72,24 @@ function loading(){
   $('.more_infor_pannel').append("<div class='load-wrapp'><div class='load'><div class='line'></div><div class='line'></div><div class='line'></div></div>")
 }
 
+function search(){
+  var ad=$('.searchBar').val();
+  var type=$('#Ad_category').val();
+  var province=$('#category').val();
+  $('.ad_area').empty();
+  $('.ad_area').append("<div class='load-wrapp'><div class='load'><div class='line'></div><div class='line'></div><div class='line'></div></div>")
+  acquire_ad(5,type,province);
+}
 
 
 $(document).ready(function(){
+var type=infor_from_url();
+console.log(type);
   $('.ad_area').append("<div class='load-wrapp'><div class='load'><div class='line'></div><div class='line'></div><div class='line'></div></div>")
-  acquire_ad(5,'all');
+  acquire_ad(5,type.type,type.city);
+$('.submit').click(function(){
+  search();
+})
 
 $('.ad_area').on('click','.learn_more',function(){
   console.log("hi")

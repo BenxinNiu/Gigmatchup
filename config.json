@@ -1,10 +1,12 @@
 {
-  "GCLOUD_PROJECT": "cobalt-concord-162220",
+"GCLOUD_PROJECT": "music-162415",
   "DATA_BACKEND": "mongodb",
   "MONGO_URL": "mongodb://benxinniu:nbx00144@ds137110.mlab.com:37110/testingdb",
   "MONGO_COLLECTION": "userBase",
   "OAUTH2_CLIENT_ID": "962747077838-ga24514kqi7rq8acvqb63gr25g7s221u.apps.googleusercontent.com",
 "OAUTH2_CLIENT_SECRET": "46Qu7c645KFOj3OjZpeThn_i",
-"OAUTH2_CALLBACK": "https://https://music-162415.appspot.com/auth/google/callback",
-"MEMCACHE_URL": "redis-11210.c12.us-east-1-4.ec2.cloud.redislabs.com:11210"
+"OAUTH2_CALLBACK": "https://music-162415.appspot.com/auth/google/callback",
+"MEMCACHE_URL": "//redis-11210.c12.us-east-1-4.ec2.cloud.redislabs.com:11210",
+"NODE_ENV":"production",
+"SECRET":"nbx00144"
 }

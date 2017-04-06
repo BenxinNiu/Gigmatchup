@@ -1,5 +1,4 @@
 "use strict";
-"use strict";
 
 const express = require('express');
 const moment=require('moment');
@@ -8,8 +7,9 @@ const mongoose=require('mongoose');
 const assert=require('assert');
 const bodyparser=require('body-parser');
 const fs=require('fs');
-const session=require('express-session');
-const MemcachedStore = require('connect-memcached')(session);
+const session = require('express-session');
+//const MemcachedStore = require('connect-memcached')(session);
+const RedisStore = require('connect-redis')(session);
 const passport = require('passport');
 const config = require('./config');
 const path = require('path');
@@ -25,19 +25,44 @@ fs.readdirSync(__dirname+'/mongoose_model').forEach(function(file){
   model=require(__dirname+'/mongoose_model/'+file)
 });
 
+
 const sessionConfig={
   resave: false,
-  saveUninitialized: false,
+ saveUninitialized: false,
   secret: config.get('SECRET'),
   signed: true
 };
+
 if (config.get('NODE_ENV') === 'production') {
-  sessionConfig.store = new MemcachedStore({
-    hosts: [config.get('MEMCACHE_URL')]
+  sessionConfig.store = new RedisStore({
+  url: config.get('MEMCACHE_URL')
   });
 }
+
 // server configuration
 //only add code below!!!!
+
+app.use(express.static(path.join(__dirname,'public')));
+app.use(bodyparser.urlencoded({ extended: true }));
+app.use(bodyparser.json()); // for parsing application/json
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(session(sessionConfig));
+app.set('trust proxy', true);
+app.use(function (req, res, next) {
+  if (!req.session) {
+    return next(new Error('I lost connection to redis lab!!!!')) // handle error
+  }
+  next() // otherwise continue
+})
+
+//  This allows cross domain request
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods","GET,PUT,POST,DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  next();
+});
 
 
 function profile_infor(profile){
@@ -147,7 +172,7 @@ mongo.connect(mongoURL,function(err,db){
      cb(null,infor);
    });}});}));
 */
-passport.serializeUser((user, cb) => {
+passport.serializeUser((user, cb) =>{
   cb(null, user);
 });
 
@@ -156,41 +181,40 @@ passport.deserializeUser((obj, cb) => {
 });
 
 
-app.use(express.static(path.join(__dirname,'public')));
-app.use(bodyparser.urlencoded({ extended: true }));
-app.use(bodyparser.json()); // for parsing application/json
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(session(sessionConfig));
-
-//  This allows cross domain request
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods","GET,PUT,POST,DELETE");
-  res.header("Access-Control-Allow-Headers", "Content-Type");
-  next();
-});
-
 // event handling !!
 //add event handling code below
 
 app.get('/',(req,res)=>{
   var query=req.query.Id;
   console.log(query);
- res.sendFile( path.join( __dirname, 'public', 'index.html' ));
+ res.send(path.join(__dirname, 'public', 'index.html'))
 });
 
+app.get('/adpage',(req,res)=>{
+res.sendFile(path.join(__dirname, 'public', 'ad.html'));
+});
+
+app.get('/profile',(req,res)=>{
+  res.send('This page is curreently under maintenance Please come back later');
+});
+
+app.get('/logout',(req,res)=>{
+  req.logout();
+  req.session.destroy()
+ res.redirect('/');
+})
+
 app.get('/login/google',function (req,res,next){
-//  console.log(req.query.return);
+   console.log(req.query.return);
   if(req.query.return){
-    req.session.oauth2return = req.query.return;
+  req.session.oauth2return=req.query.return;
   }
     next();
 },passport.authenticate('google', { scope: ['email', 'profile'] }));
 
-app.get('/auth/google/callback',passport.authenticate('google',{ failureRedirect: '/' }),function(req, res){
-  const redirect = req.session.oauth2return+"?user="+req.user.id;
-//  console.log(redirect);
+app.get('/auth/google/callback',passport.authenticate('google',{ failureRedirect: '/addsa' }),function(req, res){
+  var redirect = req.session.oauth2return+"?user="+req.user.id;
+  console.log(redirect);
   delete req.session.oauth2return;
      res.redirect(redirect);
   }
@@ -200,13 +224,14 @@ app.get('/login/twitter',function (req,res,next){
 //  console.log(req.query.return);
   if(req.query.return){
     req.session.oauth2return = req.query.return;
+    console.log(req.session.oauth2return);
   }
     next();
 },passport.authenticate('google', { scope: ['email', 'profile'] }));
 
 app.get('/auth/twitter/callback',passport.authenticate('google',{ failureRedirect: '/' }),function(req, res){
   const redirect = req.session.oauth2return+"?user="+req.user.id;
-//  console.log(redirect);
+  console.log(redirect);
   delete req.session.oauth2return;
      res.redirect(redirect);
   }
@@ -228,9 +253,6 @@ app.get('/auth/facebook/callback',passport.authenticate('google',{ failureRedire
   }
 );
 
-app.get('/adpage',(req,res)=>{
-res.sendFile(path.join(__dirname, 'public', 'ad.html'));
-});
 
 app.get('/get_html',(req,res)=>{
   var query=req.query.type;
@@ -243,12 +265,13 @@ app.get('/get_html',(req,res)=>{
 
 app.get('/adinfor/:type',(req,res)=>{
   var type=req.params.type;
+  var pro=req.query.province;
   var number=req.query.number;
   mongo.connect(mongoURL,(err,db)=>{
     if (err){ res.send(500); db.close();}
     else {
       var ad=db.collection('AdBase');
-      if (type=='all'){
+      if (type=='all'&&pro=="all"){
       ad.find().toArray(function(err,docs){
         if(err){
         res.send(500);
@@ -259,7 +282,7 @@ app.get('/adinfor/:type',(req,res)=>{
       db.close();
       }
       });}
-      else{
+      else {
         ad.find({"category":type}).toArray(function(err,docs){
           if(err)
           res.send(500);

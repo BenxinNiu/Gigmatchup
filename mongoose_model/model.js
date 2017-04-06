@@ -29,7 +29,8 @@ function construct_ad(infor,id){
   "twitter":infor.twitter,
   "youtube":infor.youtube,
   "video":infor.video,
-  "location":infor.location
+  "location":infor.location,
+  "province":infor.province
 };
 }
 

@@ -19,6 +19,7 @@ function construct_ad(infor,id){
   return{
   "ID":id,
   "Oauth_ID":"null",
+  "active":"false",
   "title":infor.title,
   "category":infor.category,
   "description": infor.description,

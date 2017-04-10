@@ -22,7 +22,7 @@ var model;
 
 fs.readdirSync(__dirname+'/mongoose_model').forEach(function(file){
   if(~file.indexOf('.js'))
-  model=require(__dirname+'/mongoose_model/'+file)
+  model=require(__dirname+'/mongoose_model/'+file);
 });
 
 
@@ -79,7 +79,7 @@ if (profile.photos && profile.photos.length) {
 
 function ensure(req,res,next){
   if(req.isAuthenticated()){return next();}
-  res.redirect('/');
+  res.redirect('/adpage');
 }
 
 function sendError(){
@@ -270,8 +270,8 @@ app.get('/adinfor/:type',(req,res)=>{
   mongo.connect(mongoURL,(err,db)=>{
     if (err){ res.send(500); db.close();}
     else {
-      var ad=db.collection('AdBase');
-      if (type=='all'&&pro=="all"){
+      var ad=db.collection(pro);
+      if (type=='all'){
       ad.find().toArray(function(err,docs){
         if(err){
         res.send(500);
@@ -295,7 +295,7 @@ app.get('/adinfor/:type',(req,res)=>{
   })
 });
 
-app.get('/user',(req,res)=>{
+app.get('/user',ensure,(req,res)=>{
 var Id=req.query.u;
 mongo.connect(mongoURL,(err,db)=>{
   if (err){
@@ -311,8 +311,13 @@ mongo.connect(mongoURL,(err,db)=>{
       }
       else{
         var name=docs[0].name;
+        var icon=docs[0].img_url;
+        let object={
+          name:name,
+          img_url:icon
+        }
         db.close();
-        res.send(name);
+        res.send(object);
       }
     })
   }
@@ -325,12 +330,12 @@ app.post('/post',(req,res)=>{
   if (err)
   sendError();
   else{
-    var ad=db.collection('AdBase');
+    var ad=db.collection('TempAdbase');
     ad.count((err,num)=>{
 if (err)
 sendError();
 else{
-    var object=model.construct_ad(data,num+1000);
+    var object=model.construct_ad(data,num+1000+data.province);
     ad.insert(object,(err,data)=>{
  if(err)
  sendError();
@@ -339,7 +344,9 @@ else{
  res.send('success');
  }});}});}});});
 
+app.get('/gigmatchup/activation/:province',ensure,(req,res)=>{
 
+})
 
 
 var server=app.listen(process.env.PORT || '8080', function(){

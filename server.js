@@ -45,9 +45,9 @@ if (config.get('NODE_ENV') === 'production') {
 app.use(express.static(path.join(__dirname,'public')));
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json()); // for parsing application/json
+app.use(session(sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(session(sessionConfig));
 app.set('trust proxy', true);
 app.use(function (req, res, next) {
   if (!req.session) {
@@ -79,7 +79,13 @@ if (profile.photos && profile.photos.length) {
 
 function ensure(req,res,next){
   if(req.isAuthenticated()){return next();}
-  res.redirect('/adpage');
+  res.redirect('/login/google');
+}
+
+function ensureforActivation(req,res,next){
+  if(req.isAuthenticated()){return next();}
+  else
+  res.redirect('/login/google');
 }
 
 function sendError(){
@@ -184,7 +190,7 @@ passport.deserializeUser((obj, cb) => {
 // event handling !!
 //add event handling code below
 
-app.get('/',(req,res)=>{
+app.get('/',ensure,(req,res)=>{
   var query=req.query.Id;
   console.log(query);
  res.send(path.join(__dirname, 'public', 'index.html'))
@@ -194,7 +200,7 @@ app.get('/adpage',(req,res)=>{
 res.sendFile(path.join(__dirname, 'public', 'ad.html'));
 });
 
-app.get('/profile',(req,res)=>{
+app.get('/profile',ensure,(req,res)=>{
   res.send('This page is curreently under maintenance Please come back later');
 });
 
@@ -270,7 +276,7 @@ app.get('/adinfor/:type',(req,res)=>{
   mongo.connect(mongoURL,(err,db)=>{
     if (err){ res.send(500); db.close();}
     else {
-      var ad=db.collection(pro);
+      var ad=db.collection('AdBase');
       if (type=='all'){
       ad.find().toArray(function(err,docs){
         if(err){
@@ -295,7 +301,7 @@ app.get('/adinfor/:type',(req,res)=>{
   })
 });
 
-app.get('/user',ensure,(req,res)=>{
+app.get('/user',(req,res)=>{
 var Id=req.query.u;
 mongo.connect(mongoURL,(err,db)=>{
   if (err){
@@ -344,7 +350,7 @@ else{
  res.send('success');
  }});}});}});});
 
-app.get('/gigmatchup/activation/:province',ensure,(req,res)=>{
+app.get('/gigmatchup/activation/:province',ensureforActivation,(req,res)=>{
 
 })
 

@@ -72,7 +72,7 @@
             <input class='searchBar'>
             <br>
             <a id="search_ad" class="btn btn-blue btn-lg">Search Ad</a>
-            <a href="/adpage?search=all&province=all" class="btn btn-blue btn-lg">Explore our talent base</a>
+            <a href="/adpage?search=all&province=Newfoundland" class="btn btn-blue btn-lg">Explore our talent base</a>
             <div class="region">
             <label for="category" class="select_province control-label col-sm-3">Select your region</label>
   <div class="province_top input-group col-xs-8">
@@ -92,6 +92,119 @@
 </div>
         </div>
     </header>
+
+    <section id="post-form-area" class="post-form-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-1 text-center">
+                    <h2>Post Ad for yourself or business</h2>
+                    <hr class="small">
+                    <div class="notification col-md-12 hidden">
+                      <span class='response'>
+                      </span>
+                      <hr class="small">
+                      <span class="more_message">
+
+                      </span>
+                      <h4>
+                    </div>
+                    <div class="row">
+
+                      <div class="post_ad col-md-12">
+                        <div class="a col-md-12">
+                      <div id="a">
+                          <h2>Link your profile to your Ad</h2>
+                          <p>Use your existing profile to post ad</p>
+                            <p>upload pictures, videos or add your social media channels</p>
+                            <p>Improve your profile to increase your chance to be discovered</p>
+                            <a href='/profile' class="btn btn-primary edit_profile_now">Edit my profile now</a>
+                            <p> or start from scratch</p>
+                            <a class='btn btn-danger skip'>Skip</a>
+                          </div>
+                          <ul class='list_unstyled social_buttons_two'>
+                            <li><a class="btn btn-social btn-google" href="/login/google?return=/">
+                                <span class="fa fa-google"></span> Sign in with Google
+                              </a></li>
+                            <li><a class="btn btn-social btn-facebook" href="/login/facebook?return='//'">
+                                <span class="fa fa-facebook"></span> Sign in with Facebook
+                              </a></li>
+                            <li>  <a class="btn btn-social btn-twitter" href='/login/twitter?return='//''>
+                                <span class="fa fa-twitter"></span> Sign in with Twitter
+                              </a></li>
+                    </ul>
+                        </div>
+                        <div class="b col-md-12">
+                          <h2>Edit details </h2>
+                       <form class='edit_ad_form col-md-6 col-md-offset-3'>
+                         <label for="Ad_title"> Ad title</label>
+                          <input class="full" id="Ad_title" placeholder="Edit title">
+                  <label for="pricing"> Pricing</label>
+                          <input class="full" id="pricing" placeholder="Pricing optional">
+                          <br>  <input type="radio" name="price" value="Hourly">Hourly
+                          <input type="radio" name="price" value="one_time">one-time-pay
+                          <input type="radio" name="price" value="contact">contact me <br>
+                         <label for="Ad_category">Select category</label>
+                            <select class="form-control" name="category" id="Ad_category">
+                              <option value="Music">Music band</option>
+                              <option value="solo">solo</option>
+                              <option value="DJ">DJ</option>
+                              <option value="other">other</option>
+                              <option value="Instrument performance">Instrument performance</option>
+                            </select>
+                            <label for="description">Add description</label>
+                            <textarea class='full' id="description"> </textarea>
+                          </form>
+
+                        </div>
+                        <div class="c col-md-12">
+                          <h2> Contact Information</h2>
+    <form class="contact_form col-md-12">
+    <label for="email">Email address</label>
+    <input class="full" id="email" type='email' placeholder="Email address">
+
+    <label for="phone">Cell phone</label>
+    <input class="full" id="phone" type='phone' placeholder="Phone Number">
+
+    <label for="city">location</label>
+      <input class="full" id="city" placeholder="City">
+      <select name="category" id="province">
+        <option value="Newfoundland">Newfoundland</option>
+        <option value="Ontario">Ontario</option>
+        <option value="British Columbia">British Columbia</option>
+        <option value="Québec">Québec</option>
+        <option value="Alberta">Alberta</option>
+        <option value="Saskatchewan">Saskatchewan</option>
+        <option value="Nova Scotia">Nova Scotia</option>
+        <option value="Manitoba">Manitoba</option>
+        <option value="New Brunswick">New Brunswick</option>
+          <option value="Prince Edward Island">Prince Edward Island</option>
+      </select>
+    </form>
+                        </div>
+                        <div class="d col-md-12">
+                          <div class="add_social col-md-6 col-md-offset-3">
+                            <ul class="social_list">
+                              <li><h3 style="margin:-20px 0 0 -35px;">click to add your social channels</h3></li>
+                              <li id="fb"><i class='fa fa-facebook fa-stack-2x channel'></i></li>
+                                <li id="yt"><i class='fa fa-youtube fa-stack-2x channel'></i></li>
+                                  <li id="tw"><i class='fa fa-twitter fa-stack-2x channel'></i></li>
+                            </ul>
+                            <label for="company">Your company's website</label>
+                            <input class='full' id="company">
+                            <span id="upload_pics" class="btn btn-primary">Upload Pictures</span>
+                              <span id="add_video" class="btn btn-primary">Add Video</span>
+                          </div>
+                        </div>
+                      </div>
+
+    <span class="navigate"><a id="get_started" class="btn btn-primary btn-lobster">Get started</a></span>
+
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </section>
+  <hr class="small">
 
     <!-- About -->
     <section id="about" class="about">
@@ -191,114 +304,7 @@
         </div>
     </aside>
 </section>
-    <section id="post-form-area" class="post-form-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-10 col-lg-offset-1 text-center">
-                    <h2>Post Ad for yourself or business</h2>
-                    <hr class="small">
-                    <div class="notification col-md-12 hidden">
-                      <span class='response'>
-                      </span>
-                      <hr class="small">
-                      <span class="more_message">
 
-                      </span>
-                      <h4>
-                    </div>
-                    <div class="row">
-
-                      <div class="post_ad col-md-12">
-                        <div class="a col-md-12">
-                      <div id="a">
-                          <h2>Link your profile to your Ad</h2>
-                          <p>Use your existing profile to post ad</p>
-                            <p>upload pictures, videos or add your social media channels</p>
-                            <p>Improve your profile to increase your chance to be discovered</p>
-                            <a href='/profile' class="btn btn-primary edit_profile_now">Edit my profile now</a>
-                            <p> or start from scratch</p>
-                            <a class='btn btn-danger skip'>Skip</a>
-                          </div>
-                          <ul class='list_unstyled social_buttons_two'>
-                            <li><a class="btn btn-social btn-google" href="/login/google?return=/">
-                                <span class="fa fa-google"></span> Sign in with Google
-                              </a></li>
-                            <li><a class="btn btn-social btn-facebook" href="/login/facebook?return='//'">
-                                <span class="fa fa-facebook"></span> Sign in with Facebook
-                              </a></li>
-                            <li>  <a class="btn btn-social btn-twitter" href='/login/twitter?return='//''>
-                                <span class="fa fa-twitter"></span> Sign in with Twitter
-                              </a></li>
-                    </ul>
-                        </div>
-                        <div class="b col-md-12">
-                          <h2>Edit details </h2>
-                       <form class='edit_ad_form col-md-6 col-md-offset-3'>
-                         <label for="Ad_title"> Ad title</label>
-                          <input class="full" id="Ad_title" placeholder="Edit title">
-                  <label for="pricing"> Pricing</label>
-                          <input class="full" id="pricing" placeholder="Pricing optional">
-                         <label for="Ad_category">Select category</label>
-                            <select class="form-control" name="category" id="Ad_category">
-                              <option value="Music">Music band</option>
-                              <option value="solo">solo</option>
-                              <option value="DJ">DJ</option>
-                              <option value="other">other</option>
-                              <option value="Instrument performance">Instrument performance</option>
-                            </select>
-                            <label for="description">Add description</label>
-                            <textarea class='full' id="description"> </textarea>
-                          </form>
-
-                        </div>
-                        <div class="c col-md-12">
-                          <h2> Contact Information</h2>
-   <form class="contact_form col-md-12">
-  <label for="email">Email address</label>
-  <input class="full" id="email" type='email' placeholder="Email address">
-
-  <label for="phone">Cell phone</label>
-    <input class="full" id="phone" type='phone' placeholder="Phone Number">
-
-    <label for="city">location</label>
-      <input class="full" id="city" placeholder="City">
-      <select name="category" id="province">
-        <option value="Newfoundland">Newfoundland</option>
-        <option value="Ontario">Ontario</option>
-        <option value="British Columbia">British Columbia</option>
-        <option value="Québec">Québec</option>
-        <option value="Alberta">Alberta</option>
-        <option value="Saskatchewan">Saskatchewan</option>
-        <option value="Nova Scotia">Nova Scotia</option>
-        <option value="Manitoba">Manitoba</option>
-        <option value="New Brunswick">New Brunswick</option>
-          <option value="Prince Edward Island">Prince Edward Island</option>
-      </select>
-   </form>
-                        </div>
-                        <div class="d col-md-12">
-                          <div class="add_social col-md-6 col-md-offset-3">
-                            <ul class="social_list">
-                              <li><h3 style="margin:-20px 0 0 -35px;">click to add your social channels</h3></li>
-                              <li id="fb"><i class='fa fa-facebook fa-stack-2x channel'></i></li>
-                                <li id="yt"><i class='fa fa-youtube fa-stack-2x channel'></i></li>
-                                  <li id="tw"><i class='fa fa-twitter fa-stack-2x channel'></i></li>
-                            </ul>
-                            <label for="company">Your company's website</label>
-                            <input class='full' id="company">
-                            <span id="upload_pics" class="btn btn-primary">Upload Pictures</span>
-                              <span id="add_video" class="btn btn-primary">Add Video</span>
-                          </div>
-                        </div>
-                      </div>
-
-<span class="navigate"><a id="get_started" class="btn btn-primary btn-lobster">Get started</a></span>
-
-            </div>
-            <!-- /.row -->
-        </div>
-        <!-- /.container -->
-    </section>
 <footer class="footer">
 </footer>
 

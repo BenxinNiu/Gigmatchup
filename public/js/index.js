@@ -8,7 +8,7 @@ function get_user_infor(){
     url:'/user?u='+id,
     success:function(data){
       console.log(data);
-    $('.logo').text("welcome "+data)
+    $('.logo').text("welcome "+data.name);
     },
     error:function(res){
    console.log(res);
@@ -206,7 +206,13 @@ optimize();
 if(is_login()){
 get_user_infor();
 }
-
+$('#search_ad').click(function(){
+var keyword=$('.searchBar').val();
+console.log(keyword)
+var province=$('#category').val();
+if (keyword!="")
+window.location="/adpage?search="+keyword+"&province="+province;
+})
 
 $('.navigate').on('click','#post_now',function(){
   $('.notification').removeClass('hidden');

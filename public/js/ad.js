@@ -8,7 +8,6 @@ function infor_from_url(){
   var city=url.slice(url.indexOf('=')+1);
   return {city:city,
           type:type};
-
 }
 
 
@@ -92,12 +91,28 @@ $('.submit').click(function(){
 })
 
 $('.ad_area').on('click','.learn_more',function(){
-  console.log("hi")
+  //console.log("hi")
   var id=$(this).attr('id');
-  var sec_id="#"+id.replace('btn','id');
+  console.log(id);
+  var sec_id="#"+id.replace('btn','id'); // section (ad id) id
   console.log(sec_id);
 $('.ad_area').children(sec_id).children('.row').children('.more_infor_pannel').removeClass('hidden').animate({marginLeft:'0px'},600)
+$('.ad_area').children(sec_id).children('.row').children('.snippet').append("<a id="+id+ " class='show_less btn btn-primary'><span class='glyphicon glyphicon-chevron-left'></span>Show Less</a>")
+$('.ad_area').children(sec_id).children('.row').children('.snippet').children('.learn_more').remove();
 })
+
+$('.ad_area').on('click','.show_less',function(){
+  var id=$(this).attr('id');
+  console.log(id);
+  var sec_id="#"+id.replace('btn','id'); // section (ad id) id
+  $('.ad_area').children(sec_id).children('.row').children('.more_infor_pannel').removeClass('hidden').animate({marginLeft:'-1000px'},600,function(){
+    $(this).addClass('hidden')
+  })
+  $('.ad_area').children(sec_id).children('.row').children('.snippet').append("<a id="+id+ " class='learn_more btn btn-primary'>Show more<span class='glyphicon glyphicon-chevron-right'></span></a>")
+$('.ad_area').children(sec_id).children('.row').children('.snippet').children('.show_less').remove();
+})
+
+
 
 
 

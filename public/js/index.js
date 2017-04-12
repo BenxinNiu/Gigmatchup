@@ -18,19 +18,33 @@ function get_user_infor(){
 
 
 function acquireInfor(){
+  var price='';
+  if(!$('#pricing').val())
+price='Contact me';
+ else if($('price_category').val()=='one')
+  price=$('#pricing').val()+ ' One time payment'
+   else if($('price_category').val()=='contact')
+price='Contact me';
+else
+price=$('#pricing').val()+' hourly'
+
   return {
     title:$('#Ad_title').val(),
     category:$('#Ad_category').val(),
-    pricing:$('#pricing').val(),
+    pricing:price,
     description:$('#description').val(),
+    contact_name:$('#contact_name').val(),
+    title:$('#contact_title_select').val()+" "+$('#contact_title').val(),
     email:$('#email').val(),
     phone:$('#phone').val(),
     facebook:$('#facebook-url').val(),
     twitter:$('#twitter_url').val(),
     youtube:$('#youtube_url').val(),
-    video:$('#video').val(),
-    location:$('#city').val(),
-    province: $('#province').val()
+    instagram:$('#ins_url').val(),
+    youtube:$('#linkedin_url').val(),
+    city:$('#city').val(),
+    province: $('#province').val(),
+    url:$('#company').val()
   };
 }
 
@@ -43,10 +57,18 @@ return{
 };
 }
 
-function postAd(){
-var url='/post';
+function postAd(ad_num){
+  var url='';
+if(ad_num=='') // no pictures uploaded
+ url='/post';
+else
+ url='/post?ad='+ad_num;
 var form=acquireInfor();
 console.log(form);
+if(is_form_completed()){
+  $('.notification').removeClass('hidden');
+  //add loading animation
+  $('.notification').append("<div class='load-wrapp'><div class='load'><div class='line'></div><div class='line'></div><div class='line'></div></div>")
 $.ajax({
   type:'POST',
   contenttype:'json',
@@ -60,16 +82,18 @@ $.ajax({
   success: function(res){
     console.log('success');
     $('load-wrapp').remove();
-    $('.response').append("<h3>Thank you for posting you ad</h3>")
+  $('.response').addClass('alert-success').html('Fuck you for posting ad ')
       $('.more_message').append("<h4> An email has been sent to your email address provided, Please check your indox and click the provided link to activate your account</h4>")
   //  $('.notification').append("<a class='goto_Ad' href="+ link +">Goto Ad page</a>")
   },
   error:function(res){
         $('load-wrapp').remove();
+        $('.response').addClass('alert-danger')
         $('.response').append("<h3>Sorry, we lost connection to the server </h3>")
   console.log(res);
   }
 });// ajax call end
+}
 }
 
 function social_login(){
@@ -138,20 +162,65 @@ function is_login(){
 //  return url.slice(num);
 }
 
+function is_form_completed(){
+  var num=0;
+  var error=[]
+if(!$('#Ad_title').val()){
+  num++;
+  error.push('Please check your ad title')
+}
+if(!$('#Ad_category').val()){
+  num++;
+  error.push('Please select a category')
+}
+if(!$('#contact_name').val()){
+  num++;
+  error.push('Please check contact name')
+}
+if(!validateEmail($('#email').val())){
+  num++;
+  error.push('Please check email address')
+}
+if(!$('#city').val()){
+  num++;
+  error.push('Please check your ad location')
+}
+if(num==0)
+return true;
+else{
+  console.log(error);
+  $('.notification').removeClass('hidden')
+  $('.response').addClass('alert-danger').html('Oops there is something wrong with your information')
+  $('.more_message').append('<ul class="errors"></ul>')
+  let $Error_list=$('.more_message').children('.errors')
+  for (var i=0;i<error.length;i++){
+  $Error_list.append("<li>"+error[i]+"</li>")
+  }
+return false;
+}
+}
+
+
 function add_social_channel(channel){
-let id="#"+channel;
+let $id=$('.url_input');
+var $children = $('.url_input').children('.urls');
+console.log(channel)
+$children.addClass('hidden')
 switch(channel){
 case "fb":
-$(id).empty();
-$(id).append("<input id='facebook-url' class='urls' placeholder='facebook url'>");
+$id.children('#facebook_url').removeClass('hidden')
 break;
 case "yt":
-$(id).empty();
-$(id).append("<input id='youtube_url' class='urls' placeholder='youtube url'>");
+$id.children('#youtube_url').removeClass('hidden')
 break;
 case "tw":
-$(id).empty();
-$(id).append("<input id='twitter_url' class='urls' placeholder='twitter url'>");
+$id.children('#twitter_url').removeClass('hidden')
+break;
+case "ins":
+$id.children('#ins_url').removeClass('hidden')
+break;
+case "linkedin":
+$id.children('#linkedin_url').removeClass('hidden')
 break;
 }
 }
@@ -199,13 +268,15 @@ function optimize(){
 
 $(document).ready(function(){
 
-initial_animation();
+var Ad_num_to_post='';  // the id returned after uploading pictures
+//initial_animation();
 
 optimize();
 
 if(is_login()){
 get_user_infor();
 }
+
 $('#search_ad').click(function(){
 var keyword=$('.searchBar').val();
 console.log(keyword)
@@ -214,9 +285,11 @@ if (keyword!="")
 window.location="/adpage?search="+keyword+"&province="+province;
 })
 
+// post ad
 $('.navigate').on('click','#post_now',function(){
-  $('.notification').removeClass('hidden');
-  $('.notification').append("<div class='load-wrapp'><div class='load'><div class='line'></div><div class='line'></div><div class='line'></div></div>")
+// remove previous error message
+$('.response').empty().removeClass('alert-danger')
+$('.more_message').empty()
   postAd();
 })
 

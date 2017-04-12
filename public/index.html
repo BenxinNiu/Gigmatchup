@@ -18,6 +18,7 @@
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
             <script src="js/index.js"></script>
+            <script src="js/validation.js"></script>
     <!-- Custom CSS -->
     <link href="css/index.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
@@ -38,16 +39,21 @@
     <!-- Navigation -->
     <div class="blackbar">
   <a class="logo"></a>
+  <ul>
+    <li><a>Features<a></li>
+        <li><a>Login<a></li>
+            <li><a>signUp<a></li>
+                <li><a>Post<a></li>
+  </ul>
 <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
     </div>
     <nav id="sidebar-wrapper">
         <ul class="sidebar-nav">
             <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
             <li class="sidebar-brand">
-                <a href="#top" onclick=$("#menu-close").click();>APP NAME gose here</a>
+                <a href="#top" style="color:blue;" onclick=$("#menu-close").click();>gigmatchup</a>
             </li>
             <li>
-                <a href="#top" onclick=$("#menu-close").click();>Home</a>
             </li>
             <li id="signin">
                 <a id="signin_navbar">SignIn</a>
@@ -68,7 +74,8 @@
 
     <header id="top" class="intro">
         <div class="home-page">
-            <h1>APP NAME</h1>
+      <!--   <span class="logo_holder"><img class='head_logo' src='/img/logo2.png'></span> -->
+           <h1>Gig matchup</h1>
             <input class='searchBar'>
             <br>
             <a id="search_ad" class="btn btn-blue btn-lg">Search Ad</a>
@@ -100,14 +107,15 @@
                     <h2>Post Ad for yourself or business</h2>
                     <hr class="small">
                     <div class="notification col-md-12 hidden">
-                      <span class='response'>
+                      <span class='response alert'>
                       </span>
                       <hr class="small">
                       <span class="more_message">
-
                       </span>
                       <h4>
                     </div>
+
+
                     <div class="row">
 
                       <div class="post_ad col-md-12">
@@ -134,39 +142,54 @@
                     </ul>
                         </div>
                         <div class="b col-md-12">
-                          <h2>Edit details </h2>
+                          <h2>Edit details
+                              <small style="font-size:14px;">*required</small>
+                          </h2>
                        <form class='edit_ad_form col-md-6 col-md-offset-3'>
-                         <label for="Ad_title"> Ad title</label>
-                          <input class="full" id="Ad_title" placeholder="Edit title">
+                         <label for="Ad_title"> Ad title*</label>
+                          <input class="full" id="Ad_title" placeholder="Edit title"> <br>
                   <label for="pricing"> Pricing</label>
-                          <input class="full" id="pricing" placeholder="Pricing optional">
-                          <br>  <input type="radio" name="price" value="Hourly">Hourly
-                          <input type="radio" name="price" value="one_time">one-time-pay
-                          <input type="radio" name="price" value="contact">contact me <br>
-                         <label for="Ad_category">Select category</label>
+                  <input class="contact_full" id="pricing" type='title' placeholder="price(optional)">
+                  <select name="category" id="price_category">
+                    <option value="hourly">Hourly</option>
+                    <option value="one">one time pay</option>
+                    <option value="contact">Contact me</option>
+                  </select> <br>
+                         <label  for="Ad_category">Select category*</label>
                             <select class="form-control" name="category" id="Ad_category">
+                              <option value=""></option>
                               <option value="Music">Music band</option>
                               <option value="solo">solo</option>
                               <option value="DJ">DJ</option>
                               <option value="other">other</option>
                               <option value="Instrument performance">Instrument performance</option>
                             </select>
+
                             <label for="description">Add description</label>
                             <textarea class='full' id="description"> </textarea>
+
                           </form>
 
                         </div>
                         <div class="c col-md-12">
                           <h2> Contact Information</h2>
-    <form class="contact_form col-md-12">
-    <label for="email">Email address</label>
-    <input class="full" id="email" type='email' placeholder="Email address">
-
-    <label for="phone">Cell phone</label>
-    <input class="full" id="phone" type='phone' placeholder="Phone Number">
-
-    <label for="city">location</label>
-      <input class="full" id="city" placeholder="City">
+    <form class="contact_form col-md-6 col-md-offset-3">
+      <label class="full_label" for="contact_name">Contact name*</label>
+      <input class="contact_full" id="contact_name" type='name' placeholder="Contact name"><br>
+      <label class="full_label" for="contact_title">Title</label>
+      <input class="contact_full" id="contact_title" type='title' placeholder="Title (optional)">
+      <select name="category" id="contact_title_select">
+        <option value="Mr">Mr.</option>
+        <option value="Mrs">Mrs.</option>
+        <option value="British Columbia">British Columbia</option>
+      </select>
+      <br>
+    <label class="full_label" for="email">Email address*</label>
+    <input class="contact_full" id="email" type='email' placeholder="Email address"><br>
+    <label class="full_label" for="phone">Cell phone</label>
+    <input class="contact_full" id="phone" type='phone' placeholder="Phone Number"> <br>
+    <label class="full_label" for="city">location*</label>
+      <input class="contact_full" id="city" placeholder="City">
       <select name="category" id="province">
         <option value="Newfoundland">Newfoundland</option>
         <option value="Ontario">Ontario</option>
@@ -182,14 +205,24 @@
     </form>
                         </div>
                         <div class="d col-md-12">
+                          <h2> Edit social information</h2>
                           <div class="add_social col-md-6 col-md-offset-3">
                             <ul class="social_list">
                               <li><h3 style="margin:-20px 0 0 -35px;">click to add your social channels</h3></li>
-                              <li id="fb"><i class='fa fa-facebook fa-stack-2x channel'></i></li>
-                                <li id="yt"><i class='fa fa-youtube fa-stack-2x channel'></i></li>
-                                  <li id="tw"><i class='fa fa-twitter fa-stack-2x channel'></i></li>
+                              <li id="fb"><i class='fa fa-facebook channel'></i></li>
+                                <li id="yt"><i class='fa fa-youtube  channel'></i></li>
+                                  <li id="tw"><i class='fa fa-twitter channel'></i></li>
+                                    <li id="ins"><i class='fa fa-instagram channel'></i></li>
+                                      <li id="linkedin"><i class='fa fa-linkedin channel'></i></li>
                             </ul>
-                            <label for="company">Your company's website</label>
+                            <span class="url_input">
+                             <input id='facebook_url' class='urls hidden' placeholder='facebook url'>
+                             <input id='youtube_url' class='urls hidden' placeholder='youtube url'>
+                             <input id='twitter_url' class='urls hidden' placeholder='twitter url'>
+                             <input id='ins_url' class='urls hidden' placeholder='Instagram url'>
+                             <input id='linkedin_url' class='urls hidden' placeholder='Linkedin url'>
+                            </span>
+                            <label for="company">Your personal website</label>
                             <input class='full' id="company">
                             <span id="upload_pics" class="btn btn-primary">Upload Pictures</span>
                               <span id="add_video" class="btn btn-primary">Add Video</span>
@@ -274,9 +307,7 @@
                           </div>
                       </div>
                     </div>
-
                 </div>
-
             </div>
         </div>
 

@@ -21,11 +21,18 @@ input{
 textarea{
   color:black;
 }
-.hidden{
-  display :none !important;
+.logo_holder{
+display:block;
+width:20%;
+margin:auto;
+background-color:red;
+}
+.head_logo{
+  margin:auto;
+  width:100%;
 }
 .hidden{
-  display:hidden !important;
+  display :none !important;
 }
 .intro {
     display: table;
@@ -102,6 +109,11 @@ textarea{
   width:30%;
 }
 #Ad_category{
+  width:70%;
+  margin:auto;
+  opacity:1;
+}
+#skill_category{
   width:70%;
   margin:auto;
   opacity:1;
@@ -357,18 +369,21 @@ hr.medium {
   top:-710px;
   background-color: white;
 }
-
+.add_social{
+  margin-top:20px;
+}
 .social_list{
   position:relative;
   color:black;
 width:100%;
 list-style-type: none;
-margin-top:20px;
+margin-bottom:20px;
 }
 .social_list li{
+  display:inline;
   width:100% !important;
-  font-size:1em;
-  padding:15px;
+  font-size:2em;
+  margin-right:20px;
   -webkit-transition: all .3s ease-in-out;
   -o-transitio: all .3 ease-in-out;
   transition: all .3s ease-in-out;
@@ -392,6 +407,29 @@ margin-top:20px;
 .full_label{
   display:table-cell;
   float:left;
+  width:100px;
+
+  margin-top:13px;
+}
+.contact_full{
+  width:70%;
+  height:30px;
+    margin:12px;
+  border:0.8px solid black;
+  border-radius:5px;
+  display:table-cell;
+}
+#pricing{
+  width:20% !important;
+  margin-right:7%;
+}
+#price_category{
+  width:30%;
+  height:30px;
+  opacity:0.7;
+}
+#contact_title{
+width:40% !important;
 }
 .urls{
   position: relative;
@@ -406,7 +444,7 @@ margin-top:20px;
 #description{
   resize:none;
   width:90% !important;
-  height:80px;
+  height:180px;
 }
 .navigate{
   display:block;
@@ -422,18 +460,23 @@ margin-top:20px;
   margin-top:-1500px;
   background-color: white;
 }
+.c h2{
+margin-bottom:25px;
+}
 .contact_form{
   color:black;
 }
 .contact_form input{
   max-width:350px;
 }
+/*
 .contact_form label{
   display:block;
   width:100px;
   position:relative;
   margin-left:17%;
 }
+*/
 #city{
   width:30% !important;
 }
@@ -441,6 +484,12 @@ margin-top:20px;
   width:30%;
   height:30px;
   opacity:0.7;
+}
+#contact_title_select{
+  width:30%;
+  height:30px;
+  opacity:0.7;
+  border-radius:4px;
 }
 .d{
   display:table;

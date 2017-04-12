@@ -274,7 +274,8 @@ app.get('/adinfor/:type',(req,res)=>{
   var pro=req.query.province;
   var number=req.query.number;
   mongo.connect(mongoURL,(err,db)=>{
-    if (err){ res.send(500); db.close();}
+    if (err){ res.send(500);
+      db.close();}
     else {
       var ad=db.collection('AdBase');
       if (type=='all'){
@@ -331,6 +332,7 @@ mongo.connect(mongoURL,(err,db)=>{
 });
 
 app.post('/post',(req,res)=>{
+  var ad_num=req.query.ad;
   var data=req.body;
   mongo.connect(mongoURL,(err,db)=>{
   if (err)

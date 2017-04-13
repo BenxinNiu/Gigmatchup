@@ -277,7 +277,7 @@ app.get('/adinfor/:type',(req,res)=>{
     if (err){ res.send(500);
       db.close();}
     else {
-      var ad=db.collection('AdBase');
+      var ad=db.collection('TempAdbase');
       if (type=='all'){
       ad.find().toArray(function(err,docs){
         if(err){
@@ -352,6 +352,7 @@ else{
  res.send('success');
  }});}});}});});
 
+//activate your ad
 app.get('/gigmatchup/activation/:province',ensureforActivation,(req,res)=>{
 
 })

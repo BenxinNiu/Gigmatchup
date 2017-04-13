@@ -41,7 +41,7 @@ price=$('#pricing').val()+' hourly'
     twitter:$('#twitter_url').val(),
     youtube:$('#youtube_url').val(),
     instagram:$('#ins_url').val(),
-    youtube:$('#linkedin_url').val(),
+    linkedin:$('#linkedin_url').val(),
     city:$('#city').val(),
     province: $('#province').val(),
     url:$('#company').val()

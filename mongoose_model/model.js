@@ -10,7 +10,8 @@ return {
   Oauth_ID: profile.id,
   name:profile.displayName,
   created_date:formated,
-  img_url:profile.image
+  img_url:profile.image,
+  Ad_id:[]
 };
 }
 function construct_ad(infor,id){
@@ -21,6 +22,7 @@ function construct_ad(infor,id){
   "Oauth_ID":"null",
   "active":"false",
   "snippet":{
+    "requested_ad":id,
     "title":infor.title,
     "category":infor.category,
     "description": infor.description,

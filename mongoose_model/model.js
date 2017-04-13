@@ -20,18 +20,25 @@ function construct_ad(infor,id){
   "ID":id,
   "Oauth_ID":"null",
   "active":"false",
-  "title":infor.title,
-  "category":infor.category,
-  "description": infor.description,
-  "phone":infor.phone,
-  "email":infor.email,
-  "post_date":formated,
-  "facebook":infor.facebook,
-  "twitter":infor.twitter,
-  "youtube":infor.youtube,
-  "video":infor.video,
-  "location":infor.location,
-  "province":infor.province
+  "snippet":{
+    "title":infor.title,
+    "category":infor.category,
+    "description": infor.description,
+    "post_date":formated,
+    "location":infor.city+" "+infor.province
+  },
+  "more":{
+    "facebook":infor.facebook,
+    "twitter":infor.twitter,
+    "youtube":infor.youtube,
+    "linkedin":infor.linkedin,
+    "instagram":infor.instagram,
+    "price":infor.pricing,
+    "contact_name":infor.contact_name,
+    "url":infor.url,
+    "phone":infor.phone,
+    "email":infor.email,
+  }
 };
 }
 

@@ -10,6 +10,29 @@ function infor_from_url(){
           type:type};
 }
 
+function(data,ad_num){
+  let $img_list=$(selector).children('.row').children('.more_infor_pannel').children('.imgs_list').children('#imgs_list');
+  let $snippet=$(selector).children('.row').children('.snippet');
+  let $more_infor_pannel=$(selector).children('.row').children('.more_infor_pannel');
+}
+
+function get_more_infor(ad_id){
+$.ajax({
+type:'GET',
+contenttype:'json',
+url:'/acquire_more/'+ad_id,
+success:function(result){
+  console.log('success');
+  display_more_infor(result);
+},
+error:function(){
+   console.log("failed to get more infor!");
+}
+});
+
+
+}
+
 function display_html(result){
   $.ajax({
     type:'GET',
@@ -22,8 +45,8 @@ function display_html(result){
       var infor=result[i];
       var id='id'+i;
       var btn='btn'+i;
-      var selector='#'+id;
-      $('.ad_area').append("<div id="+id+ "></div>");
+      var selector='#'+id;  // tyhe parent container of one ad !!!!
+      $('.ad_area').append("<div id="+id+" class="+ infor.requested_ad +"></div>");
       $(selector).append(html);
 
       let $img_list=$(selector).children('.row').children('.more_infor_pannel').children('.imgs_list').children('#imgs_list');
@@ -59,11 +82,13 @@ $.ajax({
   contenttype:'json',
   url:'/adinfor/'+type+ '?number='+number +'&province='+province,
   success:function(data){
+    console.log(data);
   var length=data.length;
   $('.num').text(length+" ad found for you")
    display_html(data);
   },
   error:function(res){
+    console.log('failed')
    result='failed';
   }
 })
@@ -87,7 +112,9 @@ $(document).ready(function(){
 var type=infor_from_url();
 console.log(type);
   $('.ad_area').append("<div class='load-wrapp'><div class='load'><div class='line'></div><div class='line'></div><div class='line'></div></div>")
+
   acquire_ad(5,type.type,type.city);
+
 $('.submit').click(function(){
   search();
 })

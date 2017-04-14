@@ -23,7 +23,7 @@ function construct_ad(infor,id){
   "active":"false",
   "snippet":{
     "requested_ad":id,
-    "title":infor.title,
+    "title":infor.Ad_title,
     "category":infor.category,
     "description": infor.description,
     "post_date":formated,

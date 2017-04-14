@@ -21,6 +21,7 @@ function construct_ad(infor,id){
   "ID":id,
   "Oauth_ID":"null",
   "active":"false",
+  "category":infor.category,
   "snippet":{
     "requested_ad":id,
     "title":infor.Ad_title,

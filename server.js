@@ -272,27 +272,38 @@ app.get('/get_html',(req,res)=>{
 app.get('/adinfor/:type',(req,res)=>{
   var type=req.params.type;
   var pro=req.query.province;
-  var number=req.query.number;
+  var number=Number(req.query.number);
+  console.log(type+" "+pro+" "+number);
   mongo.connect(mongoURL,(err,db)=>{
     if (err){ res.send(500);
       db.close();}
     else {
       var ad=db.collection('TempAdbase'); // change to province later
-var result_array=[];
+
       if (type=='all'){
-        result_array=[]
-      ad.find().forEach(function(doc){
-      result_array.unshift(doc.snippet);
-db.close();
-    res.send(result_array);
+        var result_array=[];
+          ad.find().toArray(function(err,docs){
+            if(err){res.send(500); db.close();}
+          for (var i=0;i<5&&i<docs.length;i++){
+              var data=docs[number+i];
+             console.log(data);
+            result_array.unshift(data.snippet);
+          }
+          db.close();
+          res.send(result_array);
     });
     }
+
       else {
-        result_array=[];
-        ad.find({"category":type}).forEach(function(doc){
-    result_array.unshift(doc.snippet);
- db.close();
-      res.send(result_array);
+      var result_array=[];
+        ad.find({"category":type}).toArray((err,docs)=>{
+          if(err){res.send(500); db.close();}
+        for (var i=0;i<5&&docs.length;i++){
+            var data=docs[number+i];
+            result_array.unshift(data.snippet);
+        }
+        db.close();
+        res.send(result_array);
         });
       }
     }

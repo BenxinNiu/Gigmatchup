@@ -30,6 +30,7 @@ function construct_ad(infor,id){
     "location":infor.city+" "+infor.province
   },
   "more":{
+    "requested_ad":id,
     "facebook":infor.facebook,
     "twitter":infor.twitter,
     "youtube":infor.youtube,

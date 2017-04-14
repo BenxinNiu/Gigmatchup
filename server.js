@@ -268,7 +268,7 @@ app.get('/get_html',(req,res)=>{
     break;
   }
 });
-
+// send snippet
 app.get('/adinfor/:type',(req,res)=>{
   var type=req.params.type;
   var pro=req.query.province;
@@ -277,25 +277,22 @@ app.get('/adinfor/:type',(req,res)=>{
     if (err){ res.send(500);
       db.close();}
     else {
-      var ad=db.collection('TempAdbase');
+      var ad=db.collection('TempAdbase'); // change to province later
+var result_array=[];
       if (type=='all'){
-      ad.find().toArray(function(err,docs){
-        if(err){
-        res.send(500);
-        db.close();
-      }
-      else{
-        res.send(docs);
-      db.close();
-      }
-      });}
+        result_array=[]
+      ad.find().forEach(function(doc){
+      result_array.unshift(doc.snippet);
+db.close();
+    res.send(result_array);
+    });
+    }
       else {
-        ad.find({"category":type}).toArray(function(err,docs){
-          if(err)
-          res.send(500);
-        else
-          res.send(docs);
-          db.close();
+        result_array=[];
+        ad.find({"category":type}).forEach(function(doc){
+    result_array.unshift(doc.snippet);
+ db.close();
+      res.send(result_array);
         });
       }
     }

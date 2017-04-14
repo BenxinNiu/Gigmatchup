@@ -10,27 +10,50 @@ function infor_from_url(){
           type:type};
 }
 
-function(data,ad_num){
+function display_more_infor(data,ad_num){
+  var selector='.'+ad_num;
+    let $loading_pannel=$(selector).children('.row').children('.loading_pannel');
   let $img_list=$(selector).children('.row').children('.more_infor_pannel').children('.imgs_list').children('#imgs_list');
-  let $snippet=$(selector).children('.row').children('.snippet');
   let $more_infor_pannel=$(selector).children('.row').children('.more_infor_pannel');
+  $loading_pannel.addClass('hidden')
+  $('.ad_area').children(selector).children('.row').children('.more_infor_pannel').removeClass('hidden').animate({marginLeft:'0px'},600)
+  if(infor.facebook!=null)
+   $img_list.append("<li><a href=" + infor.facebook + "><i class='fa fa-facebook'></i></a></li>")
+   if(infor.youtube!=null)
+    $img_list.append("<li><a href=" + infor.youtube + "><i class='fa fa-youtube'></i></a></li>")
+    if(infor.twitter!=null)
+     $img_list.append("<li><a href=" + infor.twitter + "><i class='fa fa-twitter'></i></a></li>")
+    if(infor.instagram!=null)
+      $img_list.append("<li><a href=" + infor.instagram + "><i class='fa fa-instagram'></i></a></li>")
+    if(infor.linkedin!=null)
+       $img_list.append("<li><a href=" + infor.linkedin+ "><i class='fa fa-linkedin'></i></a></li>")
+
+       $more_infor_pannel.children('.pricing').append("<h4>"+infor.price+"</h4>")
+       $more_infor_pannel.children('.email').append("<h4>"+infor.contact_name+"</h4>")
+       $more_infor_pannel.children('.email').append("<h4>"+infor.email+"</h4>")
+       $more_infor_pannel.children('.phone').append("<h4>"+infor.phone+"</h4>")
 }
 
-function get_more_infor(ad_id){
+function get_more_infor(ad_id,sec_id,id){
+  let $loading_pannel=$('.'+ad_id).children('.row').children('.loading_pannel')
+  let $more_infor_pannel=$('.'+ad_id).children('.row').children('.more_infor_pannel');
+  $loading_pannel.removeClass('hidden').animate({marginLeft:'0px'},600).append("<div class='load-wrapp'><div class='load'><div class='line'></div><div class='line'></div><div class='line'></div></div>")
+//  $('.ad_area').children(sec_id).children('.row').children('.more_infor_pannel').removeClass('hidden').animate({marginLeft:'0px'},600)
+  $('.ad_area').children(sec_id).children('.row').children('.snippet').append("<a id="+id+ " class='show_less btn btn-primary'><span class='glyphicon glyphicon-chevron-left'></span>Show Less</a>")
+  $('.ad_area').children(sec_id).children('.row').children('.snippet').children('.learn_more').remove();
+
 $.ajax({
 type:'GET',
 contenttype:'json',
 url:'/acquire_more/'+ad_id,
 success:function(result){
   console.log('success');
-  display_more_infor(result);
+  display_more_infor(result,ad_id);
 },
 error:function(){
    console.log("failed to get more infor!");
 }
 });
-
-
 }
 
 function display_html(result){
@@ -52,21 +75,11 @@ function display_html(result){
       let $img_list=$(selector).children('.row').children('.more_infor_pannel').children('.imgs_list').children('#imgs_list');
       let $snippet=$(selector).children('.row').children('.snippet');
       let $more_infor_pannel=$(selector).children('.row').children('.more_infor_pannel');
-
-      if(infor.facebook!=null)
-       $img_list.append("<li><a href=" + infor.facebook + "><i class='fa fa-facebook'></i></a></li>")
-       if(infor.youtube!=null)
-        $img_list.append("<li><a href=" + infor.youtube + "><i class='fa fa-youtube'></i></a></li>")
-        if(infor.twitter!=null)
-         $img_list.append("<li><a href=" + infor.twitter + "><i class='fa fa-twitter'></i></a></li>")
     $snippet.children('.title').append("<h3>"+infor.title+"</h3>")
     $snippet.children('.location').append("<h4>"+infor.location+"</h4>")
     $snippet.children('.post-time').append("<h4>"+infor.post_date+"</h4>")
     $snippet.children('.description').append("<p>"+infor.description+"</p>")
     $snippet.append("<a id="+btn+ " class='learn_more btn btn-primary'>View more <span class='glyphicon glyphicon-chevron-right'></span></a>")
-   $more_infor_pannel.children('.pricing').append("<h4>"+infor.pricing+"</h4>")
-   $more_infor_pannel.children('.email').append("<h4>"+infor.email+"</h4>")
-   $more_infor_pannel.children('.phone').append("<h4>"+infor.phone+"</h4>")
       }
     },
     error:function(res){
@@ -112,9 +125,7 @@ $(document).ready(function(){
 var type=infor_from_url();
 console.log(type);
   $('.ad_area').append("<div class='load-wrapp'><div class='load'><div class='line'></div><div class='line'></div><div class='line'></div></div>")
-
   acquire_ad(5,type.type,type.city);
-
 $('.submit').click(function(){
   search();
 })
@@ -122,12 +133,11 @@ $('.submit').click(function(){
 $('.ad_area').on('click','.learn_more',function(){
   //console.log("hi")
   var id=$(this).attr('id');
-  console.log(id);
+  var ad_class=$(this).parent().parent().parent().attr('class')
   var sec_id="#"+id.replace('btn','id'); // section (ad id) id
   console.log(sec_id);
-$('.ad_area').children(sec_id).children('.row').children('.more_infor_pannel').removeClass('hidden').animate({marginLeft:'0px'},600)
-$('.ad_area').children(sec_id).children('.row').children('.snippet').append("<a id="+id+ " class='show_less btn btn-primary'><span class='glyphicon glyphicon-chevron-left'></span>Show Less</a>")
-$('.ad_area').children(sec_id).children('.row').children('.snippet').children('.learn_more').remove();
+  get_more_infor(ad_class,sec_id,id);
+
 })
 
 $('.ad_area').on('click','.show_less',function(){

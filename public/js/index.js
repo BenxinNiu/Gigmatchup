@@ -29,12 +29,12 @@ else
 price=$('#pricing').val()+' hourly'
 
   return {
-    title:$('#Ad_title').val(),
+    Ad_title:$('#Ad_title').val(),
     category:$('#Ad_category').val(),
     pricing:price,
     description:$('#description').val(),
     contact_name:$('#contact_name').val(),
-    title:$('#contact_title_select').val()+" "+$('#contact_title').val(),
+    title:$('contact_title').val(),
     email:$('#email').val(),
     phone:$('#phone').val(),
     facebook:$('#facebook-url').val(),

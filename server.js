@@ -299,6 +299,27 @@ db.close();
   })
 });
 
+app.get('/acquire_more/:ad_num',(req,res)=>{
+  var id=req.params.ad_num;
+  var pos=id.indexOf('N');
+  var db_name=id.substring(pos);
+  console.log(db_name)
+  mongo.connect(mongoURL,(err,db)=>{
+    if (err){
+      res.send(500);
+      db.close();
+    }
+    else{
+  var d=db.collection('TempAdbase');
+  d.find({"ID":id}).toArray((err,docs)=>{
+    console.log(docs)
+    db.close();
+  res.send((docs[0]).more);
+  })
+    }
+  })
+})
+
 app.get('/user',(req,res)=>{
 var Id=req.query.u;
 mongo.connect(mongoURL,(err,db)=>{

@@ -10,23 +10,23 @@ function infor_from_url(){
           type:type};
 }
 
-function display_more_infor(data,ad_num){
+function display_more_infor(infor,ad_num){
   var selector='.'+ad_num;
     let $loading_pannel=$(selector).children('.row').children('.loading_pannel');
   let $img_list=$(selector).children('.row').children('.more_infor_pannel').children('.imgs_list').children('#imgs_list');
   let $more_infor_pannel=$(selector).children('.row').children('.more_infor_pannel');
-  $loading_pannel.addClass('hidden')
+  $loading_pannel.addClass('hidden').empty();
   $('.ad_area').children(selector).children('.row').children('.more_infor_pannel').removeClass('hidden').animate({marginLeft:'0px'},600)
-  if(infor.facebook!=null)
+  if(infor.facebook!=null&&infor.facebook!="")
    $img_list.append("<li><a href=" + infor.facebook + "><i class='fa fa-facebook'></i></a></li>")
-   if(infor.youtube!=null)
+   if(infor.youtube!=null&&infor.youtube!="")
     $img_list.append("<li><a href=" + infor.youtube + "><i class='fa fa-youtube'></i></a></li>")
-    if(infor.twitter!=null)
+    if(infor.twitter!=null&&infor.twitter!="")
      $img_list.append("<li><a href=" + infor.twitter + "><i class='fa fa-twitter'></i></a></li>")
-    if(infor.instagram!=null)
+    if(infor.instagram!=null&&infor.instagram!="")
       $img_list.append("<li><a href=" + infor.instagram + "><i class='fa fa-instagram'></i></a></li>")
-    if(infor.linkedin!=null)
-       $img_list.append("<li><a href=" + infor.linkedin+ "><i class='fa fa-linkedin'></i></a></li>")
+    if(infor.linkedin!=null&&infor.linkedin!="")
+       $img_list.append("<li><a href=" + infor.linkedin + "><i class='fa fa-linkedin'></i></a></li>")
 
        $more_infor_pannel.children('.pricing').append("<h4>"+infor.price+"</h4>")
        $more_infor_pannel.children('.email').append("<h4>"+infor.contact_name+"</h4>")
@@ -117,7 +117,7 @@ function search(){
   var province=$('#category').val();
   $('.ad_area').empty();
   $('.ad_area').append("<div class='load-wrapp'><div class='load'><div class='line'></div><div class='line'></div><div class='line'></div></div>")
-  acquire_ad(5,type,province);
+  acquire_ad(0,type,province);
 }
 
 
@@ -125,13 +125,13 @@ $(document).ready(function(){
 var type=infor_from_url();
 console.log(type);
   $('.ad_area').append("<div class='load-wrapp'><div class='load'><div class='line'></div><div class='line'></div><div class='line'></div></div>")
-  acquire_ad(5,type.type,type.city);
+  acquire_ad(0,type.type,type.city);
+
 $('.submit').click(function(){
   search();
 })
 
 $('.ad_area').on('click','.learn_more',function(){
-  //console.log("hi")
   var id=$(this).attr('id');
   var ad_class=$(this).parent().parent().parent().attr('class')
   var sec_id="#"+id.replace('btn','id'); // section (ad id) id

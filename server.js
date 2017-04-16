@@ -9,6 +9,7 @@ const bodyparser=require('body-parser');
 const fs=require('fs');
 const session = require('express-session');
 //const MemcachedStore = require('connect-memcached')(session);
+const sendgrid=require('sendgrid')('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')
 const RedisStore = require('connect-redis')(session);
 const passport = require('passport');
 const config = require('./config');
@@ -200,9 +201,10 @@ app.get('/adpage',(req,res)=>{
 res.sendFile(path.join(__dirname, 'public', 'ad.html'));
 });
 
-app.get('/profile',ensure,(req,res)=>{
-  res.send('This page is curreently under maintenance Please come back later');
-});
+//add ensure function later
+app.get('/profile',(req,res)=>{
+  res.sendFile(path.join(__dirname,'public','profile.html'))
+})
 
 app.get('/logout',(req,res)=>{
   req.logout();
@@ -259,7 +261,6 @@ app.get('/auth/facebook/callback',passport.authenticate('google',{ failureRedire
   }
 );
 
-
 app.get('/get_html',(req,res)=>{
   var query=req.query.type;
   switch(query){
@@ -268,6 +269,7 @@ app.get('/get_html',(req,res)=>{
     break;
   }
 });
+
 // send snippet
 app.get('/adinfor/:type',(req,res)=>{
   var type=req.params.type;

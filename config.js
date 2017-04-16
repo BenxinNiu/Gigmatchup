@@ -33,7 +33,8 @@ nconf
     'OAUTH2_CLIENT_SECRET',
     'OAUTH2_CALLBACK',
     'PORT',
-    'SECRET'
+    'SECRET',
+    "SENDGRID_API_KEY"
   ])
 
   .file({ file: path.join(__dirname, 'config.json') })
@@ -73,6 +74,7 @@ checkConfig('GCLOUD_PROJECT');
 //checkConfig('CLOUD_BUCKET');
 checkConfig('OAUTH2_CLIENT_ID');
 checkConfig('OAUTH2_CLIENT_SECRET');
+checkConfig('SENDGRID_API_KEY');
 
 if (nconf.get('DATA_BACKEND') === 'cloudsql') {
   checkConfig('MYSQL_USER');

@@ -69,7 +69,62 @@
 <section id="profile_area">
 <div class='container'>
 <div class="row">
-
+<div class="col-md-8 profile-area">
+<span class='profile_infor'>
+<img class="avator img-responsive img-circle" src="/img/no-picture-icon.png">
+ </span>
+ <span class='description'>
+<textarea id='textarea' placeholder="Write something about yourself"></textarea>
+</span>
+<form class="information">
+  <span class="input_container">
+  <label class="label" for="#contact_name">Contact name</label>
+  <input class="full" id='contact_name'>
+</span>
+<span class="input_container">
+<label class="label" for="email">Email address</label>
+<input class="full" id='email'>
+</span>
+<span class="input_container">
+<label class="label" for="phone">Cell phone</label>
+<input class="full" id='phone'>
+</span>
+<span class="input_container">
+<label class="label" for="city">city</label>
+<input class="full" id='city'>
+<select class="form-control" name="category" id="province">
+  <option value="Newfoundland">Newfoundland</option>
+  <option value="Ontario">Ontario</option>
+  <option value="British Columbia">British Columbia</option>
+  <option value="Québec">Québec</option>
+  <option value="Alberta">Alberta</option>
+  <option value="Saskatchewan">Saskatchewan</option>
+  <option value="Nova Scotia">Nova Scotia</option>
+  <option value="Manitoba">Manitoba</option>
+  <option value="New Brunswick">New Brunswick</option>
+    <option value="Prince Edward Island">Prince Edward Island</option>
+</select>
+</span>
+<span class="input_container">
+<h2>Social media
+<small>Click to edit</small>
+</h2>
+<ul class="social_list">
+  <li id="facebook"><i class='fa fa-facebook channel'></i></li>
+    <li id="youtube"><i class='fa fa-youtube  channel'></i></li>
+      <li id="twitter"><i class='fa fa-twitter channel'></i></li>
+        <li id="instagram"><i class='fa fa-instagram channel'></i></li>
+          <li id="linkedin"><i class='fa fa-linkedin channel'></i></li>
+</ul>
+<input class='social_link hidden' id="facebook_url" placeholder="facebook link">
+<input class='social_link hidden' id="youtube_url" placeholder="youtube link">
+<input class='social_link hidden' id="twitter_url" placeholder="twitter link">
+<input class='social_link hidden' id="instagram_url" placeholder="facebook link">
+<input class='social_link hidden' id="linkedin_url" placeholder="facebook link">
+</span>
+<a class='btn btn-primary' id='submit'>Save</a>
+</form>
+</div>
 </div>
 
 </div>

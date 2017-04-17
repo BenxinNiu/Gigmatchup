@@ -80,7 +80,7 @@ if (profile.photos && profile.photos.length) {
 
 function ensure(req,res,next){
   if(req.isAuthenticated()){return next();}
-  res.redirect('/login/google');
+  res.redirect('/login/google?return=/profile');
 }
 
 function ensureforActivation(req,res,next){
@@ -102,21 +102,28 @@ passport.use(new GoogleStrategy({
   accessType: 'offline'
 },function(accessToken, refresh,profile, cb){
  let infor=profile_infor(profile);
- var information=model.construct(infor);
+ var information=model.construct(infor); // extract user information
+ var user_profile=model.construct_user_infor(infor); //create user infor mation in the user_infor collection
  mongo.connect(mongoURL,function(err,db){
    if(err)
    sendError();
    else{
      var user=db.collection('userBase');
+     var infor_db=db.collection('user_infor');
      user.count({Oauth_ID: infor.id},(err,num)=>{
        if(err)
        sendError();
-       else if(num===0)
+       else if(num===0){
        user.insert(information,(err,data)=>{
         if (err)
         sendError();
-       db.close();
+        infor_db.insert(user_profile,(err,data)=>{
+         if (err)
+         sendError();
+        db.close();
+        });
        });
+     }
        else
         db.close();
       cb(null,infor);
@@ -202,7 +209,7 @@ res.sendFile(path.join(__dirname, 'public', 'ad.html'));
 });
 
 //add ensure function later
-app.get('/profile',(req,res)=>{
+app.get('/profile',ensure,(req,res)=>{
   res.sendFile(path.join(__dirname,'public','profile.html'))
 })
 
@@ -382,6 +389,25 @@ else{
  db.close();
  res.send('success');
  }});}});}});});
+
+app.post('/updateprofile/:id',(req,res)=>{
+  var user_id=req.params.id;
+  var infor=req.body;
+  var data=model.update_user_infor(infor);
+  mongo.connect(mongoURL,(err,db)=>{
+    if(err){db.close(); response.send(500)}
+    else{
+      var collection=db.collection('user_infor');
+      collection.updateOne({clientID:user_id},{$set:{information:data}},(err)=>{
+        if (err){db.close(); response.send('failed');}
+        else{
+          db.close();
+          response.send('success');
+        }
+      });
+    }
+  });
+});
 
 //activate your ad
 app.get('/gigmatchup/activation/:province',ensureforActivation,(req,res)=>{

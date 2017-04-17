@@ -46,7 +46,33 @@ function construct_ad(infor,id){
 };
 }
 
+function construct_user_infor(profile){
+  return {
+    clientID:profile.id,
+    information:{
+      description:"",
+      contact_name:"",
+      email:"",
+      phone:"",
+      location:"",
+      facebook:"",
+      twitter:"",
+      youtube:"",
+      linkedin:"",
+      instagram:""
+    }
+  };
+}
+
+function update_user_infor(infor){
+  return{
+
+  }
+}
+
 module.exports={
 construct:  construct_user,
-construct_ad: construct_ad
+construct_ad: construct_ad,
+update_user_infor:update_user_infor,
+construct_user_infor:construct_user_infor
 };

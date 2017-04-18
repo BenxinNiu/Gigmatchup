@@ -14,6 +14,17 @@ return {
   Ad_id:[]
 };
 }
+function create_user(profile){
+  var date=new Date();
+  var formated=formatTime(date);
+return {
+  Oauth_ID: profile.id,
+  name:profile.displayName,
+  created_date:formated,
+  img_url:profile.image,
+  Ad_id:[]
+};
+}
 function construct_ad(infor,id){
   var date=new Date();
   var formated=formatTime(date);
@@ -55,19 +66,31 @@ function construct_user_infor(profile){
       email:"",
       phone:"",
       location:"",
+      social:{
       facebook:"",
       twitter:"",
       youtube:"",
       linkedin:"",
       instagram:""
     }
-  };
+  }
+};
 }
-
 function update_user_infor(infor){
   return{
-
+    description:infor.a,
+    contact_name:infor.b,
+    email:infor.c,
+    phone:infor.d,
+    location:infor.e,
+    social:{
+    facebook:infor.f.facebook,
+    twitter:infor.f.twitter,
+    youtube:infor.f.youtube,
+    linkedin:infor.f.linkedin,
+    instagram:infor.f.instagram
   }
+};
 }
 
 module.exports={

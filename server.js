@@ -9,7 +9,7 @@ const bodyparser=require('body-parser');
 const fs=require('fs');
 const session = require('express-session');
 //const MemcachedStore = require('connect-memcached')(session);
-const sendgrid=require('sendgrid')('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')
+//const sendgrid=require('sendgrid')('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')
 const RedisStore = require('connect-redis')(session);
 const passport = require('passport');
 const config = require('./config');
@@ -19,6 +19,7 @@ const FacebookStrategy=require('passport-facebook').Strategy;
 const TwitterStrategy=require('passport-twitter').Strategy;
 const app = express();
 const mongoURL=config.get('MONGO_URL');
+const mailgun=require('mailgun-js')({apiKey: config.get('MAILGUN_API_KEY'), domain: config.get('MAILGUN_DOMAIN')});
 var model;
 
 fs.readdirSync(__dirname+'/mongoose_model').forEach(function(file){
@@ -80,7 +81,7 @@ if (profile.photos && profile.photos.length) {
 
 function ensure(req,res,next){
   if(req.isAuthenticated()){return next();}
-  res.redirect('/login/google?return=/profile');
+  res.redirect('/loginpage');
 }
 
 function ensureforActivation(req,res,next){
@@ -91,7 +92,6 @@ function ensureforActivation(req,res,next){
 
 function sendError(){
   req.send(500);
-
 }
 
 //passport configuration
@@ -199,9 +199,11 @@ passport.deserializeUser((obj, cb) => {
 //add event handling code below
 
 app.get('/',ensure,(req,res)=>{
-  var query=req.query.Id;
-  console.log(query);
- res.send(path.join(__dirname, 'public', 'index.html'))
+ res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.get('/loginpage',(req,res)=>{
+res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
 app.get('/adpage',(req,res)=>{
@@ -210,8 +212,10 @@ res.sendFile(path.join(__dirname, 'public', 'ad.html'));
 
 //add ensure function later
 app.get('/profile',ensure,(req,res)=>{
+  let user_id=req.user.id;
+  console.log(user_id);
   res.sendFile(path.join(__dirname,'public','profile.html'))
-})
+});
 
 app.get('/logout',(req,res)=>{
   req.logout();
@@ -229,7 +233,7 @@ app.get('/login/google',function (req,res,next){
 
 app.get('/auth/google/callback',passport.authenticate('google',{ failureRedirect: '/addsa' }),function(req, res){
   var redirect = req.session.oauth2return+"?user="+req.user.id;
-  console.log(redirect);
+  //console.log(redirect);
   delete req.session.oauth2return;
      res.redirect(redirect);
   }
@@ -340,7 +344,8 @@ app.get('/acquire_more/:ad_num',(req,res)=>{
   })
 })
 
-app.get('/user',(req,res)=>{
+// for index.html
+app.get('/user',ensure,(req,res)=>{
 var Id=req.query.u;
 mongo.connect(mongoURL,(err,db)=>{
   if (err){
@@ -386,8 +391,21 @@ else{
  if(err)
  sendError();
  else{
- db.close();
- res.send('success');
+   var email_content = {
+  from: config.get('MAILGUN_FROM'),
+  to: object.more.email,
+  subject: 'Activation link',
+  text: 'This email is sent to you because this email address was used to publish an advertisement on Gigmatchup.ca. Please follow the link bleow to activate your ad: '
+};
+mailgun.messages().send(email_content, function (err, body) {
+  if(err)
+  response.send(500);
+  else {
+    db.close();
+    res.send('success');
+  }
+  console.log(body);
+});
  }});}});}});});
 
 app.post('/updateprofile/:id',(req,res)=>{
@@ -403,16 +421,25 @@ app.post('/updateprofile/:id',(req,res)=>{
         else{
           db.close();
           response.send('success');
-        }
-      });
-    }
-  });
-});
+        }});}});});
+
+app.get('/getuser',ensure,(req,res)=>{
+  let user_id=req.user.id;
+  mongo.connect(mongoURL,(err,db)=>{
+    if(err){db.close(); res.send(500);}
+    else{
+      var collection=db.collection('user_infor');
+      collection.find({clientID:user_id}).toArray(function(err,doc){
+        if(err){db.close(); res.send(500);}
+        else{
+          var data=doc[0].information;
+          res.send(data);
+        }});}});});
 
 //activate your ad
 app.get('/gigmatchup/activation/:province',ensureforActivation,(req,res)=>{
 
-})
+})；
 
 
 var server=app.listen(process.env.PORT || '8080', function(){

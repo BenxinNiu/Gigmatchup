@@ -37,6 +37,20 @@ function acquire_form(){
   };
 }
 
+function acquire_user_infor(){
+  $.ajax({
+    type:"GET",
+    url:"/getuser",
+    contenttype:'json',
+    success:function(result){
+      console.log(result);
+    },
+    error:function(result){
+      console.log('error');
+    }
+  })
+}
+
 function updateprofile(user_ID){
   const form=acquire_form();
   console.log(form);
@@ -56,6 +70,8 @@ function updateprofile(user_ID){
 
 
 $(document).ready(function(){
+acquire_user_infor();
+
 $('.fa').on('click',function(){
   var id=$(this).parent().attr('id');
   edit_social_channel(id);

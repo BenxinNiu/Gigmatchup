@@ -37,13 +37,41 @@
 
 <body>
     <!-- Navigation -->
-    <div class="blackbar">
-  <a class="logo"></a>
-  <ul>
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
+          <div class="container">
+              <!-- Brand and toggle get grouped for better mobile display -->
+              <div class="navbar-header page-scroll">
+                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                      <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                  </button>
+                  <a class="navbar-brand" href="#page-top">Gig matchup</a>
+              </div>
 
-  </ul>
-<a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
-    </div>
+              <!-- Collect the nav links, forms, and other content for toggling -->
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <ul class="nav navbar-nav navbar-right">
+                      <li class="hidden">
+                          <a href="#page-top"></a>
+                      </li>
+                      <li class="page-scroll" id="login_navbar">
+                          <a href="/loginpage?return=/">Login</a>
+                      </li>
+                      <li class="page-scroll" id="register_navbar">
+                          <a href="/loginpage?return=/">Register</a>
+                      </li>
+                      <li class="page-scroll">
+                          <a href="#post-form-area">post Ad</a>
+                      </li>
+                      <li class="page-scroll">
+                          <a href="#contact">Explore</a>
+                      </li>
+                  </ul>
+              </div>
+              <!-- /.navbar-collapse -->
+          </div>
+          <!-- /.container-fluid -->
+      </nav>
+      <!--
     <nav id="sidebar-wrapper">
         <ul class="sidebar-nav">
           <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
@@ -67,13 +95,14 @@
             </li>
         </ul>
     </nav>
-
+-->
     <!-- Header -->
 
     <header id="top" class="intro">
         <div class="home-page">
       <!--   <span class="logo_holder"><img class='head_logo' src='/img/logo2.png'></span> -->
-           <h1>Gig matchup</h1>
+           <h1>Gig matchup
+          </h1>
             <input class='searchBar'>
             <br>
             <a id="search_ad" class="btn btn-blue btn-lg">Search Ad</a>
@@ -123,7 +152,7 @@
                           <p>Use your existing profile to post ad</p>
                             <p>upload pictures, videos or add your social media channels</p>
                             <p>Improve your profile to increase your chance to be discovered</p>
-                            <a href='/profile' class="btn btn-primary edit_profile_now">Edit my profile now</a>
+                            <a class="btn btn-primary edit_profile_now">Edit my profile now</a>
                             <p> or start from scratch</p>
                             <a class='btn btn-danger skip'>Skip</a>
                           </div>

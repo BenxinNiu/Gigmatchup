@@ -251,9 +251,8 @@ function initial_animation(){
   $('.service_detail').slideUp(0.1);
   $('.post_ad').slideUp(0.1);
   if(is_login()){
-    $('#signin').remove();
-      $('#register').remove();
-      $('.sidebar-nav').append("<li><a href='/logout'>Logout</a></li>")
+    $('#login_navbar').empty().append('<a href="/profile">account</a>')
+    $('#register_navbar').empty().append('<a href="/logout">Logout</a>')
   }
 }
 
@@ -269,7 +268,7 @@ function optimize(){
 $(document).ready(function(){
 
 var Ad_num_to_post='';  // the id returned after uploading pictures
-//initial_animation();
+initial_animation();
 
 optimize();
 
@@ -317,7 +316,7 @@ $('.channel').on('click',function(){
 
 $('.edit_profile_now').on('click',function(){
   if(is_login())
-  window.location.href='/edit';
+  window.location.href='/profile';
   else
   promote_login();
 })
@@ -336,30 +335,5 @@ $('.login_icon').on('click',function(){
   social_login();
 })
 
-
-  $('#signin_navbar').click(function(){
-    $('.sidebar-nav').append("<li><a class='nav_login btn btn-social btn-google' href='/login/google?return=/'><span class='fa fa-google'></span> Sign in with Google</a></li>")
-        $('.sidebar-nav').append("<li><a class='nav_login btn btn-social btn-facebook' href='/login/google?return=/'><span class='fa fa-facebook'></span> Sign in with Google</a></li>")
-            $('.sidebar-nav').append("<li><a class='nav_login btn btn-social btn-twitter' href='/login/google?return=/'><span class='fa fa-twitter'></span> Sign in with Google</a></li>")
-  })
-
-$('#register_navbar').click(function(){
-  $('.sidebar-nav').append("<li><a class='nav_login btn btn-social btn-google' href='/login/google?return=/'><span class='fa fa-google'></span> register with Google</a></li>")
-      $('.sidebar-nav').append("<li><a class='nav_login btn btn-social btn-facebook' href='/login/google?return=/'><span class='fa fa-facebook'></span>  register with Google</a></li>")
-          $('.sidebar-nav').append("<li><a class='nav_login btn btn-social btn-twitter' href='/login/google?return=/'><span class='fa fa-twitter'></span> register with Google</a></li>")
-})
-
-
-  // Closes the sidebar menu
-  $("#menu-close").click(function(e) {
-      e.preventDefault();
-      $("#sidebar-wrapper").toggleClass("active");
-  });
-  // Opens the sidebar menu
-  $("#menu-toggle").click(function(e) {
-    console.log("hi")
-      e.preventDefault();
-      $("#sidebar-wrapper").toggleClass("active");
-  });
 
 }); // document

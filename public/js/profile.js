@@ -82,7 +82,6 @@ function display_user_infor(data){
    $('#linkedin_url').val(data.social.linkedin)
    if(data.social.instagram!=="")
    $('#instagram_url').val(data.social.instagram)
-
 }
 
 function acquire_user_infor(){

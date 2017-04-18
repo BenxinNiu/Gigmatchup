@@ -478,6 +478,7 @@ app.get('/getuser',ensure,(req,res)=>{
         if(err){db.close(); res.send(500);}
         else{
           var data=doc[0].information;
+          console.log(data);
           res.send(data);
         }});}});});
 
@@ -559,7 +560,7 @@ else{
      res.send(500);
      else {
        db.close();
-       res.redirect('/adpage?search='+ad_id'&province=newfoundland');
+       res.redirect('/adpage?search='+ad_id+'&province=newfoundland');
      }
      console.log(body);
    });

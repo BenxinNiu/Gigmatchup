@@ -82,8 +82,8 @@ $.ajax({
   success: function(res){
     console.log('success');
     $('load-wrapp').remove();
-  $('.response').addClass('alert-success').html('Fuck you for posting ad ')
-      $('.more_message').append("<h4> An email has been sent to your email address provided, Please check your indox and click the provided link to activate your account</h4>")
+  $('.response').addClass('alert-success').html('Thank you for posting ad ')
+      $('.more_message').append("<h4> An email has been sent to "+form.email+", Please check your indox and click the provided link to activate your account</h4>")
   //  $('.notification').append("<a class='goto_Ad' href="+ link +">Goto Ad page</a>")
   },
   error:function(res){
@@ -154,12 +154,26 @@ break;
 ///adpage?search=Music&province=all
 //see if user is logged in
 function is_login(){
+  $.ajax({
+type:'GET',
+url:'/verify',
+contenttype:'json',
+success:function(result){
+if(result=='yes'){
+  $('#login_navbar').empty().append('<a href="/profile">account</a>')
+  $('#register_navbar').empty().append('<a href="/logout">Logout</a>')
+}
+},
+error:function(){console.log('error')}
+  })
+  /*
   var url=window.location.href;
   var num=url.indexOf("=")+1;
   if(num===0)
   return false;
   else return true;
 //  return url.slice(num);
+*/
 }
 
 function is_form_completed(){
@@ -250,10 +264,6 @@ function start_post_ad(id){
 function initial_animation(){
   $('.service_detail').slideUp(0.1);
   $('.post_ad').slideUp(0.1);
-  if(is_login()){
-    $('#login_navbar').empty().append('<a href="/profile">account</a>')
-    $('#register_navbar').empty().append('<a href="/logout">Logout</a>')
-  }
 }
 
 function optimize(){
@@ -267,14 +277,12 @@ function optimize(){
 
 $(document).ready(function(){
 
+is_login();
+
 var Ad_num_to_post='';  // the id returned after uploading pictures
 initial_animation();
 
 optimize();
-
-if(is_login()){
-get_user_infor();
-}
 
 $('#search_ad').click(function(){
 var keyword=$('.searchBar').val();
@@ -282,6 +290,8 @@ console.log(keyword)
 var province=$('#category').val();
 if (keyword!="")
 window.location="/adpage?search="+keyword+"&province="+province;
+else
+window.location="/adpage?search=all&province="+province;
 })
 
 // post ad
@@ -315,10 +325,12 @@ $('.channel').on('click',function(){
 })
 
 $('.edit_profile_now').on('click',function(){
-  if(is_login())
-  window.location.href='/profile';
-  else
-  promote_login();
+  if(!is_login())
+  window.location.href='/loginpage?return=/';
+  else{
+    $('.a').animate({left:"1000px"},600)
+      $('.navigate').append("<a id='next_to_contact' class='btn btn-primary btn-lobster'>(1/3)Next</a>")
+  }
 })
 $('.skip').on('click',function(){
   $('.a').animate({left:"1000px"},600)

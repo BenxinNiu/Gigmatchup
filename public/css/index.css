@@ -501,7 +501,9 @@ margin-bottom:25px;
 .notification{
   display:block;
   height:200px;
-
+}
+.errors{
+  list-style-type:none;
 }
 
 .footer{

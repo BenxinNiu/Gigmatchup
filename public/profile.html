@@ -41,7 +41,7 @@
               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                   <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
               </button>
-              <a class="navbar-brand" href="#page-top">Gig matchup</a>
+              <a class="navbar-brand" href="/">Gig matchup</a>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
@@ -51,13 +51,13 @@
                       <a href="#page-top"></a>
                   </li>
                   <li class="page-scroll">
-                      <a href="#portfolio">Profile</a>
+                      <a href="#portfolio">postAd</a>
                   </li>
                   <li class="page-scroll">
-                      <a href="#about">Account</a>
+                      <a href="/profile">Account</a>
                   </li>
                   <li class="page-scroll">
-                      <a href="#contact">logout</a>
+                      <a href="/logout">logout</a>
                   </li>
               </ul>
           </div>
@@ -70,6 +70,7 @@
 <div class='container'>
 <div class="row">
 <div class="col-md-8 profile-area">
+  <h2 class='alert hidden'></h2>
 <span class='profile_infor'>
 <img class="avator img-responsive img-circle" src="/img/no-picture-icon.png">
  </span>
@@ -79,7 +80,7 @@
 <form class="information">
   <span class="input_container">
   <label class="label" for="#contact_name">Contact name</label>
-  <input class="full" id='contact_name'>
+  <input class="full" id='contact_name' placeholder="hi">
 </span>
 <span class="input_container">
 <label class="label" for="email">Email address</label>
@@ -93,6 +94,7 @@
 <label class="label" for="city">city</label>
 <input class="full" id='city'>
 <select class="form-control" name="category" id="province">
+    <option value=""></option>
   <option value="Newfoundland">Newfoundland</option>
   <option value="Ontario">Ontario</option>
   <option value="British Columbia">British Columbia</option>
@@ -123,13 +125,25 @@
 <input class='social_link hidden' id="linkedin_url" placeholder="facebook link">
 </span>
 <a class='btn btn-primary' id='submit'>Save</a>
-<a class='btn btn-primary' id='post_ad'>use your profile to post ad</a>
+<a class='btn btn-primary' id='manage_ad'>Manage my ad</a>
 </form>
 </div>
 </div>
-
 </div>
-
+</section>
+<section id="ad_area">
+<div class="container">
+<div class="row">
+<div class="col-md-8 ads">
+<!--
+<span class="ad">
+<h3>Ad ID:</h3> <a class="btn btn-primary">View ad</a>
+<a class="delete btn btn-danger">Delete</a>
+</span>
+-->
+</div>
+</div>
+</div>
 </section>
 
 <footer>

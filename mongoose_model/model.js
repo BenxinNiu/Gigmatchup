@@ -7,6 +7,7 @@ function construct_user(profile){
   var date=new Date();
   var formated=formatTime(date);
 return {
+    active:"true",
   Oauth_ID: profile.id,
   name:profile.displayName,
   created_date:formated,
@@ -18,6 +19,7 @@ function create_user(profile){
   var date=new Date();
   var formated=formatTime(date);
 return {
+  active:"false",
   Oauth_ID: profile.id,
   name:profile.displayName,
   created_date:formated,
@@ -25,10 +27,11 @@ return {
   Ad_id:[]
 };
 }
-function construct_ad(infor,id){
+function construct_ad(infor,id,activation){
   var date=new Date();
   var formated=formatTime(date);
   return{
+  "activeCode":activation,
   "ID":id,
   "Oauth_ID":"null",
   "active":"false",
@@ -60,12 +63,15 @@ function construct_ad(infor,id){
 function construct_user_infor(profile){
   return {
     clientID:profile.id,
+    img:profile.image,
     information:{
-      description:"",
-      contact_name:"",
-      email:"",
-      phone:"",
-      location:"",
+      img:profile.image,
+      description:"Write something about yourself",
+      contact_name:profile.displayName,
+      email:"Click to edit",
+      phone:"Click to edit",
+      city:"Click to edit",
+      province:"",
       social:{
       facebook:"",
       twitter:"",
@@ -73,6 +79,10 @@ function construct_user_infor(profile){
       linkedin:"",
       instagram:""
     }
+  },
+  credential:{
+    login_email:profile.login_email,
+    pwd:profile.pwd
   }
 };
 }
@@ -82,7 +92,8 @@ function update_user_infor(infor){
     contact_name:infor.b,
     email:infor.c,
     phone:infor.d,
-    location:infor.e,
+    city:infor.e,
+    province:infor.g,
     social:{
     facebook:infor.f.facebook,
     twitter:infor.f.twitter,
@@ -95,6 +106,7 @@ function update_user_infor(infor){
 
 module.exports={
 construct:  construct_user,
+create_user:create_user,
 construct_ad: construct_ad,
 update_user_infor:update_user_infor,
 construct_user_infor:construct_user_infor

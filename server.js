@@ -75,7 +75,9 @@ if (profile.photos && profile.photos.length) {
   return {
     id: profile.id,
     displayName: profile.displayName,
-    image: url
+    image: url,
+    login_email:"",
+    pwd:""
   };
 }
 
@@ -198,8 +200,15 @@ passport.deserializeUser((obj, cb) => {
 // event handling !!
 //add event handling code below
 
-app.get('/',ensure,(req,res)=>{
+app.get('/',(req,res)=>{
  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.get('/verify',(req,res)=>{
+if(req.isAuthenticated())
+res.send('yes');
+else
+res.send('no');
 });
 
 app.get('/loginpage',(req,res)=>{
@@ -291,32 +300,38 @@ app.get('/adinfor/:type',(req,res)=>{
     if (err){ res.send(500);
       db.close();}
     else {
-      var ad=db.collection('TempAdbase'); // change to province later
-
+      var ad=db.collection(pro); // change to province later
       if (type=='all'){
         var result_array=[];
           ad.find().toArray(function(err,docs){
             if(err){res.send(500); db.close();}
           for (var i=0;i<5&&i<docs.length;i++){
               var data=docs[number+i];
-             console.log(data);
+            // console.log(data);
             result_array.unshift(data.snippet);
           }
           db.close();
           res.send(result_array);
     });
     }
-
       else {
-      var result_array=[];
         ad.find({"category":type}).toArray((err,docs)=>{
+          var result_array=[];
           if(err){res.send(500); db.close();}
-        for (var i=0;i<5&&docs.length;i++){
+        for (var i=0;i<5&&i<docs.length;i++){
             var data=docs[number+i];
             result_array.unshift(data.snippet);
         }
-        db.close();
-        res.send(result_array);
+        ad.find({"ID":type}).toArray(function(err,docs){
+          if(err){res.send(500); db.close();}
+          for (var i=0;i<5&&docs.length;i++){
+              var data=docs[number+i];
+              result_array.unshift(data.snippet);
+          }
+          db.close();
+          console.log(result_array);
+          res.send(result_array);
+        });
         });
       }
     }
@@ -325,8 +340,7 @@ app.get('/adinfor/:type',(req,res)=>{
 
 app.get('/acquire_more/:ad_num',(req,res)=>{
   var id=req.params.ad_num;
-  var pos=id.indexOf('N');
-  var db_name=id.substring(pos);
+  var db_name=id.substring(4);
   console.log(db_name)
   mongo.connect(mongoURL,(err,db)=>{
     if (err){
@@ -334,7 +348,7 @@ app.get('/acquire_more/:ad_num',(req,res)=>{
       db.close();
     }
     else{
-  var d=db.collection('TempAdbase');
+  var d=db.collection(db_name);
   d.find({"ID":id}).toArray((err,docs)=>{
     console.log(docs)
     db.close();
@@ -377,29 +391,60 @@ mongo.connect(mongoURL,(err,db)=>{
 app.post('/post',(req,res)=>{
   var ad_num=req.query.ad;
   var data=req.body;
+  if(req.isAuthenticated())
+  var user_id=req.user.id;
   mongo.connect(mongoURL,(err,db)=>{
   if (err)
   sendError();
   else{
+    if(!req.user)
     var ad=db.collection('TempAdbase');
+    else{
+    var ad=db.collection(data.province);
+    var userBase=db.collection('userBase')
+  }
     ad.count((err,num)=>{
 if (err)
 sendError();
 else{
-    var object=model.construct_ad(data,num+1000+data.province);
+  if(req.isAuthenticated()){
+    userBase.find({Oauth_ID:user_id}).toArray(function(err,doc){
+      if(doc.length!=0){
+        var ads=doc[0].Ad_id;
+        ads.push(num+1000+data.province);
+        userBase.update({Oauth_ID:user_id},{$set:{Ad_id:ads}})
+      }
+    });
+  }
+  var code=Math.floor((Math.random() * 10000000) + 1);
+    var object=model.construct_ad(data,num+1000+data.province,code);
+    var active_link='http://localhost:8080/gigmatchup/activation/'+
+    object.ID+"?activation_code="+code+"&email="+object.more.email;
     ad.insert(object,(err,data)=>{
  if(err)
  sendError();
  else{
-   var email_content = {
-  from: config.get('MAILGUN_FROM'),
-  to: object.more.email,
-  subject: 'Activation link',
-  text: 'This email is sent to you because this email address was used to publish an advertisement on Gigmatchup.ca. Please follow the link bleow to activate your ad: '
-};
+   if(req.isAuthenticated()){
+     var email_content = {
+    from: config.get('MAILGUN_FROM'),
+    to: object.more.email,
+    subject: 'your ad is now on Gigmatchup.ca',
+    text: 'Thank you for using Gigmatchup.ca, your ad has been successfully activated'
+  };
+   }
+   else{
+     console.log(active_link);
+     var email_content = {
+    from: config.get('MAILGUN_FROM'),
+    to: object.more.email,
+    subject: 'Activation link',
+    text: 'This email is sent to you because this email address was used to publish an advertisement on Gigmatchup.ca. Please follow the link bleow to activate your ad: '+
+    active_link
+  };
+   }
 mailgun.messages().send(email_content, function (err, body) {
   if(err)
-  response.send(500);
+  res.send('success');
   else {
     db.close();
     res.send('success');
@@ -408,19 +453,19 @@ mailgun.messages().send(email_content, function (err, body) {
 });
  }});}});}});});
 
-app.post('/updateprofile/:id',(req,res)=>{
-  var user_id=req.params.id;
+app.post('/updateprofile',(req,res)=>{
+  var user_id=req.user.id;
   var infor=req.body;
   var data=model.update_user_infor(infor);
   mongo.connect(mongoURL,(err,db)=>{
-    if(err){db.close(); response.send(500)}
+    if(err){db.close(); res.send(500)}
     else{
       var collection=db.collection('user_infor');
       collection.updateOne({clientID:user_id},{$set:{information:data}},(err)=>{
-        if (err){db.close(); response.send('failed');}
+        if (err){db.close(); res.send('failed');}
         else{
           db.close();
-          response.send('success');
+          res.send('success');
         }});}});});
 
 app.get('/getuser',ensure,(req,res)=>{
@@ -436,10 +481,96 @@ app.get('/getuser',ensure,(req,res)=>{
           res.send(data);
         }});}});});
 
-//activate your ad
-app.get('/gigmatchup/activation/:province',ensureforActivation,(req,res)=>{
+app.get('/manageAd',ensure,(req,res)=>{
+  var id=req.user.id;
+  mongo.connect(mongoURL,(err,db)=>{
+    if(err){db.close(); res.send(500);}
+    else{
+      var collection=db.collection('userBase');
+      collection.find({Oauth_ID:id}).toArray(function(err,doc){
+       if(err){db.close(); res.send(500);}
+       else{
+         var array=doc[0].Ad_id;
+         res.send(array);
+       }
+     });
+    }
+  })
+});
 
-})；
+app.get('/deleteAd/:id',ensure,(req,res)=>{
+  var user_id=req.user.id;
+  var ad_id=req.params.id;
+  var ad_name=ad_id.substring(4);
+  console.log(ad_name);
+  mongo.connect(mongoURL,(err,db)=>{
+    if(err){db.close(); res.send(500);}
+    else{
+      var userBase=db.collection('userBase');
+      var ad_base=db.collection(ad_name);
+      userBase.find({Oauth_ID: user_id}).toArray(function(err,doc){
+        if(err){  db.close(); res.send(500);}
+      var ad_array=doc[0].Ad_id;
+      var position=ad_array.indexOf(ad_id);
+          ad_array.splice(position,1);
+      userBase.updateOne({Oauth_ID:user_id},{$set:{Ad_id:ad_array}},(err)=>{
+      if(err){db.close(); res.send(500);}
+    else{
+      ad_base.remove({"ID":ad_id},(err)=>{
+        if(err){  db.close(); res.send(500);}
+        else{
+            db.close();
+            res.send('success');
+        }
+      });
+    }});
+      });
+    }
+  });
+})
+
+//activate your ad
+app.get('/gigmatchup/activation/:id',(req,res)=>{
+var email=req.query.email;
+var ad_id=req.params.id;
+var code=req.query.activation_code;
+console.log(ad_id);
+console.log(email);
+var ad_name=ad_id.substring(4);
+console.log(ad_name);
+mongo.connect(mongoURL,(err,db)=>{
+if(err){db.close(); res.send(500);}
+else{
+  var adBase=db.collection(ad_name);
+  var temp=db.collection('TempAdbase');
+  temp.find({"ID":ad_id}).toArray(function(err,doc){
+    var activation=doc[0].activeCode;
+    if(Number(code)===Number(activation)){
+      adBase.insert(doc[0]);
+      temp.remove({"ID":ad_id});
+      var email_content = {
+     from: config.get('MAILGUN_FROM'),
+     to: email,
+     subject: 'your ad is now on Gigmatchup.ca',
+     text: 'Thank you for using Gigmatchup.ca, your ad has been successfully activated'
+   };
+   mailgun.messages().send(email_content, function (err, body){
+     if(err)
+     res.send(500);
+     else {
+       db.close();
+       res.redirect('/adpage?search='+ad_id'&province=newfoundland');
+     }
+     console.log(body);
+   });
+    }// if matched
+    else{
+      res.send("activation failed");
+    }
+  });
+}//mongo else
+}); //mongo connect
+});
 
 
 var server=app.listen(process.env.PORT || '8080', function(){

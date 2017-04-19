@@ -7,7 +7,9 @@ function return_url(){
 $(document).ready(function(){
 var redirect=return_url();
 $('.btn-google').click(function(){
-  window.location.href='/login/google?return='+redirect; 
+  window.location.href='/login/google?return='+redirect;
 })
-
+$('.register').click(function(){
+  
+})
 })

@@ -17,6 +17,7 @@ const path = require('path');
 const GoogleStrategy=require('passport-google-oauth20').Strategy;
 const FacebookStrategy=require('passport-facebook').Strategy;
 const TwitterStrategy=require('passport-twitter').Strategy;
+const LocalStrategy=require('passport-local').Strategy;
 const app = express();
 const mongoURL=config.get('MONGO_URL');
 const mailgun=require('mailgun-js')({apiKey: config.get('MAILGUN_API_KEY'), domain: config.get('MAILGUN_DOMAIN')});
@@ -30,7 +31,7 @@ fs.readdirSync(__dirname+'/mongoose_model').forEach(function(file){
 
 const sessionConfig={
   resave: false,
- saveUninitialized: false,
+  saveUninitialized: false,
   secret: config.get('SECRET'),
   signed: true
 };
@@ -66,7 +67,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-
+//extract user information from 3rd party auth
 function profile_infor(profile){
 let url='';
 if (profile.photos && profile.photos.length) {
@@ -76,25 +77,99 @@ if (profile.photos && profile.photos.length) {
     id: profile.id,
     displayName: profile.displayName,
     image: url,
-    login_email:"",
-    pwd:""
   };
 }
+
+//extract user information from local mongo database
+function extract_dear_user(profile){
+return{
+  id: profile.clientID,
+  displayName: profile.information.contact_name,
+  image: profile.img,
+};
+}
+
+function create_profile(id,pwd,email){
+ return{
+id:id,
+displayName:"",
+img:"",
+login_email:email,
+pwd:pwd
+ };
+}
+
 
 function ensure(req,res,next){
   if(req.isAuthenticated()){return next();}
   res.redirect('/loginpage');
 }
 
-function ensureforActivation(req,res,next){
-  if(req.isAuthenticated()){return next();}
-  else
-  res.redirect('/login/google');
-}
-
 function sendError(){
   req.send(500);
 }
+
+
+/*
+userBase.count((err,num)=>{
+if(err){db.close(); cb(null, false)}
+else
+var number=(Math.floor((Math.random() * 100000000) + 1)).toString();
+var count=number+(18+num).toString();
+var id=parseInt(count,10);
+var infor=create_profile(id,password,username);
+}) // ocunt create profile
+*/
+
+//local passport
+
+passport.use('user_login', new LocalStrategy(
+function(username,password,cd){
+mongo.connect(mongoURL,(err,db)=>{
+var userBase=db.collection('userBase');
+var user_infor=db.collection('user_infor');
+var dear_user=user_infor.findOne({'credential.login_email':username});
+if(!dear_user)
+return cd(null,false);
+else{
+ var pwd=dear_user.credential.pwd;
+ if(pwd===password){
+ var dear_user_infor=extract_dear_user(dear_user);
+ return cd(null,dear_user_infor);
+ }
+ else
+ return cd(null,false);
+}
+})
+}
+));
+
+passport.use('/signup', new LocalStrategy(
+function(username,password,cb){
+mongo.connect(mongoURL,(err,db)=>{
+var temp_user=db.collection('TempUser');
+userBase.count((err,num)=>{
+if(err){db.close(); cb(null, false)}
+else{
+var id=model.generateId(num);
+var infor=create_profile(id,password,username); // for model functions
+var basic=model.create_user(infor);
+var detail=model.construct_user_infor(infor);
+var dear_user_all_infor={
+temp_id:username,
+user_basic: basic,
+user_detail:detail
+};
+temp_user.insert(dear_user_all_infor,(err,data)=>{
+if(err){db.close(); cb(null,false);}
+else{ cb(null,infor); }
+});
+}
+});
+});
+} // function
+));
+
 
 //passport configuration
 passport.use(new GoogleStrategy({
@@ -204,6 +279,10 @@ app.get('/',(req,res)=>{
  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+app.get('/register',(req,res)=>{
+res.sendFile(path.join(__dirname,'public','register.html'));
+});
+
 app.get('/verify',(req,res)=>{
 if(req.isAuthenticated())
 res.send('yes');
@@ -226,11 +305,25 @@ app.get('/profile',ensure,(req,res)=>{
   res.sendFile(path.join(__dirname,'public','profile.html'))
 });
 
-app.get('/logout',(req,res)=>{
+app.get('/logout',ensure,(req,res)=>{
   req.logout();
   req.session.destroy()
  res.redirect('/');
 })
+
+app.get('/verify_email/:email',(req,res)=>{
+var email={temp_id:req.params.email};
+mongo.connect(mongoURL,(err,db)=>{
+if(err){db.close(); res.send(500);}
+var collection=db.collection('TempUser');
+var is_user=collection.findOne(email);
+if(is_user)
+res.send('denied');
+else
+res.send('pass');
+db.close();
+});// mongo connect
+});
 
 app.get('/login/google',function (req,res,next){
    console.log(req.query.return);
@@ -240,7 +333,7 @@ app.get('/login/google',function (req,res,next){
     next();
 },passport.authenticate('google', { scope: ['email', 'profile'] }));
 
-app.get('/auth/google/callback',passport.authenticate('google',{ failureRedirect: '/addsa' }),function(req, res){
+app.get('/auth/google/callback',passport.authenticate('google',{ failureRedirect: '/login?return=/' }),function(req, res){
   var redirect = req.session.oauth2return+"?user="+req.user.id;
   //console.log(redirect);
   delete req.session.oauth2return;
@@ -397,11 +490,12 @@ app.post('/post',(req,res)=>{
   if (err)
   sendError();
   else{
-    if(!req.user)
-    var ad=db.collection('TempAdbase');
-    else{
+    if(req.isAuthenticated()){
     var ad=db.collection(data.province);
-    var userBase=db.collection('userBase')
+    var userBase=db.collection('userBase');
+  }
+    else{
+        var ad=db.collection('TempAdbase');
   }
     ad.count((err,num)=>{
 if (err)
@@ -535,16 +629,14 @@ app.get('/gigmatchup/activation/:id',(req,res)=>{
 var email=req.query.email;
 var ad_id=req.params.id;
 var code=req.query.activation_code;
-console.log(ad_id);
-console.log(email);
 var ad_name=ad_id.substring(4);
-console.log(ad_name);
 mongo.connect(mongoURL,(err,db)=>{
 if(err){db.close(); res.send(500);}
 else{
   var adBase=db.collection(ad_name);
   var temp=db.collection('TempAdbase');
   temp.find({"ID":ad_id}).toArray(function(err,doc){
+    if(!err&&doc.length!=0){
     var activation=doc[0].activeCode;
     if(Number(code)===Number(activation)){
       adBase.insert(doc[0]);
@@ -568,6 +660,11 @@ else{
     else{
       res.send("activation failed");
     }
+  }
+  else{
+    db.close();
+    res.send("activation failed");
+  }
   });
 }//mongo else
 }); //mongo connect

@@ -543,3 +543,32 @@ margin-bottom:25px;
     50% {transform: translate(0,15px);}
     100% {transform: translate(0,0);}
 }
+
+/*night mode*/
+.toggle{
+  width: 51px;
+	height: 31px;
+  box-sizing: border-box;
+	display: block;
+	background: #6a666b;
+  border-radius:5px;
+  margin-left:20px;
+}
+#switch{
+  position:relative;
+  width: 20px;
+	height: 31px;
+  box-sizing: border-box;
+	display: block;
+  border-radius:8px;
+	background: #fff;
+  box-shadow: 0 0 1px 0 rgba(0,0,0, 0.25),
+				0 3px 3px 0 rgba(0,0,0, 0.15);
+}
+.toggle i:hover{
+  cursor:pointer;
+}
+
+.turned_on{
+
+}

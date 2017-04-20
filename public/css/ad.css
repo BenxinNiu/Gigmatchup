@@ -5,6 +5,7 @@
  */
 
 body {
+  color:black;
     padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 
@@ -75,7 +76,34 @@ display:inline-block;
   border-radius:5px;
 }
 
+/* night mode */
+.toggle{
+  width: 51px;
+	height: 31px;
+  box-sizing: border-box;
+	display: block;
+	background: #6a666b;
+  border-radius:5px;
+  margin-bottom:20px;
+}
+#switch{
+  position:relative;
+  width: 20px;
+	height: 31px;
+  box-sizing: border-box;
+	display: block;
+  border-radius:8px;
+	background: #fff;
+  box-shadow: 0 0 1px 0 rgba(0,0,0, 0.25),
+				0 3px 3px 0 rgba(0,0,0, 0.15);
+}
+.toggle i:hover{
+  cursor:pointer;
+}
 
+.turned_on{
+
+}
 
 
 

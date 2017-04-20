@@ -151,7 +151,26 @@ $('.ad_area').on('click','.show_less',function(){
 $('.ad_area').children(sec_id).children('.row').children('.snippet').children('.show_less').remove();
 })
 
-
+// night mode
+$('#switch').click(function(){
+  console.log('yes');
+  if($(this).parent().hasClass('turned_on')){
+    $(this).parent().removeClass('turned_on')
+  $(this).animate({left:'0px'},300,function(){
+    $(this).css("background","#fff")
+      $(this).parent().css("background","#6a666b")
+        $('body').css("background","#f4f4f4").css("color","black")
+  });
+  }
+  else{
+    $(this).parent().addClass('turned_on')
+    $(this).animate({left:'31px'},300,function(){
+      $(this).css("background","#6a666b")
+        $(this).parent().css("background","white")
+        $('body').css("background","#2a282b").css("color","white")
+    });
+  }
+})
 
 
 

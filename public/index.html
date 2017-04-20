@@ -57,13 +57,14 @@
                           <a href="/loginpage?return=/">Login</a>
                       </li>
                       <li class="page-scroll" id="register_navbar">
-                          <a href="/loginpage?return=/">Register</a>
+                          <a href="/register">Register</a>
                       </li>
                       <li class="page-scroll">
                           <a href="#post-form-area">post Ad</a>
                       </li>
                       <li class="page-scroll">
-                          <a href="#about">Explore</a>
+                        <span class="toggle"><i id="switch"></i></span>
+                          <p style="color:white;"><strong>Night mode</strong></p>
                       </li>
                   </ul>
               </div>
@@ -72,29 +73,7 @@
           <!-- /.container-fluid -->
       </nav>
       <!--
-    <nav id="sidebar-wrapper">
-        <ul class="sidebar-nav">
-          <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
-         <li class="sidebar-brand">
-             <a href="#top" style="color:blue;" onclick=$("#menu-close").click();>gigmatchup</a>
-         </li>
-            </li>
-            <li>
-            </li>
-            <li id="signin">
-                <a id="signin_navbar">SignIn</a>
-            </li>
-            <li id="register">
-                <a id="register_navbar">Register</a>
-            </li>
-            <li>
-                <a href="#post-form-area" onclick=$("#menu-close").click();>Post Ad</a>
-            </li>
-            <li>
-                <a href="#contact" onclick=$("#menu-close").click();>Contact</a>
-            </li>
-        </ul>
-    </nav>
+
 -->
     <!-- Header -->
 
@@ -112,15 +91,6 @@
   <div class="province_top input-group col-xs-8">
     <select class="form-control" name="category" id="category">
       <option value="newfoundland">Newfoundland</option>
-      <option value="ontario">Ontario</option>
-      <option value="BC">British Columbia</option>
-      <option value="quebec">Québec</option>
-      <option value="alberta">Alberta</option>
-      <option value="saskatchewan">Saskatchewan</option>
-      <option value="NS">Nova Scotia</option>
-      <option value="manitoba">Manitoba</option>
-      <option value="NB">New Brunswick</option>
-        <option value="PEI">Prince Edward Island</option>
     </select>
   </div>
 </div>
@@ -146,7 +116,7 @@
                     <div class="row">
 
                       <div class="post_ad col-md-12">
-                        <div class="a col-md-12">
+                        <div class="night a col-md-12">
                       <div id="a">
                           <h2>SignIn to manage your ad</h2>
                             <p>upload pictures, add your social media channels</p>
@@ -167,7 +137,7 @@
                               </a></li>
                     </ul>
                         </div>
-                        <div class="b col-md-12">
+                        <div class="night b col-md-12">
                           <h2>Edit details
                               <small style="font-size:14px;">*required</small>
                           </h2>
@@ -202,7 +172,7 @@
                           </form>
 
                         </div>
-                        <div class="c col-md-12">
+                        <div class="night c col-md-12">
                           <h2> Contact Information</h2>
     <form class="contact_form col-md-6 col-md-offset-3">
       <label class="full_label" for="contact_name">Contact name*</label>
@@ -235,7 +205,7 @@
       </select>
     </form>
                         </div>
-                        <div class="d col-md-12">
+                        <div class="night d col-md-12">
                           <h2> Edit social information</h2>
                           <div class="add_social col-md-6 col-md-offset-3">
                             <ul class="social_list">
@@ -256,7 +226,7 @@
                             <label for="company">Your personal website</label>
                             <input class='full' id="company">
                             <span id="upload_pics" class="btn btn-primary">Upload Pictures</span>
-                              <span id="add_video" class="btn btn-primary">Add Video</span>
+
                           </div>
                         </div>
                       </div>

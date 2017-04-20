@@ -348,4 +348,25 @@ $('.login_icon').on('click',function(){
 })
 
 
+$('#switch').click(function(){
+  if($(this).parent().hasClass('turned_on')){
+    $(this).parent().removeClass('turned_on')
+  $(this).animate({left:'0px'},300,function(){
+    $(this).css("background","#fff")
+    $(this).parent().css("background","#6a666b")
+    $('body').css("color","black").css("background","#f4f4f4")
+  $('.night').css("background","#6a666b")
+  });
+  }
+  else{
+    $(this).parent().addClass('turned_on')
+    $(this).animate({left:'31px'},300,function(){
+      $(this).css("background","#6a666b")
+        $(this).parent().css("background","white")
+          $('body').css("color","white").css("background","#2a282b")
+        $('.night').css("background","#2a282b")
+    });
+  }
+})
+
 }); // document

@@ -7,7 +7,6 @@ function construct_user(profile){
   var date=new Date();
   var formated=formatTime(date);
 return {
-    active:"true",
   Oauth_ID: profile.id,
   name:profile.displayName,
   created_date:formated,
@@ -19,7 +18,6 @@ function create_user(profile){
   var date=new Date();
   var formated=formatTime(date);
 return {
-  active:"false",
   Oauth_ID: profile.id,
   name:profile.displayName,
   created_date:formated,
@@ -59,7 +57,7 @@ function construct_ad(infor,id,activation){
   }
 };
 }
-
+//from third party
 function construct_user_infor(profile){
   return {
     clientID:profile.id,
@@ -81,9 +79,9 @@ function construct_user_infor(profile){
     }
   },
   credential:{
-    login_email:profile.login_email,
-    pwd:profile.pwd
-  }
+    login_email:"",
+    pwd:""
+  } // think about this!!!!
 };
 }
 function update_user_infor(infor){
@@ -104,10 +102,18 @@ function update_user_infor(infor){
 };
 }
 
+function generateId(num){
+  var number=(Math.floor((Math.random() * 100000000000) + 1)).toString();
+  var count=number+(18+num).toString();
+  var id=parseInt(count,10);
+  return id;
+}
+
 module.exports={
 construct:  construct_user,
 create_user:create_user,
 construct_ad: construct_ad,
 update_user_infor:update_user_infor,
+generateId:generateId,
 construct_user_infor:construct_user_infor
 };

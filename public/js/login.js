@@ -14,6 +14,7 @@ if(redirect=='failed'){
 
 $('.btn-google').click(function(){
   window.location.href='/login/google?return='+redirect;
+<<<<<<< HEAD
 })
 
 $('#switch').click(function(){
@@ -35,4 +36,10 @@ $('#switch').click(function(){
     });
   }
 })
+=======
+})
+$('.register').click(function(){
+  
+})
+>>>>>>> ec74a2b6de9983632ce85b84bbfb6a6ab766d6ee
 })

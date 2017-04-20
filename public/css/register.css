@@ -20,6 +20,7 @@ h1 {
 
 h1,
 p {
+  font-size:12px;
   margin-bottom: 10px;
 }
 
@@ -32,14 +33,17 @@ strong {
 }
 
 
+
 /* ---------- LOGIN ---------- */
 
-#login {
+#register {
   text-align:center;
   margin:150px auto ;
   width: 100%;
 }
-
+#claim{
+  margin-top:20px;
+}
 form fieldset input[type="text"],
 input[type="password"] {
   background: #e5e5e5;
@@ -58,28 +62,8 @@ input[type="password"] {
   width:20%;
 }
 
-.btn-round {
-  background: #5a5656;
-  border-radius: 50%;
-  color: #f4f4f4;
-  padding:20px;
-  font-size: 12px;
-  height: 50px;
-  line-height: 50px;
-  margin: 30px 125px;
-  text-align: center;
-  text-transform: uppercase;
-  width: 50px;
-}
-.list_unstyled{
-  margin-left:-2%;
-  list-style-type:none;
-}
-.list_unstyled li{
-  margin-top:20px;
-}
 footer{
-  margin-top:200px;
+  margin-top:80px;
   position:relative;
   width:100%;
   text-align:center;

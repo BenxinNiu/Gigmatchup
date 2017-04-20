@@ -1,5 +1,6 @@
 const mongo=require('mongodb').MongoClient;
 
+
 function formatTime(date){
   return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + "/" + date.getHours()+ ":" + date.getMinutes();
 }
@@ -7,6 +8,7 @@ function construct_user(profile){
   var date=new Date();
   var formated=formatTime(date);
 return {
+  login_email:"",
   Oauth_ID: profile.id,
   name:profile.displayName,
   created_date:formated,
@@ -18,6 +20,7 @@ function create_user(profile){
   var date=new Date();
   var formated=formatTime(date);
 return {
+  login_email:profile.login_email,
   Oauth_ID: profile.id,
   name:profile.displayName,
   created_date:formated,
@@ -79,9 +82,10 @@ function construct_user_infor(profile){
     }
   },
   credential:{
-    login_email:"",
-    pwd:""
-  } // think about this!!!!
+    login_email:profile.login_email,
+    pwd:profile.pwd,
+    reset_code:""
+  }
 };
 }
 function update_user_infor(infor){
@@ -109,11 +113,20 @@ function generateId(num){
   return id;
 }
 
+function generate_reset_code(){
+  var text = "";
+      var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      for( var i=0; i < 12; i++ )
+          text += letters.charAt(Math.floor(Math.random() * letters.length));
+ return text;
+}
+
 module.exports={
 construct:  construct_user,
 create_user:create_user,
 construct_ad: construct_ad,
 update_user_infor:update_user_infor,
 generateId:generateId,
+generate_reset_code:generate_reset_code,
 construct_user_infor:construct_user_infor
 };

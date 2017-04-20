@@ -77,10 +77,12 @@ if (profile.photos && profile.photos.length) {
     id: profile.id,
     displayName: profile.displayName,
     image: url,
+    login_email:"",
+    pwd:""
   };
 }
 
-//extract user information from local mongo database
+//extract user information from local mongo database to pass to passport.js
 function extract_dear_user(profile){
 return{
   id: profile.clientID,
@@ -89,16 +91,33 @@ return{
 };
 }
 
-function create_profile(id,pwd,email){
+function create_profile(pwd,email,num){
+  var id=model.generateId(num);
  return{
 id:id,
 displayName:"",
-img:"",
+image:"",
 login_email:email,
 pwd:pwd
  };
 }
 
+function greetEmail(email_address){
+  var email_content = {
+  from: config.get('MAILGUN_FROM'),
+  to: email_address,
+  subject: 'Thank you for choosing Gigmatchup.ca',
+  text: 'Hi, We would like to welcome you to join our family. You can now post ad or search talents for your party!'+" Thank you again for choosing Gigmatchup.ca If you have any question or concern, Please do not hesitate to contact us at bn2645@mun.ca"
+  };
+  mailgun.messages().send(email_content, function (err, body) {
+    if(err)
+  console.log(err)
+    else {
+      console.log('hi')
+    }
+    console.log(body);
+  });
+}
 
 function ensure(req,res,next){
   if(req.isAuthenticated()){return next();}
@@ -110,17 +129,6 @@ function sendError(){
 }
 
 
-/*
-userBase.count((err,num)=>{
-if(err){db.close(); cb(null, false)}
-else
-var number=(Math.floor((Math.random() * 100000000) + 1)).toString();
-var count=number+(18+num).toString();
-var id=parseInt(count,10);
-var infor=create_profile(id,password,username);
-}) // ocunt create profile
-*/
-
 //local passport
 
 passport.use('user_login', new LocalStrategy(
@@ -128,46 +136,26 @@ function(username,password,cd){
 mongo.connect(mongoURL,(err,db)=>{
 var userBase=db.collection('userBase');
 var user_infor=db.collection('user_infor');
-var dear_user=user_infor.findOne({'credential.login_email':username});
-if(!dear_user)
-return cd(null,false);
-else{
- var pwd=dear_user.credential.pwd;
- if(pwd===password){
- var dear_user_infor=extract_dear_user(dear_user);
- return cd(null,dear_user_infor);
- }
- else
- return cd(null,false);
-}
-})
-}
-));
-
-passport.use('/signup', new LocalStrategy(
-function(username,password,cb){
-mongo.connect(mongoURL,(err,db)=>{
-var temp_user=db.collection('TempUser');
-userBase.count((err,num)=>{
-if(err){db.close(); cb(null, false)}
-else{
-var id=model.generateId(num);
-var infor=create_profile(id,password,username); // for model functions
-var basic=model.create_user(infor);
-var detail=model.construct_user_infor(infor);
-var dear_user_all_infor={
-temp_id:username,
-user_basic: basic,
-user_detail:detail
-};
-temp_user.insert(dear_user_all_infor,(err,data)=>{
-if(err){db.close(); cb(null,false);}
-else{ cb(null,infor); }
+user_infor.find({'credential.login_email':username}).toArray(function(err,doc){
+  if(err){db.close(); cd(null,false);}
+  else if(doc.length==0){
+    db.close(); cd(null,false);
+  }
+  else{
+    var pwd=doc[0].credential.pwd;
+    if(pwd===password){
+    var dear_user_infor=extract_dear_user(doc[0]);
+    db.close();
+    return cd(null,dear_user_infor);
+    }
+    else{
+      db.close();
+        return cd(null,false);
+    }
+    }
 });
+})// mogo connect
 }
-});
-});
-} // function
 ));
 
 
@@ -179,7 +167,7 @@ passport.use(new GoogleStrategy({
   accessType: 'offline'
 },function(accessToken, refresh,profile, cb){
  let infor=profile_infor(profile);
- var information=model.construct(infor); // extract user information
+ var information=model.construct(infor); // use creat_user for local
  var user_profile=model.construct_user_infor(infor); //create user infor mation in the user_infor collection
  mongo.connect(mongoURL,function(err,db){
    if(err)
@@ -188,8 +176,7 @@ passport.use(new GoogleStrategy({
      var user=db.collection('userBase');
      var infor_db=db.collection('user_infor');
      user.count({Oauth_ID: infor.id},(err,num)=>{
-       if(err)
-       sendError();
+       if(err){db.close(); cb(null,false)}
        else if(num===0){
        user.insert(information,(err,data)=>{
         if (err)
@@ -283,6 +270,7 @@ app.get('/register',(req,res)=>{
 res.sendFile(path.join(__dirname,'public','register.html'));
 });
 
+// verify if user is logged in
 app.get('/verify',(req,res)=>{
 if(req.isAuthenticated())
 res.send('yes');
@@ -298,6 +286,10 @@ app.get('/adpage',(req,res)=>{
 res.sendFile(path.join(__dirname, 'public', 'ad.html'));
 });
 
+app.get('/forget',(req,res)=>{
+res.sendFile(path.join(__dirname,'public','forget.html'))
+});
+
 //add ensure function later
 app.get('/profile',ensure,(req,res)=>{
   let user_id=req.user.id;
@@ -311,18 +303,55 @@ app.get('/logout',ensure,(req,res)=>{
  res.redirect('/');
 })
 
+app.post('/signup',(req,res)=>{
+  var secret=req.body;
+  console.log(secret);
+  mongo.connect(mongoURL,(err,db)=>{
+  var userBase=db.collection('userBase');// change this to temp later if we want activation
+  var user_infor=db.collection('user_infor');
+  userBase.count((err,num)=>{
+  if(err){db.close(); cb(null, false)}
+  else{
+  var infor=create_profile(secret.pwd,secret.login,num); // for model functions
+  var basic=model.create_user(infor); // use contruct for 3rd party
+  var detail=model.construct_user_infor(infor);
+  userBase.insert(basic,(err,data)=>{
+  if(err){db.close(); res.send(500);}
+  else{
+    user_infor.insert(detail,(err,data)=>{
+    if(err){db.close(); res.send(500);}
+      else{db.close();
+        greetEmail(secret.login);
+        res.send('success');}
+    });
+  }
+  });
+  }
+  }); // count
+  }); // connect
+});
+
 app.get('/verify_email/:email',(req,res)=>{
-var email={temp_id:req.params.email};
+var email={login_email:req.params.email};
 mongo.connect(mongoURL,(err,db)=>{
 if(err){db.close(); res.send(500);}
-var collection=db.collection('TempUser');
-var is_user=collection.findOne(email);
-if(is_user)
-res.send('denied');
-else
-res.send('pass');
-db.close();
+var collection=db.collection('userBase');
+var is_user=collection.find(email).toArray(function(err,doc){
+if(err){db.close(); res.send(500)}
+else if(doc.length==0){
+  db.close();
+  res.send('pass');
+}
+else{
+  db.close();
+  res.send('denied');
+}
+});//find && toArray
 });// mongo connect
+});
+
+app.post('/login',passport.authenticate('user_login',{failureRedirect:'/loginpage?result=failed'}),(req,res)=>{
+res.redirect('/');
 });
 
 app.get('/login/google',function (req,res,next){
@@ -538,7 +567,7 @@ else{
    }
 mailgun.messages().send(email_content, function (err, body) {
   if(err)
-  res.send('success');
+  res.send('success'); // change later
   else {
     db.close();
     res.send('success');
@@ -562,8 +591,10 @@ app.post('/updateprofile',(req,res)=>{
           res.send('success');
         }});}});});
 
+// for profile page
 app.get('/getuser',ensure,(req,res)=>{
   let user_id=req.user.id;
+  console.log(user_id);
   mongo.connect(mongoURL,(err,db)=>{
     if(err){db.close(); res.send(500);}
     else{
@@ -623,6 +654,42 @@ app.get('/deleteAd/:id',ensure,(req,res)=>{
     }
   });
 })
+
+// request a reset pwd code
+app.get('/requestResetCode/:ea',(req,res)=>{
+var email=req.params.ea;
+mongo.connect(mongoURL,(err,db)=>{
+if(err){db.close(); res.send(500);}
+else{
+var collection=db.collection('user_infor');
+collection.find({'credential.login_email':email}).toArray(function(err,doc){
+if(doc.length==0){db.close(); res.send('noUser')}
+else{
+var code=model.generate_reset_code();
+console.log(code);
+var link='http://localhost:8080/gigmatchup/forgetPassword/?dearuser='+email+'&verificationCode='+code;
+console.log(link);
+collection.update({'credential.login_email':email},{$set:{'credential.reset_code':code}});
+var email_content = {
+from: config.get('MAILGUN_FROM'),
+to: email,
+subject: 'Gigmatchup',
+text:"Hi, Please follow the link to reset your password: "+link+" Thank you!"
+};
+mailgun.messages().send(email_content, function (err, body) {
+  if(err)
+  res.send('success');
+  else {
+    res.send('success');
+  }
+  console.log(body);
+});
+db.close();
+}
+});
+}
+});
+});
 
 //activate your ad
 app.get('/gigmatchup/activation/:id',(req,res)=>{

@@ -5,13 +5,13 @@
   "MONGO_COLLECTION": "userBase",
   "OAUTH2_CLIENT_ID": "962747077838-ga24514kqi7rq8acvqb63gr25g7s221u.apps.googleusercontent.com",
 "OAUTH2_CLIENT_SECRET": "46Qu7c645KFOj3OjZpeThn_i",
-"OAUTH2_CALLBACK": "https://music-162415.appspot.com/auth/google/callback",
+"OAUTH2_CALLBACK": "http://localhost:8080/auth/google/callback",
 "OAUTH2_LOCAL_CALLBACK":"https://music-162415.appspot.com/auth/google/callback",
 "MEMCACHE_URL": "//redis-11210.c12.us-east-1-4.ec2.cloud.redislabs.com:11210",
 "NODE_ENV":"production",
 "SECRET":"nbx00144",
 "SENDGRID_API_KEY":"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",
 "MAILGUN_API_KEY":"key-1527a048d8695c20f5cc0608f78bb134",
-"MAILGUN_DOMAIN":"sandbox48cb9a90347547788a2b853b50edff72.mailgun.org",
-"MAILGUN_FROM":"Gigmatchup <postmaster@sandbox48cb9a90347547788a2b853b50edff72.mailgun.org>"
+"MAILGUN_DOMAIN":"www.gigmatchup.ca",
+"MAILGUN_FROM":"Gigmatchup <postmaster@www.gigmatchup.ca>"
 }

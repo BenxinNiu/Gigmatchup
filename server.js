@@ -112,9 +112,7 @@ function greetEmail(email_address){
   mailgun.messages().send(email_content, function (err, body) {
     if(err)
   console.log(err)
-    else {
-      console.log('hi')
-    }
+
     console.log(body);
   });
 }
@@ -446,7 +444,7 @@ app.get('/adinfor/:type',(req,res)=>{
         }
         ad.find({"ID":type}).toArray(function(err,docs){
           if(err){res.send(500); db.close();}
-          for (var i=0;i<5&&docs.length;i++){
+          for (var i=0;i<5&&i<docs.length;i++){
               var data=docs[number+i];
               result_array.unshift(data.snippet);
           }
@@ -655,6 +653,52 @@ app.get('/deleteAd/:id',ensure,(req,res)=>{
   });
 })
 
+app.get('/gigmatchupForgetpassword',(req,res)=>{
+  if(req.query.dearuser!==undefined&&req.query.verificationCode!==undefined)
+res.sendFile(path.join(__dirname,'public','reset.html'));
+else
+res.sendStatus(404);
+});
+
+//reset password verification
+app.post('/reset_pwd',(req,res)=>{
+var data=req.body;
+console.log(data.pwd);
+var email=req.query.dearuser;
+var code=req.query.verificationCode;
+console.log(email);
+console.log(code);
+mongo.connect(mongoURL,(err,db)=>{
+if(err){db.close(); res.send(500);}
+else{
+var collection=db.collection('user_infor');
+collection.find({'credential.login_email':email}).toArray(function(err,doc){
+if(doc.length==0){db.close(); res.send(500);}
+else{
+var reset_code=doc[0].credential.reset_code;
+if(code==reset_code){
+  collection.update({'credential.login_email':email},{$set:{'credential.pwd':data.pwd}},function(err){
+if(err){db.close();res.send('failed');}
+else{
+collection.update({'credential.login_email':email},{$set:{'credential.reset_code':""}},function(err){
+if(err){db.close();res.send('failed');}
+else{
+  db.close();
+  res.send('success');
+}
+});
+}
+  });
+}
+else{
+db.close(); res.send('falied');
+}
+}
+})//to Array
+}
+});//mongo connect
+});
+
 // request a reset pwd code
 app.get('/requestResetCode/:ea',(req,res)=>{
 var email=req.params.ea;
@@ -667,7 +711,7 @@ if(doc.length==0){db.close(); res.send('noUser')}
 else{
 var code=model.generate_reset_code();
 console.log(code);
-var link='http://localhost:8080/gigmatchup/forgetPassword/?dearuser='+email+'&verificationCode='+code;
+var link='http://localhost:8080/gigmatchupForgetpassword/?dearuser='+email+'&verificationCode='+code;
 console.log(link);
 collection.update({'credential.login_email':email},{$set:{'credential.reset_code':code}});
 var email_content = {

@@ -280,6 +280,10 @@ app.get('/loginpage',(req,res)=>{
 res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
+app.get('/postad',(req,res)=>{
+res.sendFile(path.join(__dirname, 'public', 'post.html'));
+})
+
 app.get('/adpage',(req,res)=>{
 res.sendFile(path.join(__dirname, 'public', 'ad.html'));
 });
@@ -559,8 +563,7 @@ else{
     from: config.get('MAILGUN_FROM'),
     to: object.more.email,
     subject: 'Activation link',
-    text: 'This email is sent to you because this email address was used to publish an advertisement on Gigmatchup.ca. Please follow the link bleow to activate your ad: '+
-    active_link
+    text: 'This email is sent to you because this email address was used to publish an advertisement on Gigmatchup.ca. Please follow the link bleow to activate your ad: '+active_link
   };
    }
 mailgun.messages().send(email_content, function (err, body) {

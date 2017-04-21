@@ -1,10 +1,3 @@
-/*!
- * Start Bootstrap - Stylish Portfolio (http://startbootstrap.com/)
- * Copyright 2013-2016 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
- */
-
-/* Global Styles */
 
 html,
 body {
@@ -18,19 +11,7 @@ body {
 input{
   color:black;
 }
-textarea{
-  color:black;
-}
-.logo_holder{
-display:block;
-width:20%;
-margin:auto;
-background-color:red;
-}
-.head_logo{
-  margin:auto;
-  width:100%;
-}
+
 .hidden{
   display :none !important;
 }
@@ -60,25 +41,9 @@ background-color:red;
   margin-bottom:15px;
   margin-top:15px;
 }
-.logo{
-  top:2%;
-  left:2%;
-  position: fixed;
-  font-size:1.5em;
-}
-.logo:hover{
-  cursor:pointer;
-}
+
 .nav_login{
   margin-top:8px;
-}
-.sidebar-nav li{
-  cursor:pointer;
-}
-.user{
-  top:1%;
-  left:10%;
-  position: fixed;
 }
 
 #post{
@@ -86,38 +51,12 @@ background-color:red;
   padding:15px 25px 15px 25px;
 }
 
-.description{
-  resize:none;
-  width:90%;
-  height:200px;
-}
-.add_pic{
-  display:block;
-  margin-top:10px;
-}
 .form-control{
   opacity:0.7;
 }
 .region{
   text-align:center;
   margin-top:20px;
-}
-.province_top{
-  margin:auto;
-  width:30%;
-}
-#Ad_category{
-  width:70%;
-  margin:auto;
-  opacity:1;
-}
-#skill_category{
-  width:70%;
-  margin:auto;
-  opacity:1;
-}
-.select_province{
-  width:100%;
 }
 
 .searchBar{
@@ -128,12 +67,12 @@ background-color:red;
   border:0.8px solid black;
   border-radius:5px;
 }
-.home-page{
+.home{
   display: table-cell;
   text-align: center;
   vertical-align: middle;
 }
-.home-page h1{
+.home h1{
   margin: 0;
   padding: 0;
   font-size: 4.5em;
@@ -244,70 +183,6 @@ hr.medium {
     font-family: 'Lobster', cursive;
 }
 
-/* Side Menu */
-
-#sidebar-wrapper {
-    z-index: 1000;
-    position: fixed;
-    right: 0;
-    width: 250px;
-    height: 100%;
-    transform: translateX(250px);
-    overflow-y: auto;
-    background: #222;
-    -webkit-transition: all 0.4s ease 0s;
-    -moz-transition: all 0.4s ease 0s;
-    -ms-transition: all 0.4s ease 0s;
-    -o-transition: all 0.4s ease 0s;
-    transition: all 0.4s ease 0s;
-}
-
-.sidebar-nav {
-    position: absolute;
-    top: 0;
-    width: 250px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.sidebar-nav li {
-    text-indent: 20px;
-    line-height: 40px;
-}
-
-.sidebar-nav li a {
-    display: block;
-    text-decoration: none;
-    color: #999;
-}
-
-.sidebar-nav li a:hover {
-    text-decoration: none;
-    color: #fff;
-    background: rgba(255,255,255,0.2);
-}
-
-.sidebar-nav li a:active,
-.sidebar-nav li a:focus {
-    text-decoration: none;
-}
-
-.sidebar-nav > .sidebar-brand {
-    height: 55px;
-    font-size: 18px;
-    line-height: 55px;
-}
-
-.sidebar-nav > .sidebar-brand a {
-    color: #999;
-}
-
-.sidebar-nav > .sidebar-brand a:hover {
-    color: #fff;
-    background: none;
-}
-
 #menu-toggle {
     z-index: 1;
     position: fixed;
@@ -315,195 +190,17 @@ hr.medium {
     right: 0;
 }
 
-#sidebar-wrapper.active {
-    right: 250px;
-    width: 250px;
-    -webkit-transition: all 0.4s ease 0s;
-    -moz-transition: all 0.4s ease 0s;
-    -ms-transition: all 0.4s ease 0s;
-    -o-transition: all 0.4s ease 0s;
-    transition: all 0.4s ease 0s;
-}
 
 .toggle {
     margin: 5px 5px 0 0;
 }
 
-.post_ad{
-  border:1px solid black;
-  border-radius:5px;
-  height:480px;
-  margin-bottom:13px;
-  overflow:hidden;
+.province_top{
+  margin:auto;
+  width:30%;
 }
-.a{
-  position:relative;
+.select_province{
   width:100%;
-  z-index:10;
-  height:700px;
-  background-color: white;
-}
-#a{
-  position:relative;
-}
-.social_buttons_two{
-  position:relative;
- top:150px;
-}
-#a h2{
-  margin-top:50px;
-  margin-bottom:30px;
-}
-.edit_profile_now{
-  margin-top:10px;
-  margin-bottom:10px;
-}
-.b{
-  display:table;
-  position:relative;
-  width: 100%;
-  z-index:8;
-  height:800px;
-  top:-710px;
-  background-color: white;
-}
-.add_social{
-  margin-top:20px;
-}
-.social_list{
-  position:relative;
-  color:black;
-width:100%;
-list-style-type: none;
-margin-bottom:20px;
-}
-.social_list li{
-  display:inline;
-  width:100% !important;
-  font-size:2em;
-  margin-right:20px;
-  -webkit-transition: all .3s ease-in-out;
-  -o-transitio: all .3 ease-in-out;
-  transition: all .3s ease-in-out;
-}
-
-.social_list li:hover{
-  cursor:pointer;
-}
-#fb{
-  margin-top:-20px;
-}
-
-.full{
-  width:80%;
-  height:30px;
-  margin:10px;
-  border:0.8px solid black;
-  border-radius:5px;
-  display:table-cell;
-}
-.full_label{
-  display:table-cell;
-  float:left;
-  width:100px;
-
-  margin-top:13px;
-}
-.contact_full{
-  width:70%;
-  height:30px;
-    margin:12px;
-  border:0.8px solid black;
-  border-radius:5px;
-  display:table-cell;
-}
-#pricing{
-  width:20% !important;
-  margin-right:7%;
-}
-#price_category{
-  width:30%;
-  height:30px;
-  opacity:0.7;
-}
-#contact_title{
-width:40% !important;
-}
-.urls{
-  position: relative;
-  width:80%;
-  height:30px;
-  border:0.8px solid black;
-  border-radius:5px;
-}
-#upload_pics, #add_video{
-  margin-top:30px;
-}
-#description{
-  resize:none;
-  width:90% !important;
-  height:180px;
-}
-.navigate{
-  display:block;
-  position:relative;
-  margin-bottom:20px;
-}
-.c{
-  display:table;
-  position:relative;
-  width: 100%;
-  z-index:6;
-  height:400px;
-  margin-top:-1500px;
-  background-color: white;
-}
-.c h2{
-margin-bottom:25px;
-}
-.contact_form{
-  color:black;
-}
-.contact_form input{
-  max-width:350px;
-}
-/*
-.contact_form label{
-  display:block;
-  width:100px;
-  position:relative;
-  margin-left:17%;
-}
-*/
-#city{
-  width:30% !important;
-}
-#province{
-  width:30%;
-  height:30px;
-  opacity:0.7;
-}
-#contact_title_select{
-  width:30%;
-  height:30px;
-  opacity:0.7;
-  border-radius:4px;
-}
-.d{
-  display:table;
-  position:relative;
-  width: 100%;
-  z-index:4;
-  height:400px;
-  margin-top:-1500px;
-  background-color:white;
-}
-.notification{
-  display:block;
-  height:200px;
-}
-.errors{
-  list-style-type:none;
 }
 
 .footer{
@@ -571,4 +268,32 @@ margin-bottom:25px;
 
 .turned_on{
 
+}
+
+@media(max-width:380){
+
+  .social {
+      display: table;
+      width: 100%;
+      color: #fff;
+      background: url(../img/portfolio-4.jpg) no-repeat center center scroll;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      background-size: cover;
+      -o-background-size: cover;
+      
+  }
+
+  .intro {
+      display: table;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: url(../img/bg.jpg) no-repeat center center scroll;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      background-size: cover;
+      -o-background-size: cover;
+
+  }
 }

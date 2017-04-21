@@ -60,7 +60,7 @@
                           <a href="/register">Register</a>
                       </li>
                       <li class="page-scroll">
-                          <a href="#post-form-area">post Ad</a>
+                          <a href="/postad">post Ad</a>
                       </li>
                       <li class="page-scroll">
                         <span class="toggle"><i id="switch"></i></span>
@@ -78,7 +78,7 @@
     <!-- Header -->
 
     <header id="top" class="intro">
-        <div class="home-page">
+        <div class="home">
       <!--   <span class="logo_holder"><img class='head_logo' src='/img/logo2.png'></span> -->
            <h1>Gig matchup
           </h1>
@@ -103,139 +103,8 @@
                 <div class="col-lg-10 col-lg-offset-1 text-center">
                     <h2>Post Ad for yourself or business</h2>
                     <hr class="small">
-                    <div class="notification col-md-12 hidden">
-                      <span class='response alert'>
-                      </span>
-                      <hr class="small">
-                      <span class="more_message">
-                      </span>
-                      <h4>
-                    </div>
-
-
-                    <div class="row">
-
-                      <div class="post_ad col-md-12">
-                        <div class="night a col-md-12">
-                      <div id="a">
-                          <h2>SignIn to manage your ad</h2>
-                            <p>upload pictures, add your social media channels</p>
-                            <p>Improve your profile to increase your chance to be discovered</p>
-                            <a class="btn btn-primary edit_profile_now">Signin now</a>
-                            <p> or post without signin</p>
-                            <a class='btn btn-danger skip'>Skip</a>
-                          </div>
-                          <ul class='list_unstyled social_buttons_two'>
-                            <li><a class="btn btn-social btn-google" href="/login/google?return=/">
-                                <span class="fa fa-google"></span> Sign in with Google
-                              </a></li>
-                            <li><a class="btn btn-social btn-facebook" href="/login/facebook?return='//'">
-                                <span class="fa fa-facebook"></span> Sign in with Facebook
-                              </a></li>
-                            <li>  <a class="btn btn-social btn-twitter" href='/login/twitter?return='//''>
-                                <span class="fa fa-twitter"></span> Sign in with Twitter
-                              </a></li>
-                    </ul>
-                        </div>
-                        <div class="night b col-md-12">
-                          <h2>Edit details
-                              <small style="font-size:14px;">*required</small>
-                          </h2>
-                       <form class='edit_ad_form col-md-6 col-md-offset-3'>
-                         <label for="Ad_title"> Ad title*</label>
-                          <input class="full" id="Ad_title" placeholder="Edit title"> <br>
-                  <label for="pricing"> Pricing</label>
-                  <input class="contact_full" id="pricing" type='title' placeholder="price(optional)">
-                  <select name="category" id="price_category">
-                    <option value="hourly">Hourly</option>
-                    <option value="one">one time pay</option>
-                    <option value="contact">Contact me</option>
-                  </select> <br>
-                         <label  for="Ad_category">Select category*</label>
-                            <select class="form-control" name="category" id="Ad_category">
-                              <option value=""></option>
-                              <option value="Music">Band</option>
-                              <option value="solo">solo</option>
-                              <option value="DJ">DJ</option>
-                              <option value="choir">Choir</option>
-                              <option value="pianist">Pianist</option>
-                              <option value="violinist">Violinist</option>
-                              <option value="singer">Singer</option>
-                                <option value="magician">Magician</option>
-                                  <option value="organist">Organist</option>
-                              <option value="other">other</option>
-                            </select>
-
-                            <label for="description">Add description</label>
-                            <textarea class='full' id="description"> </textarea>
-
-                          </form>
-
-                        </div>
-                        <div class="night c col-md-12">
-                          <h2> Contact Information</h2>
-    <form class="contact_form col-md-6 col-md-offset-3">
-      <label class="full_label" for="contact_name">Contact name*</label>
-      <input class="contact_full" id="contact_name" type='name' placeholder="Contact name"><br>
-      <label class="full_label" for="contact_title">Title</label>
-      <input class="contact_full" id="contact_title" type='title' placeholder="Title (optional)">
-      <select name="category" id="contact_title_select">
-        <option value="Mr">Mr.</option>
-        <option value="Mrs">Mrs.</option>
-        <option value="British Columbia">British Columbia</option>
-      </select>
-      <br>
-    <label class="full_label" for="email">Email address*</label>
-    <input class="contact_full" id="email" type='email' placeholder="Email address"><br>
-    <label class="full_label" for="phone">Cell phone</label>
-    <input class="contact_full" id="phone" type='phone' placeholder="Phone Number"> <br>
-    <label class="full_label" for="city">location*</label>
-      <input class="contact_full" id="city" placeholder="City">
-      <select name="category" id="province">
-        <option value="newfoundland">Newfoundland</option>
-        <option value="ontario">Ontario</option>
-        <option value="BC">British Columbia</option>
-        <option value="quebec">Québec</option>
-        <option value="alberta">Alberta</option>
-        <option value="saskatchewan">Saskatchewan</option>
-        <option value="NS">Nova Scotia</option>
-        <option value="manitoba">Manitoba</option>
-        <option value="NB">New Brunswick</option>
-        <option value="PEI">Prince Edward Island</option>
-      </select>
-    </form>
-                        </div>
-                        <div class="night d col-md-12">
-                          <h2> Edit social information</h2>
-                          <div class="add_social col-md-6 col-md-offset-3">
-                            <ul class="social_list">
-                              <li><h3 style="margin:-20px 0 0 -35px;">click to add your social channels</h3></li>
-                              <li id="fb"><i class='fa fa-facebook channel'></i></li>
-                                <li id="yt"><i class='fa fa-youtube  channel'></i></li>
-                                  <li id="tw"><i class='fa fa-twitter channel'></i></li>
-                                    <li id="ins"><i class='fa fa-instagram channel'></i></li>
-                                      <li id="linkedin"><i class='fa fa-linkedin channel'></i></li>
-                            </ul>
-                            <span class="url_input">
-                             <input id='facebook_url' class='urls hidden' placeholder='facebook url'>
-                             <input id='youtube_url' class='urls hidden' placeholder='youtube url'>
-                             <input id='twitter_url' class='urls hidden' placeholder='twitter url'>
-                             <input id='ins_url' class='urls hidden' placeholder='Instagram url'>
-                             <input id='linkedin_url' class='urls hidden' placeholder='Linkedin url'>
-                            </span>
-                            <label for="company">Your personal website</label>
-                            <input class='full' id="company">
-                            <span id="upload_pics" class="btn btn-primary">Upload Pictures</span>
-
-                            <!--  <span id="add_video" class="btn btn-primary">Add Video</span>-->
-
-                          </div>
-                        </div>
-                      </div>
-
-    <span class="navigate"><a id="get_started" class="btn btn-primary btn-lobster">Get started</a></span>
-
-            </div>
+                    <a href='/postad' class='btn btn-primary btn-lobster'>Post Ad now</a>
+                    <a href='/profile' class='btn btn-primary btn-lobster'>Manage your Ad</a>
             <!-- /.row -->
         </div>
         <!-- /.container -->
@@ -320,26 +189,26 @@
         <div class="social-area">
             <h1 style="font-family:lobster;">Register now for free with </h1>
             <ul class='list_unstyled' id="social_login">
-      <li><i class="login_icon fa fa-google fa-stack-2x "></i></li>
-      <li><i class="login_icon fa fa-facebook fa-stack-2x "></i></li>
-      <li>  <i class="login_icon fa fa-twitter fa-stack-2x "></i></li>
+              <li><i class="login_icon fa fa-google fa-stack-2x "></i></li>
+              <li><i class="login_icon fa fa-envelope fa-stack-2x "></i></li>
+              <li><i class="login_icon fa fa-envelope fa-stack-2x "></i></li>
       </ul>
       <ul class='list_unstyled social_buttons'>
         <li><a class="btn btn-social btn-google" href="/login/google?return=/">
-            <span class="fa fa-google"></span> Sign in or register with Google
+            <span class="fa fa-google"></span> Signup with Google
           </a></li>
-        <li><a class="btn btn-social btn-facebook" href="/login/facebook?return='//'">
-            <span class="fa fa-facebook"></span> Sign in or register with Facebook
+        <li><a class="btn btn-social btn-facebook" href="/register">
+            <span class="fa fa-envelope"></span>
+            signup with email
           </a></li>
-        <li>  <a class="btn btn-social btn-twitter" href='/login/twitter?return='//''>
-            <span class="fa fa-twitter"></span> Sign in or register with Twitter
-          </a></li>
+
 </ul>
         </div>
     </aside>
 </section>
 
 <footer class="footer">
+
 </footer>
 
 </body>

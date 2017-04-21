@@ -40,13 +40,15 @@ p {
   height: 50px;
   outline: none;
   padding: 0px 10px;
-  width: 25%;
+  width: 40%;
   -webkit-appearance: none;
+  min-width:160px;
+  max-width:400px;
 }
 .btn{
   width:20%;
+  min-width:120px;
 }
-
 .btn-round {
   background: #5a5656;
   border-radius: 50%;
@@ -55,13 +57,12 @@ p {
   font-size: 12px;
   height: 50px;
   line-height: 50px;
-  margin: 30px 125px;
   text-align: center;
   text-transform: uppercase;
   width: 50px;
 }
 .list_unstyled{
-  margin-left:-2%;
+ margin-left:-40px;
   list-style-type:none;
 }
 .list_unstyled li{

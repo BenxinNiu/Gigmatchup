@@ -52,11 +52,14 @@ strong {
   height: 50px;
   outline: none;
   padding: 0px 10px;
-  width: 25%;
+  width: 40%;
   -webkit-appearance: none;
+  min-width:160px;
+  max-width:400px;
 }
 .btn{
   width:20%;
+  min-width:120px;
 }
 
 .toggle{
@@ -94,7 +97,7 @@ strong {
 }
 
 footer{
-  margin-top:80px;
+  margin-top:0px;
   position:relative;
   width:100%;
   text-align:center;

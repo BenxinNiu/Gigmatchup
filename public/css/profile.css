@@ -54,8 +54,10 @@ body{
   width:20%;
   height:30px;
   background:transparent;
-  margin-left:6%;
+  margin-left:30px;
   color:black;
+  display:inline-block;
+  min-width:110px;
 }
 .full:hover{
   background-color:white;
@@ -63,6 +65,8 @@ body{
 #province{
   display:inline-block;
   width:20%;
+  min-width:110px;
+  margin-left:30px
 }
 .input_container{
   display:block;
@@ -75,6 +79,7 @@ font-size:1em;
 color:black;
 display:inline-block;
 width:18%;
+margin-right:60px;
 }
 .social_list{
   position:relative;
@@ -101,6 +106,7 @@ margin-bottom:20px;
   border:none;
   width:25%;
   height:30px;
+  min-width:110px;
 }
 footer{
   margin-top:200px;

@@ -1,100 +1,4 @@
-function get_user_infor(){
-  var url=window.location.href;
-  var num=url.indexOf("=")+1;
-  var id=url.slice(num);
-  $.ajax({
-    tyep:'GET',
-      contenttype:'json',
-    url:'/user?u='+id,
-    success:function(data){
-      console.log(data);
-    $('.logo').text("welcome "+data.name);
-    },
-    error:function(res){
-   console.log(res);
-    }
-  })
-}
 
-
-function acquireInfor(){
-  var price='';
-  if(!$('#pricing').val())
-price='Contact me';
- else if($('price_category').val()=='one')
-  price=$('#pricing').val()+ ' One time payment'
-   else if($('price_category').val()=='contact')
-price='Contact me';
-else
-price=$('#pricing').val()+' hourly'
-
-  return {
-    Ad_title:$('#Ad_title').val(),
-    category:$('#Ad_category').val(),
-    pricing:price,
-    description:$('#description').val(),
-    contact_name:$('#contact_name').val(),
-    title:$('contact_title').val(),
-    email:$('#email').val(),
-    phone:$('#phone').val(),
-    facebook:$('#facebook-url').val(),
-    twitter:$('#twitter_url').val(),
-    youtube:$('#youtube_url').val(),
-    instagram:$('#ins_url').val(),
-    linkedin:$('#linkedin_url').val(),
-    city:$('#city').val(),
-    province: $('#province').val(),
-    url:$('#company').val()
-  };
-}
-
-function acquireSocial_urls(){
-return{
-  facebook:$('#facebook-url').val(),
-  twitter:$('#twitter_url').val(),
-  youtube:$('#youtube_url').val(),
-  video:$('#video').val()
-};
-}
-
-function postAd(ad_num){
-  var url='';
-if(ad_num=='') // no pictures uploaded
- url='/post';
-else
- url='/post?ad='+ad_num;
-var form=acquireInfor();
-console.log(form);
-if(is_form_completed()){
-  $('.notification').removeClass('hidden');
-  //add loading animation
-  $('.notification').append("<div class='load-wrapp'><div class='load'><div class='line'></div><div class='line'></div><div class='line'></div></div>")
-$.ajax({
-  type:'POST',
-  contenttype:'json',
-//  timeout:3000,
-  url:url,
-  data:form,
-  xhrFields:{
-    withCredentials: false
-  },
-  headers:{},
-  success: function(res){
-    console.log('success');
-    $('load-wrapp').remove();
-  $('.response').addClass('alert-success').html('Thank you for posting ad ')
-      $('.more_message').append("<h4> An email has been sent to "+form.email+", Please check your indox and click the provided link to activate your account</h4>")
-  //  $('.notification').append("<a class='goto_Ad' href="+ link +">Goto Ad page</a>")
-  },
-  error:function(res){
-        $('load-wrapp').remove();
-        $('.response').addClass('alert-danger')
-        $('.response').append("<h3>Sorry, we lost connection to the server </h3>")
-  console.log(res);
-  }
-});// ajax call end
-}
-}
 
 function social_login(){
 $('.list_unstyled').animate({left: "53%"},600);
@@ -176,89 +80,7 @@ error:function(){console.log('error')}
 */
 }
 
-function is_form_completed(){
-  var num=0;
-  var error=[]
-if(!$('#Ad_title').val()){
-  num++;
-  error.push('Please check your ad title')
-}
-if(!$('#Ad_category').val()){
-  num++;
-  error.push('Please select a category')
-}
-if(!$('#contact_name').val()){
-  num++;
-  error.push('Please check contact name')
-}
-if(!validateEmail($('#email').val())){
-  num++;
-  error.push('Please check email address')
-}
-if(!$('#city').val()){
-  num++;
-  error.push('Please check your ad location')
-}
-if(num==0)
-return true;
-else{
-  console.log(error);
-  $('.notification').removeClass('hidden')
-  $('.response').addClass('alert-danger').html('Oops there is something wrong with your information')
-  $('.more_message').append('<ul class="errors"></ul>')
-  let $Error_list=$('.more_message').children('.errors')
-  for (var i=0;i<error.length;i++){
-  $Error_list.append("<li>"+error[i]+"</li>")
-  }
-return false;
-}
-}
 
-
-function add_social_channel(channel){
-let $id=$('.url_input');
-var $children = $('.url_input').children('.urls');
-console.log(channel)
-$children.addClass('hidden')
-switch(channel){
-case "fb":
-$id.children('#facebook_url').removeClass('hidden')
-break;
-case "yt":
-$id.children('#youtube_url').removeClass('hidden')
-break;
-case "tw":
-$id.children('#twitter_url').removeClass('hidden')
-break;
-case "ins":
-$id.children('#ins_url').removeClass('hidden')
-break;
-case "linkedin":
-$id.children('#linkedin_url').removeClass('hidden')
-break;
-}
-}
-
-function start_post_ad(id){
-  switch(id){
-    case "get_started":
-    $('.post_ad').slideDown(500);
-    $('.navigate').empty();
-    break;
-    case "next_to_contact":
-    $('.b').animate({left:"1000px"},600)
-    $('.navigate').empty();
-    $('.navigate').append("<a id='go_back_first' class='btn btn-primary btn-lobster'>Go back</a>")
-      $('.navigate').append("<a id='next_to_social' class='btn btn-primary btn-lobster'>(2/3)Next</a>")
-    break;
-    case "next_to_social":
-    $('.c').animate({left:"1000px"},600)
-    $('.navigate').empty();
-    $('.navigate').append("<a id='go_back_contact' class='btn btn-primary btn-lobster'>Go back</a>")
-      $('.navigate').append("<a id='post_now' class='btn btn-primary btn-lobster'>(3/3)Post Now</a>")
-    break;
-  }
-}
 
 // load some animation when the page is first loaded
 function initial_animation(){
@@ -270,7 +92,7 @@ function optimize(){
   var width=window.innerWidth;
   if (width<=700){
   $('.c').css('top','-30px')
-  $('.d').css('top','1080px')
+  $('.d').css('top','-500px')
 }
 }
 
@@ -279,7 +101,6 @@ $(document).ready(function(){
 
 is_login();
 
-var Ad_num_to_post='';  // the id returned after uploading pictures
 initial_animation();
 
 optimize();
@@ -292,49 +113,6 @@ if (keyword!="")
 window.location="/adpage?search="+keyword+"&province="+province;
 else
 window.location="/adpage?search=all&province="+province;
-})
-
-// post ad
-$('.navigate').on('click','#post_now',function(){
-// remove previous error message
-$('.response').empty().removeClass('alert-danger')
-$('.more_message').empty()
-  postAd();
-})
-
-$('.navigate').on('click','#go_back_first',function(){
-  $('.b').animate({left:"0px"},600)
-  $('.navigate').empty();
-  $('.navigate').append("<a id='next_to_contact' class='btn btn-primary btn-lobster'>(1/3)Next</a>")
-})
-$('.navigate').on('click','#go_back_contact',function(){
-  $('.c').animate({left:"0px"},600)
-  $('.navigate').empty();
-      $('.navigate').append("<a id='go_back_first' class='btn btn-primary btn-lobster'>Go back</a>")
-  $('.navigate').append("<a id='next_to_social' class='btn btn-primary btn-lobster'>(2/3)Next</a>")
-})
-
-$('.navigate').on('click','.btn',function(){
-var child=$(this).attr('id')
-start_post_ad(child);
-})
-
-$('.channel').on('click',function(){
- let Id=$(this).parent().attr('id')
-  add_social_channel(Id);
-})
-
-$('.edit_profile_now').on('click',function(){
-  if(!is_login())
-  window.location.href='/loginpage?return=/';
-  else{
-    $('.a').animate({left:"1000px"},600)
-      $('.navigate').append("<a id='next_to_contact' class='btn btn-primary btn-lobster'>(1/3)Next</a>")
-  }
-})
-$('.skip').on('click',function(){
-  $('.a').animate({left:"1000px"},600)
-    $('.navigate').append("<a id='next_to_contact' class='btn btn-primary btn-lobster'>(1/3)Next</a>")
 })
 
 

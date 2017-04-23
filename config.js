@@ -34,7 +34,9 @@ nconf
     'OAUTH2_CALLBACK',
     'PORT',
     'SECRET',
-    "SENDGRID_API_KEY"
+    "MAILGUN_API_KEY",
+    "MAILGUN_DOMAIN",
+    "MAILGUN_FROM"
   ])
 
   .file({ file: path.join(__dirname, 'config.json') })
@@ -71,10 +73,10 @@ nconf
 
 // Check for required settings
 checkConfig('GCLOUD_PROJECT');
-//checkConfig('CLOUD_BUCKET');
+checkConfig('CLOUD_BUCKET');
 checkConfig('OAUTH2_CLIENT_ID');
 checkConfig('OAUTH2_CLIENT_SECRET');
-checkConfig('SENDGRID_API_KEY');
+checkConfig('MAILGUN_API_KEY');
 
 if (nconf.get('DATA_BACKEND') === 'cloudsql') {
   checkConfig('MYSQL_USER');

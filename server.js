@@ -79,7 +79,7 @@ function greetEmail(email_address){
   from: config.get('MAILGUN_FROM'),
   to: email_address,
   subject: 'Thank you for choosing Gigmatchup.ca',
-  text: 'Hi, We would like to welcome you to join our family. You can now post ad or search talents for your party!'+" Thank you again for choosing Gigmatchup.ca If you have any question or concern, Please do not hesitate to contact us at bn2645@mun.ca"
+  text: 'Hi, We would like to welcome you to join our family. You can now post ad or search talents for your party!'+" Thank you again for choosing Gigmatchup.ca If you have any question or concern, Please do not hesitate to contact us！"
   };
   mailgun.messages().send(email_content, function (err, body) {
     if(err)
@@ -546,7 +546,7 @@ else{
   }
   var code=Math.floor((Math.random() * 10000000) + 1);
     var object=model.construct_ad(data,num+1000+data.province,code);
-    var active_link='http://localhost:8080/gigmatchup/activation/'+
+    var active_link='http://www.gigmatchup.ca/gigmatchup/activation/'+
     object.ID+"?activation_code="+code+"&email="+object.more.email;
     ad.insert(object,(err,data)=>{
  if(err)
@@ -718,7 +718,7 @@ if(doc.length==0){db.close(); res.send('noUser')}
 else{
 var code=model.generate_reset_code();
 console.log(code);
-var link='http://localhost:8080/gigmatchupForgetpassword/?dearuser='+email+'&verificationCode='+code;
+var link='http://www.gigmatchup.ca/gigmatchupForgetpassword/?dearuser='+email+'&verificationCode='+code;
 console.log(link);
 collection.update({'credential.login_email':email},{$set:{'credential.reset_code':code}});
 var email_content = {

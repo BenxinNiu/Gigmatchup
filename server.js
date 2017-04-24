@@ -8,8 +8,6 @@ const assert=require('assert');
 const bodyparser=require('body-parser');
 const fs=require('fs');
 const session = require('express-session');
-//const MemcachedStore = require('connect-memcached')(session);
-//const sendgrid=require('sendgrid')('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')
 const RedisStore = require('connect-redis')(session);
 const passport = require('passport');
 const config = require('./config');
@@ -21,30 +19,39 @@ const LocalStrategy=require('passport-local').Strategy;
 const app = express();
 const mongoURL=config.get('MONGO_URL');
 const mailgun=require('mailgun-js')({apiKey: config.get('MAILGUN_API_KEY'), domain: config.get('MAILGUN_DOMAIN')});
+const Multer=require('multer');
 var model;
+var userInfor;
+var storeIMG;
 
 fs.readdirSync(__dirname+'/mongoose_model').forEach(function(file){
-  if(~file.indexOf('.js'))
-  model=require(__dirname+'/mongoose_model/'+file);
+   model=require(__dirname+'/mongoose_model/'+'model');
+   userInfor=require(__dirname+'/mongoose_model/'+'userInfor');
+   storeIMG=require(__dirname+'/mongoose_model/'+'storeIMG');
 });
 
+const multer=Multer({
+  storage:Multer.MemoryStorage,
+  limits:{
+  fileSize:5*1024*1024
+  }
+});
 
+//session configuration
 const sessionConfig={
   resave: false,
   saveUninitialized: false,
   secret: config.get('SECRET'),
   signed: true
 };
-
-if (config.get('NODE_ENV') === 'production') {
+if (config.get('NODE_ENV') === 'production') { // production stage??
   sessionConfig.store = new RedisStore({
   url: config.get('MEMCACHE_URL')
   });
 }
 
-// server configuration
-//only add code below!!!!
 
+// server configuration
 app.use(express.static(path.join(__dirname,'public')));
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json()); // for parsing application/json
@@ -52,13 +59,12 @@ app.use(session(sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
 app.set('trust proxy', true);
-app.use(function (req, res, next) {
+app.use(function (req, res, next) { // check if session exsits
   if (!req.session) {
     return next(new Error('I lost connection to redis lab!!!!')) // handle error
   }
   next() // otherwise continue
 })
-
 //  This allows cross domain request
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -67,40 +73,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-//extract user information from 3rd party auth
-function profile_infor(profile){
-let url='';
-if (profile.photos && profile.photos.length) {
-    url = profile.photos[0].value;
-  }
-  return {
-    id: profile.id,
-    displayName: profile.displayName,
-    image: url,
-    login_email:"",
-    pwd:""
-  };
-}
-
-//extract user information from local mongo database to pass to passport.js
-function extract_dear_user(profile){
-return{
-  id: profile.clientID,
-  displayName: profile.information.contact_name,
-  image: profile.img,
-};
-}
-
-function create_profile(pwd,email,num){
-  var id=model.generateId(num);
- return{
-id:id,
-displayName:"",
-image:"",
-login_email:email,
-pwd:pwd
- };
-}
 
 function greetEmail(email_address){
   var email_content = {
@@ -126,7 +98,6 @@ function sendError(){
   req.send(500);
 }
 
-
 //local passport
 
 passport.use('user_login', new LocalStrategy(
@@ -142,7 +113,7 @@ user_infor.find({'credential.login_email':username}).toArray(function(err,doc){
   else{
     var pwd=doc[0].credential.pwd;
     if(pwd===password){
-    var dear_user_infor=extract_dear_user(doc[0]);
+    var dear_user_infor=userInfor.extract_dear_user(doc[0]);
     db.close();
     return cd(null,dear_user_infor);
     }
@@ -164,8 +135,8 @@ passport.use(new GoogleStrategy({
   callbackURL: config.get('OAUTH2_CALLBACK'),
   accessType: 'offline'
 },function(accessToken, refresh,profile, cb){
- let infor=profile_infor(profile);
- var information=model.construct(infor); // use creat_user for local
+ let infor=userInfor.profile_infor(profile);
+ var information=model.construct(infor); // use creat_user for local signup
  var user_profile=model.construct_user_infor(infor); //create user infor mation in the user_infor collection
  mongo.connect(mongoURL,function(err,db){
    if(err)
@@ -199,54 +170,72 @@ passport.use(new FacebookStrategy({
   clientSecret: config.get('FACEBOOK_CLIENT_SECRET'),
   callbackURL: config.get('FACEBOOK_CALLBACK'),
   accessType: "offline"
-},function(accessToken,refresh,profile,cb){
-let infor=profile_infor(profile);
-var information=model.construct(infor);
-mongo.connect(mongoURL,function(err,db){
-  if(err)
-  sendError();
-  else{
-    var user=db.collection('userBase');
-    user.count({Oauth_ID: infor.id},(err,num)=>{
-      if(err)
-      sendError();
-      else if(num===0)
-      user.insert(information,(err,data)=>{
-       if (err)
-       sendError();
-      db.close();
-      });
-      else
-       db.close();
-     cb(null,infor);
-   });}});}));
+},function(accessToken, refresh,profile, cb){
+ let infor=model.profile_infor(profile);
+ var information=model.construct(infor); // use creat_user for local
+ var user_profile=model.construct_user_infor(infor); //create user infor mation in the user_infor collection
+ mongo.connect(mongoURL,function(err,db){
+   if(err)
+   sendError();
+   else{
+     var user=db.collection('userBase');
+     var infor_db=db.collection('user_infor');
+     user.count({Oauth_ID: infor.id},(err,num)=>{
+       if(err){db.close(); cb(null,false)}
+       else if(num===0){
+       user.insert(information,(err,data)=>{
+        if (err)
+        sendError();
+        infor_db.insert(user_profile,(err,data)=>{
+         if (err)
+         sendError();
+        db.close();
+        });
+       });
+     }
+       else
+        db.close();
+      cb(null,infor);
+    });
+   }
+ });
+}));
 
 passport.use(new TwitterStrategy({
   clientID: config.get('TWITTER_CLIENT_ID'),
   clientSecret: config.get('TWITTER_CLIENT_SECRET'),
   callbackURL: config.get('TWITTER_CALLBACK'),
   accessType: "offline"
-},function(accessToken,refresh,profile,cb){
-let infor=profile_infor(profile);
-var information=model.construct(infor);
-mongo.connect(mongoURL,function(err,db){
-  if(err)
-  sendError();
-  else{
-    var user=db.collection('userBase');
-    user.count({Oauth_ID: infor.id},(err,num)=>{
-      if(err)
-      sendError();
-      else if(num===0)
-      user.insert(information,(err,data)=>{
-       if (err)
-       sendError();
-      db.close();
-      });
-      else
-       db.close();
-     cb(null,infor);
-   });}});}));
+},function(accessToken, refresh,profile, cb){
+ let infor=model.profile_infor(profile);
+ var information=model.construct(infor); // use creat_user for local
+ var user_profile=model.construct_user_infor(infor); //create user infor mation in the user_infor collection
+ mongo.connect(mongoURL,function(err,db){
+   if(err)
+   sendError();
+   else{
+     var user=db.collection('userBase');
+     var infor_db=db.collection('user_infor');
+     user.count({Oauth_ID: infor.id},(err,num)=>{
+       if(err){db.close(); cb(null,false)}
+       else if(num===0){
+       user.insert(information,(err,data)=>{
+        if (err)
+        sendError();
+        infor_db.insert(user_profile,(err,data)=>{
+         if (err)
+         sendError();
+        db.close();
+        });
+       });
+     }
+       else
+        db.close();
+      cb(null,infor);
+    });
+   }
+ });
+}));
 */
 passport.serializeUser((user, cb) =>{
   cb(null, user);
@@ -267,7 +256,6 @@ app.get('/',(req,res)=>{
 app.get('/register',(req,res)=>{
 res.sendFile(path.join(__dirname,'public','register.html'));
 });
-
 // verify if user is logged in
 app.get('/verify',(req,res)=>{
 if(req.isAuthenticated())
@@ -314,7 +302,7 @@ app.post('/signup',(req,res)=>{
   userBase.count((err,num)=>{
   if(err){db.close(); cb(null, false)}
   else{
-  var infor=create_profile(secret.pwd,secret.login,num); // for model functions
+  var infor=userInfor.create_profile(secret.pwd,secret.login,num); //
   var basic=model.create_user(infor); // use contruct for 3rd party
   var detail=model.construct_user_infor(infor);
   userBase.insert(basic,(err,data)=>{
@@ -371,7 +359,7 @@ app.get('/auth/google/callback',passport.authenticate('google',{ failureRedirect
      res.redirect(redirect);
   }
 );
-
+/*
 app.get('/login/twitter',function (req,res,next){
 //  console.log(req.query.return);
   if(req.query.return){
@@ -404,7 +392,7 @@ app.get('/auth/facebook/callback',passport.authenticate('google',{ failureRedire
      res.redirect(redirect);
   }
 );
-
+*/
 app.get('/get_html',(req,res)=>{
   var query=req.query.type;
   switch(query){
@@ -440,16 +428,17 @@ app.get('/adinfor/:type',(req,res)=>{
     }
       else {
         ad.find({"category":type}).toArray((err,docs)=>{
+          var ad_found=docs.length;
           var result_array=[];
           if(err){res.send(500); db.close();}
-        for (var i=0;i<5&&i<docs.length;i++){
-            var data=docs[number+i];
+        for (var i=number;i<5&&i<docs.length;i++){
+            var data=docs[i];
             result_array.unshift(data.snippet);
         }
         ad.find({"ID":type}).toArray(function(err,docs){
           if(err){res.send(500); db.close();}
-          for (var i=0;i<5&&i<docs.length;i++){
-              var data=docs[number+i];
+          for (var i=number;i<5&&i<docs.length;i++){
+              var data=docs[i];
               result_array.unshift(data.snippet);
           }
           db.close();
@@ -512,11 +501,25 @@ mongo.connect(mongoURL,(err,db)=>{
 })
 });
 
+app.get('/test',(req,res)=>{
+res.sendFile(path.join(__dirname, 'public', 'img.html'));
+});
+
+app.post('/add/img',multer.single('image'),
+storeIMG.sendUploadToGCS,(req,res)=>{
+  if (req.file && req.file.publicUrl){
+        var imageUrl = req.file.publicUrl;
+        res.send(imageUrl);
+      }
+      else
+      res.send('fail')
+});
+
 app.post('/post',(req,res)=>{
-  var ad_num=req.query.ad;
   var data=req.body;
   if(req.isAuthenticated())
   var user_id=req.user.id;
+
   mongo.connect(mongoURL,(err,db)=>{
   if (err)
   sendError();
@@ -604,6 +607,7 @@ app.get('/getuser',ensure,(req,res)=>{
         if(err){db.close(); res.send(500);}
         else{
           var data=doc[0].information;
+          data.img=doc[0].img;
           console.log(data);
           res.send(data);
         }});}});});

@@ -1,4 +1,4 @@
-
+'use strict';
 //extract user information from 3rd party auth
 function profile_infor(profile){
 let url='';

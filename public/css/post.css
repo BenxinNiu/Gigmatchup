@@ -73,8 +73,15 @@ margin-top:120px;
   margin-top:5px;
   display:inline-block;
   width:20%;
-  min-width:150px;
-  height:100px;
+  min-width:120px;
+  max-height:100px;
+}
+.list_unstyled li:hover{
+  cursor:pointer;
+  content:"delete";
+}
+.img-responsive{
+  max-height:100px;
 }
 #first, #second, #third{
   position:relative;
@@ -82,6 +89,12 @@ margin-top:120px;
 .navigate{
   margin-right:5px;
 }
+
+#upload{
+  margin-top:10px;
+}
+
+
 /* loading bar animation */
 
 .load-wrapp {

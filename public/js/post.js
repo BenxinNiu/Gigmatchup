@@ -1,3 +1,5 @@
+
+
 function is_login(){
   $.ajax({
 type:'GET',
@@ -11,14 +13,7 @@ if(result=='yes'){
 },
 error:function(){console.log('error')}
   })
-  /*
-  var url=window.location.href;
-  var num=url.indexOf("=")+1;
-  if(num===0)
-  return false;
-  else return true;
-//  return url.slice(num);
-*/
+
 }
 
 function navigate(id){
@@ -60,7 +55,7 @@ function navigate(id){
   }
 }
 
-function acquireInfor(){
+function acquireInfor(img_list){
   var price='';
   if(!$('#pricing').val())
 price='Contact me';
@@ -86,7 +81,8 @@ price='$' +$('#pricing').val()+' hourly'
     linkedin:$('#linkedin_url').val(),
     city:$('#city').val(),
     province: $('#province').val(),
-    url:$('#company').val()
+    url:$('#company').val(),
+    img_urls:img_list
   };
 }
 function validate(){
@@ -121,8 +117,8 @@ if(e!=""){
 return pass;
 }
 
-function post(){
-var form=acquireInfor();
+function post(img_list){
+var form=acquireInfor(img_list);
   $.ajax({
     type:'POST',
     contenttype:'json',
@@ -147,7 +143,22 @@ var form=acquireInfor();
   });// ajax call end
 }
 
+function display_imgs(list){
+  $('.list_unstyled').empty();
+for(var i=0;i<list.length;i++){
+$('.list_unstyled').append('<li><img class="img-responsive" src='+list[i]+'></li>')
+}
+}
+
+
+
 $(document).ready(function(){
+
+var img_list=[];
+
+
+  $('#form').slideUp(10);
+
 is_login();
 
 $('.basic').on('click','.navigate',function(){
@@ -160,12 +171,50 @@ $('.basic').on('click','#post',function(){
   if(validate()){
   $('.basic').append("<div class='load-wrapp'><div class='load'><div class='line'></div><div class='line'></div><div class='line'></div></div>")
   document.getElementById('post').disabled=true;
-    document.getElementById('add_pic').disabled=true;
+    //document.getElementById('add_pic').disabled=true;
     $('error_area').empty();
     $('.notification').removeClass('alert-danger').removeClass('alert-success').text('');
-    post();
+    post(img_list);
   }
 })
+
+$('#add').click(function(){
+$('#form').slideDown(500);
+})
+
+$("#form").on('submit',(function(ha) {
+  $('.basic').append("<div class='load-wrapp'><div class='load'><div class='line'></div><div class='line'></div><div class='line'></div></div>")
+  document.getElementById('upload').disabled=true;
+    document.getElementById('post').disabled=true;
+
+ ha.preventDefault();
+ $.ajax({
+  url: "/add/img",
+  type: "POST",
+  data:  new FormData(this),
+    cache: false,
+  contentType: false,
+  processData:false,
+  success: function(data){
+    $('#form').slideUp(10);
+    $('#uploadImage').val("")
+    document.getElementById('upload').disabled=false;
+    document.getElementById('post').disabled=false;
+    $('.load-wrapp').remove();
+    if(data=='fail'){
+   $('#error_area').append("<h5 class='alert alert-danger'>Ooops something went wrong</h5>")
+    }
+    else{
+img_list.push(data);
+console.log(img_list);
+display_imgs(img_list);
+    }
+     },
+    error: function(e){
+
+     }
+   });
+}));
 
 
 //night mode effect

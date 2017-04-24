@@ -1,8 +1,3 @@
-/*!
- * Start Bootstrap - 1 Col Portfolio (http://startbootstrap.com/)
- * Copyright 2013-2016 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
- */
 
 body {
   color:black;
@@ -61,10 +56,24 @@ display:inline-block;
   text-decoration: none;
   cursor:pointer;
 }
-.big_img{
-  display:block;
-  width:50%;
-  height:200px;
+.slider{
+  list-style-type: none;
+  max-width:250px;
+
+}
+.slider li{
+  display:inline-block;
+  max-width:80px;
+  max-height:40px;
+  min-height:40px;
+  min-width:40px;
+  margin-top:20px;
+  margin-right:8px;
+  background-color:grey;
+}
+.slider li:hover{
+  transform:scale(1.1);
+  cursor:pointer;
 }
 .pricing{
   display:block;
@@ -75,6 +84,10 @@ display:inline-block;
   border:1px solid black;
   border-radius:5px;
 }
+.more_result:hover{
+  cursor:pointer;
+}
+
 
 /* night mode */
 .toggle{

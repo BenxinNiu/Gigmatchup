@@ -12,6 +12,7 @@ input{
   color:black;
 }
 
+
 .hidden{
   display :none !important;
 }
@@ -205,10 +206,39 @@ hr.medium {
 
 .footer{
   width:100%;
-  height:60px;
+  height:auto;
   background-color: black;
   opacity:0.8;
+  margin:0 auto;
 }
+#left{
+  display:block;
+  list-style-type:none;
+  font-size:30px;
+  padding-top:30px;
+  padding-bottom:30px;
+  width:100%;
+}
+#left a{
+  text-decoration: none;
+  color:white;
+}
+#left li{
+  margin-right:50px;
+  display:inline-block;
+}
+#left li:hover{
+  cursor:pointer;
+  color:#4ca2e0;
+}
+.mid{
+  text-align:center;
+}
+.mid a:hover{
+cursor:pointer;
+}
+
+
 /* loading bar animation */
 
 .load-wrapp {
@@ -272,28 +302,4 @@ hr.medium {
 
 @media(max-width:380){
 
-  .social {
-      display: table;
-      width: 100%;
-      color: #fff;
-      background: url(../img/portfolio-4.jpg) no-repeat center center scroll;
-      -webkit-background-size: cover;
-      -moz-background-size: cover;
-      background-size: cover;
-      -o-background-size: cover;
-      
-  }
-
-  .intro {
-      display: table;
-      position: relative;
-      width: 100%;
-      height: 100%;
-      background: url(../img/bg.jpg) no-repeat center center scroll;
-      -webkit-background-size: cover;
-      -moz-background-size: cover;
-      background-size: cover;
-      -o-background-size: cover;
-
-  }
 }

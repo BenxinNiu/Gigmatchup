@@ -11,9 +11,11 @@ function infor_from_url(){
 }
 
 function display_more_infor(infor,ad_num){
+  var list=infor.pictures;
   var selector='.'+ad_num;
     let $loading_pannel=$(selector).children('.row').children('.loading_pannel');
   let $img_list=$(selector).children('.row').children('.more_infor_pannel').children('.imgs_list').children('#imgs_list');
+  let $slider=$(selector).children('.row').children('.more_infor_pannel').children('.imgs_list').children('.slider');
   let $more_infor_pannel=$(selector).children('.row').children('.more_infor_pannel');
   $loading_pannel.addClass('hidden').empty();
   $('.ad_area').children(selector).children('.row').children('.more_infor_pannel').removeClass('hidden').animate({marginLeft:'0px'},600)
@@ -27,6 +29,11 @@ function display_more_infor(infor,ad_num){
       $img_list.append("<li><a href=" + infor.instagram + "><i class='fa fa-instagram'></i></a></li>")
     if(infor.linkedin!=null&&infor.linkedin!="")
        $img_list.append("<li><a href=" + infor.linkedin + "><i class='fa fa-linkedin'></i></a></li>")
+
+for(var i=0;i<list.length;i++){
+$slider.append("<li><img class='img-responsive' src=" +list[i] +"></li>")
+}
+
 
        $more_infor_pannel.children('.pricing').append("<h4>"+infor.price+"</h4>")
        $more_infor_pannel.children('.email').append("<h4>"+infor.contact_name+"</h4>")
@@ -76,6 +83,7 @@ function display_html(result){
       let $snippet=$(selector).children('.row').children('.snippet');
       let $more_infor_pannel=$(selector).children('.row').children('.more_infor_pannel');
     $snippet.children('.title').append("<h3>"+infor.title+"</h3>")
+      $snippet.children('.location').append("<h4>"+infor.category+"</h4>")
     $snippet.children('.location').append("<h4>"+infor.location+"</h4>")
     $snippet.children('.post-time').append("<h4>"+infor.post_date+"</h4>")
     $snippet.children('.description').append("<p>"+infor.description+"</p>")
@@ -90,6 +98,7 @@ function display_html(result){
 
 function acquire_ad(number,type,province){
   //console.log(type);
+  console.log(number);
 $.ajax({
   type:'GET',
   contenttype:'json',
@@ -111,24 +120,30 @@ function loading(){
   $('.more_infor_pannel').append("<div class='load-wrapp'><div class='load'><div class='line'></div><div class='line'></div><div class='line'></div></div>")
 }
 
-function search(){
+function search(displayNumber){
+  console.log(displayNumber);
   var ad=$('.searchBar').val();
   var type=$('#Ad_category').val();
   var province=$('#category').val();
+  if(displayNumber==0)
   $('.ad_area').empty();
   $('.ad_area').append("<div class='load-wrapp'><div class='load'><div class='line'></div><div class='line'></div><div class='line'></div></div>")
-  acquire_ad(0,type,province);
+  acquire_ad(displayNumber,type,province);
 }
 
 
 $(document).ready(function(){
+var displayNumber=0;
+var is_specific=false;
+
 var type=infor_from_url();
 console.log(type);
-  $('.ad_area').append("<div class='load-wrapp'><div class='load'><div class='line'></div><div class='line'></div><div class='line'></div></div>")
-  acquire_ad(0,type.type,type.city);
+$('.ad_area').append("<div class='load-wrapp'><div class='load'><div class='line'></div><div class='line'></div><div class='line'></div></div>")
+ acquire_ad(0,type.type,type.city);
 
 $('.submit').click(function(){
   search();
+  is_specific=true;
 })
 
 $('.ad_area').on('click','.learn_more',function(){
@@ -144,12 +159,37 @@ $('.ad_area').on('click','.show_less',function(){
   var id=$(this).attr('id');
   console.log(id);
   var sec_id="#"+id.replace('btn','id'); // section (ad id) id
+  var ad_class=$(this).parent().parent().parent().attr('class')
+  let $img_list=$('.'+ad_class).children('.row').children('.more_infor_pannel').children('.imgs_list').children('#imgs_list');
+  let $slider=$('.'+ad_class).children('.row').children('.more_infor_pannel').children('.imgs_list').children('.slider');
+  let $more_infor_pannel=$('.'+ad_class).children('.row').children('.more_infor_pannel');
+
   $('.ad_area').children(sec_id).children('.row').children('.more_infor_pannel').removeClass('hidden').animate({marginLeft:'-1000px'},600,function(){
     $(this).addClass('hidden')
   })
   $('.ad_area').children(sec_id).children('.row').children('.snippet').append("<a id="+id+ " class='learn_more btn btn-primary'>Show more<span class='glyphicon glyphicon-chevron-right'></span></a>")
 $('.ad_area').children(sec_id).children('.row').children('.snippet').children('.show_less').remove();
+$img_list.empty();
+$slider.empty();
+$more_infor_pannel.children('.pricing').empty()
+$more_infor_pannel.children('.email').empty()
+$more_infor_pannel.children('.phone').empty()
 })
+
+$('.ad_area').on('click','img',function(){
+  var url=$(this).attr('src')
+  window.open(url)
+})
+
+$('.more_result').on('click',function(){
+  $('.ad_area').append("<div class='load-wrapp'><div class='load'><div class='line'></div><div class='line'></div><div class='line'></div></div>")
+  displayNumber+=5;
+if(is_specific)
+search(displayNumber);
+ acquire_ad(displayNumber,type.type,type.city);
+})
+
+
 
 // night mode
 $('#switch').click(function(){

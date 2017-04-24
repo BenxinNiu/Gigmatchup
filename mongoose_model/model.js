@@ -46,6 +46,7 @@ function construct_ad(infor,id,activation){
     "location":infor.city+" "+infor.province
   },
   "more":{
+    "pictures":infor.img_urls,
     "requested_ad":id,
     "facebook":infor.facebook,
     "twitter":infor.twitter,
@@ -106,12 +107,6 @@ function update_user_infor(infor){
 };
 }
 
-function generateId(num){
-  var number=(Math.floor((Math.random() * 100000000000) + 1)).toString();
-  var count=number+(18+num).toString();
-  var id=parseInt(count,10);
-  return id;
-}
 
 function generate_reset_code(){
   var text = "";
@@ -126,7 +121,6 @@ construct:  construct_user,
 create_user:create_user,
 construct_ad: construct_ad,
 update_user_infor:update_user_infor,
-generateId:generateId,
 generate_reset_code:generate_reset_code,
 construct_user_infor:construct_user_infor
 };

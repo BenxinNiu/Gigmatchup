@@ -3,8 +3,6 @@
 const express = require('express');
 const moment=require('moment');
 const mongo=require('mongodb').MongoClient;
-const mongoose=require('mongoose');
-const assert=require('assert');
 const bodyparser=require('body-parser');
 const fs=require('fs');
 const session = require('express-session');
@@ -718,7 +716,7 @@ if(doc.length==0){db.close(); res.send('noUser')}
 else{
 var code=model.generate_reset_code();
 console.log(code);
-var link='http://www.gigmatchup.ca/gigmatchupForgetpassword/?dearuser='+email+'&verificationCode='+code;
+var link='www.gigmatchup.ca/gigmatchupForgetpassword?dearuser='+email+'&verificationCode='+code;
 console.log(link);
 collection.update({'credential.login_email':email},{$set:{'credential.reset_code':code}});
 var email_content = {

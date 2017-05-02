@@ -31,7 +31,7 @@ fs.readdirSync(__dirname+'/mongoose_model').forEach(function(file){
 const multer=Multer({
   storage:Multer.MemoryStorage,
   limits:{
-  fileSize:12*1024*1024
+  fileSize:17*1024*1024
   }
 });
 
@@ -506,11 +506,15 @@ res.sendFile(path.join(__dirname, 'public', 'img.html'));
 app.post('/add/img',multer.single('image'),
 storeIMG.sendUploadToGCS,(req,res)=>{
   if (req.file && req.file.publicUrl){
+    if(req.file.size>10*1024*1024)
+    res.send('large');
+    else{
         var imageUrl = req.file.publicUrl;
         res.send(imageUrl);
       }
+      }
       else
-      res.send('fail')
+      res.send('fail');
 });
 
 app.post('/post',(req,res)=>{

@@ -13,12 +13,13 @@ function infor_from_url(){
 function display_more_infor(infor,ad_num){
   var list=infor.pictures;
   var selector='.'+ad_num;
+  console.log("hi"+selector)
     let $loading_pannel=$(selector).children('.row').children('.loading_pannel');
   let $img_list=$(selector).children('.row').children('.more_infor_pannel').children('.imgs_list').children('#imgs_list');
   let $slider=$(selector).children('.row').children('.more_infor_pannel').children('.imgs_list').children('.slider');
   let $more_infor_pannel=$(selector).children('.row').children('.more_infor_pannel');
   $loading_pannel.addClass('hidden').empty();
-  $('.ad_area').children(selector).children('.row').children('.more_infor_pannel').removeClass('hidden').animate({marginLeft:'0px'},600)
+  $more_infor_pannel.removeClass('hidden').animate({marginLeft:'0px'},600)
   if(infor.facebook!=null&&infor.facebook!="")
    $img_list.append("<li><a href=" + infor.facebook + "><i class='fa fa-facebook'></i></a></li>")
    if(infor.youtube!=null&&infor.youtube!="")
@@ -43,6 +44,7 @@ $slider.append("<li><img class='img-responsive' src=" +list[i] +"></li>")
 }
 
 function get_more_infor(ad_id,sec_id,id){
+  console.log(ad_id);
   let $loading_pannel=$('.'+ad_id).children('.row').children('.loading_pannel')
   let $more_infor_pannel=$('.'+ad_id).children('.row').children('.more_infor_pannel');
   $loading_pannel.removeClass('hidden').animate({marginLeft:'0px'},600).append("<div class='load-wrapp'><div class='load'><div class='line'></div><div class='line'></div><div class='line'></div></div>")
@@ -72,6 +74,7 @@ function display_html(result){
     success:function(html){
       $('.load-wrapp').remove();
       result=result.reverse();
+      console.log(result)
       for (var i=0;i<result.length;i++){
       var infor=result[i];
       var id='id'+i;
@@ -108,6 +111,7 @@ $.ajax({
     console.log(data);
   var length=data.length;
   $('.num').text(length+" ad found for you")
+  console.log(data)
    display_html(data);
   },
   error:function(res){
@@ -150,6 +154,7 @@ $('.submit').click(function(){
 $('.ad_area').on('click','.learn_more',function(){
   var id=$(this).attr('id');
   var ad_class=$(this).parent().parent().parent().attr('class')
+  console.log(ad_class)
   var sec_id="#"+id.replace('btn','id'); // section (ad id) id
   console.log(sec_id);
   get_more_infor(ad_class,sec_id,id);
@@ -160,7 +165,7 @@ $('.ad_area').on('click','.show_less',function(){
   var id=$(this).attr('id');
   console.log(id);
   var sec_id="#"+id.replace('btn','id'); // section (ad id) id
-  var ad_class=$(this).parent().parent().parent().attr('class')
+  var ad_class=$(this).parent().parent().parent().attr('class');
   let $img_list=$('.'+ad_class).children('.row').children('.more_infor_pannel').children('.imgs_list').children('#imgs_list');
   let $slider=$('.'+ad_class).children('.row').children('.more_infor_pannel').children('.imgs_list').children('.slider');
   let $more_infor_pannel=$('.'+ad_class).children('.row').children('.more_infor_pannel');

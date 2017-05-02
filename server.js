@@ -415,8 +415,8 @@ app.get('/adinfor/:type',(req,res)=>{
         var result_array=[];
           ad.find().toArray(function(err,docs){
             if(err){res.send(500); db.close();}
-          for (var i=0;i<5&&i<docs.length;i++){
-              var data=docs[number+i];
+          for (var i=number;i<number+5&&i<docs.length;i++){
+              var data=docs[number];
             // console.log(data);
             result_array.unshift(data.snippet);
           }
@@ -429,7 +429,7 @@ app.get('/adinfor/:type',(req,res)=>{
           var ad_found=docs.length;
           var result_array=[];
           if(err){res.send(500); db.close();}
-        for (var i=number;i<5&&i<docs.length;i++){
+        for (var i=number;i<number+5&&i<docs.length;i++){
             var data=docs[i];
             result_array.unshift(data.snippet);
         }
@@ -716,7 +716,7 @@ if(doc.length==0){db.close(); res.send('noUser')}
 else{
 var code=model.generate_reset_code();
 console.log(code);
-var link='www.gigmatchup.ca/gigmatchupForgetpassword?dearuser='+email+'&verificationCode='+code;
+var link='http://www.gigmatchup.ca/gigmatchupForgetpassword?dearuser='+email+'&verificationCode='+code;
 console.log(link);
 collection.update({'credential.login_email':email},{$set:{'credential.reset_code':code}});
 var email_content = {

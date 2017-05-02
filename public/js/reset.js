@@ -37,7 +37,7 @@ function reset_pwd(pwd){
       },2500)
   }
   else{
-    $('.Error').addClass('alert-danger').text('Ooops something went wrong..Please check back later');
+    $('.Error').addClass('alert-danger').text('Invalid Verification code or Code has expired!');
   }
     },
     error:function(){

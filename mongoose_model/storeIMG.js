@@ -15,7 +15,7 @@ function getPublicUrl (filename) {
 }
 
 function sendUploadToGCS (req, res, next) {
-  if (!req.file) {
+  if (!req.file||req.file.size>10*1024*1024) {
     return next();
   }
   const gcsname = Date.now() + req.file.originalname;

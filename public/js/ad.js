@@ -74,7 +74,6 @@ function display_html(result){
     success:function(html){
       $('.load-wrapp').remove();
       result=result.reverse();
-      console.log(result)
       for (var i=0;i<result.length;i++){
       var infor=result[i];
       var id='id'+i;
@@ -108,10 +107,8 @@ $.ajax({
   contenttype:'json',
   url:'/adinfor/'+type+ '?number='+number +'&province='+province,
   success:function(data){
-    console.log(data);
   var length=data.length;
   $('.num').text(length+" ad found for you")
-  console.log(data)
    display_html(data);
   },
   error:function(res){

@@ -31,7 +31,7 @@ fs.readdirSync(__dirname+'/mongoose_model').forEach(function(file){
 const multer=Multer({
   storage:Multer.MemoryStorage,
   limits:{
-  fileSize:5*1024*1024
+  fileSize:12*1024*1024
   }
 });
 

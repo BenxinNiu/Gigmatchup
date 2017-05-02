@@ -204,9 +204,11 @@ $("#form").on('submit',(function(ha) {
     if(data=='fail'){
    $('#error_area').append("<h5 class='alert alert-danger'>Ooops something went wrong</h5>")
     }
+    else if(data=='large'){
+      $('#error_area').append("<h5 class='alert alert-danger'>File too large</h5>")
+    }
     else{
 img_list.push(data);
-console.log(img_list);
 display_imgs(img_list);
     }
      },

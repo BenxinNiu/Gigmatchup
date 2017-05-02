@@ -1,6 +1,6 @@
 {
   "name": "gigmatchup-project",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "online platform for local music band and other type of perfomance ",
   "main": "server.js",
   "scripts": {

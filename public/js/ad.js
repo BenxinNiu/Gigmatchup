@@ -30,6 +30,7 @@ function display_more_infor(infor,ad_num){
     if(infor.linkedin!=null&&infor.linkedin!="")
        $img_list.append("<li><a href=" + infor.linkedin + "><i class='fa fa-linkedin'></i></a></li>")
 
+if(list!==null)
 for(var i=0;i<list.length;i++){
 $slider.append("<li><img class='img-responsive' src=" +list[i] +"></li>")
 }

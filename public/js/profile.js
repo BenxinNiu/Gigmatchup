@@ -152,7 +152,7 @@ $('.ads').on('click','.delete',function(){
 })
 $('.ads').on('click','.view',function(){
   var ad_id=$(this).attr('id');
-  var province=ad_id.subtring(3);
+  var province=ad_id.substring(4);
   window.location.href='/adpage?search='+ad_id+"&province="+province;
 })
 

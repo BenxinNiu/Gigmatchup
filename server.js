@@ -551,10 +551,11 @@ else{
     var object=model.construct_ad(data,num+1001+data.province,code);
     var active_link='http://www.gigmatchup.ca/gigmatchup/activation/'+
     object.ID+"?activation_code="+code+"&email="+object.more.email;
+    if(req.isAuthenticated())
     TempAdbase.insert(object);
     ad.insert(object,(err,data)=>{
  if(err)
- sendError();
+ {req.sendStatus(500); db.close();}
  else{
    if(req.isAuthenticated()){
      var email_content = {

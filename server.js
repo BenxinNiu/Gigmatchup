@@ -415,11 +415,11 @@ app.get('/adinfor/:type',(req,res)=>{
         var result_array=[];
           ad.find().toArray(function(err,docs){
             if(err){res.send(500); db.close();}
-          for (var i=number;i<number+5&&i<docs.length;i++){
+          for (var i=number;i<number+15&&i<docs.length;i++){
               var data=docs[i];
             result_array.unshift(data.snippet);
-            console.log(result_array)
           }
+           console.log(result_array.length)
           db.close();
           res.send(result_array);
     });
@@ -429,18 +429,18 @@ app.get('/adinfor/:type',(req,res)=>{
           var ad_found=docs.length;
           var result_array=[];
           if(err){res.send(500); db.close();}
-        for (var i=number;i<number+5&&i<docs.length;i++){
+        for (var i=number;i<number+15&&i<docs.length;i++){
             var data=docs[i];
             result_array.unshift(data.snippet);
         }
         ad.find({"ID":type}).toArray(function(err,docs){
           if(err){res.send(500); db.close();}
-          for (var i=number;i<number+5&&i<docs.length;i++){
+          for (var i=number;i<number+15&&i<docs.length;i++){
               var data=docs[i];
               result_array.unshift(data.snippet);
           }
           db.close();
-          console.log(result_array);
+
           res.send(result_array);
         });
         });

@@ -524,7 +524,7 @@ app.post('/post',(req,res)=>{
 
   mongo.connect(mongoURL,(err,db)=>{
   if (err)
-  sendError();
+  {req.sendStatus(500); db.close();}
   else{
     if(req.isAuthenticated()){
     var ad=db.collection(data.province);
@@ -535,7 +535,7 @@ app.post('/post',(req,res)=>{
   }
     ad.count((err,num)=>{
 if (err)
-sendError();
+{req.sendStatus(500); db.close();}
 else{
   if(req.isAuthenticated()){
     userBase.find({Oauth_ID:user_id}).toArray(function(err,doc){

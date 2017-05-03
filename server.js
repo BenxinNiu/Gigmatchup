@@ -526,6 +526,7 @@ app.post('/post',(req,res)=>{
   if (err)
   {req.sendStatus(500); db.close();}
   else{
+    var TempAdbase=db.collection('TempAdbase');
     if(req.isAuthenticated()){
     var ad=db.collection(data.province);
     var userBase=db.collection('userBase');
@@ -533,7 +534,7 @@ app.post('/post',(req,res)=>{
     else{
         var ad=db.collection('TempAdbase');
   }
-    ad.count((err,num)=>{
+    TempAdbase.count((err,num)=>{
 if (err)
 {req.sendStatus(500); db.close();}
 else{

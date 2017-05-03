@@ -541,13 +541,13 @@ else{
     userBase.find({Oauth_ID:user_id}).toArray(function(err,doc){
       if(doc.length!=0){
         var ads=doc[0].Ad_id;
-        ads.push(num+1000+data.province);
+        ads.push(num+1001+data.province);
         userBase.update({Oauth_ID:user_id},{$set:{Ad_id:ads}})
       }
     });
   }
   var code=Math.floor((Math.random() * 10000000) + 1);
-    var object=model.construct_ad(data,num+1000+data.province,code);
+    var object=model.construct_ad(data,num+1001+data.province,code);
     var active_link='http://www.gigmatchup.ca/gigmatchup/activation/'+
     object.ID+"?activation_code="+code+"&email="+object.more.email;
     ad.insert(object,(err,data)=>{

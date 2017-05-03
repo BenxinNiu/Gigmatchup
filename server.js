@@ -551,6 +551,7 @@ else{
     var object=model.construct_ad(data,num+1001+data.province,code);
     var active_link='http://www.gigmatchup.ca/gigmatchup/activation/'+
     object.ID+"?activation_code="+code+"&email="+object.more.email;
+    TempAdbase.insert(object);
     ad.insert(object,(err,data)=>{
  if(err)
  sendError();
@@ -761,7 +762,7 @@ else{
     var activation=doc[0].activeCode;
     if(Number(code)===Number(activation)){
       adBase.insert(doc[0]);
-  // temp.remove({"ID":ad_id});
+  temp.update({"ID":ad_id},{$set:{"activeCode":""}});
       var email_content = {
      from: config.get('MAILGUN_FROM'),
      to: email,

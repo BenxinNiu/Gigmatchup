@@ -73,6 +73,7 @@ function display_html(result){
     url:'/get_html?type=ad_html',
     success:function(html){
       $('.load-wrapp').remove();
+      $('.ad_area').empty();
       result=result.reverse();
       for (var i=0;i<result.length;i++){
       var infor=result[i];
@@ -81,7 +82,6 @@ function display_html(result){
       var selector='#'+id;  // tyhe parent container of one ad !!!!
       $('.ad_area').append("<div id="+id+" class="+ infor.requested_ad +"></div>");
       $(selector).append(html);
-
       let $img_list=$(selector).children('.row').children('.more_infor_pannel').children('.imgs_list').children('#imgs_list');
       let $snippet=$(selector).children('.row').children('.snippet');
       let $more_infor_pannel=$(selector).children('.row').children('.more_infor_pannel');
@@ -137,7 +137,7 @@ function search(displayNumber){
 $(document).ready(function(){
 var displayNumber=0;
 var is_specific=false;
-
+var more_clicked=0;
 var type=infor_from_url();
 console.log(type);
 $('.ad_area').append("<div class='load-wrapp'><div class='load'><div class='line'></div><div class='line'></div><div class='line'></div></div>")
@@ -190,6 +190,13 @@ $('.more_result').on('click',function(){
 if(is_specific)
 search(displayNumber);
  acquire_ad(displayNumber,type.type,type.city);
+ if(more_clicked==0){
+     more_clicked++;
+ $('.pagination').append('<li><a class="go_back">Go back&raquo;</a></li>')
+ }
+})
+$('.pagination').on('click','.go_back',function(){
+  acquire_ad(0,'all','newfoundland');
 })
 
 

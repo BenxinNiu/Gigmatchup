@@ -87,7 +87,9 @@ display:inline-block;
 .more_result:hover{
   cursor:pointer;
 }
-
+.go_back:hover{
+  cursor:pointer;
+}
 
 /* night mode */
 .toggle{

@@ -760,7 +760,7 @@ else{
     var activation=doc[0].activeCode;
     if(Number(code)===Number(activation)){
       adBase.insert(doc[0]);
-      temp.remove({"ID":ad_id});
+  // temp.remove({"ID":ad_id});
       var email_content = {
      from: config.get('MAILGUN_FROM'),
      to: email,

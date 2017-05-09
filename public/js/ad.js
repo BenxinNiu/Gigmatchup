@@ -127,14 +127,32 @@ function search(displayNumber){
   var ad=$('.searchBar').val();
   var type=$('#Ad_category').val();
   var province=$('#category').val();
+  console.log(type+" "+province);
   if(displayNumber==0)
   $('.ad_area').empty();
   $('.ad_area').append("<div class='load-wrapp'><div class='load'><div class='line'></div><div class='line'></div><div class='line'></div></div>")
   acquire_ad(displayNumber,type,province);
 }
 
+//see if user is logged in
+function is_login(){
+  $.ajax({
+type:'GET',
+url:'/verify',
+contenttype:'json',
+success:function(result){
+if(result=='yes'){
+  $('#login_navbar').empty().append('<a href="/profile">account</a>')
+  $('#register_navbar').empty().append('<a href="/logout">Logout</a>')
+}
+},
+error:function(){console.log('error')}
+  })
+
+}
 
 $(document).ready(function(){
+  is_login();
 var displayNumber=0;
 var is_specific=false;
 var more_clicked=0;
@@ -144,7 +162,7 @@ $('.ad_area').append("<div class='load-wrapp'><div class='load'><div class='line
  acquire_ad(0,type.type,type.city);
 
 $('.submit').click(function(){
-  search();
+  search(displayNumber);
   is_specific=true;
 })
 
